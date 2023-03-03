@@ -6,6 +6,7 @@ import win32com.client as comclt
 import win32api
 import win32con
 import configparser
+import ssh
 
 
 wsh = comclt.Dispatch("WScript.Shell")
@@ -106,5 +107,7 @@ class Bot(commands.Bot):
 if __name__ == "__main__":
     bot = Bot()
     bot.update_komendy()
+    ssh.polacz()
     bot.run()
+
     
