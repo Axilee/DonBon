@@ -1,13 +1,18 @@
 import paramiko
 import multiprocessing
 import time
-import assets
 hostname='172.30.85.163'
 username='donbon'
 password='qwe!@#'
 
 
-loading_t = multiprocessing.Process(target=loading)
+def loading():
+        while True:
+            for i in range(3):
+                print(".", end="", flush=True)
+                time.sleep(0.5)
+            print("\r    \r")
+
 
 def polacz():
 
@@ -30,13 +35,14 @@ def polacz():
 def execute():
     try:
         print(f"Wysyłanie komend do {hostname}")
-        loading_t.start()
+        loading_t = multiprocessing.Process(target=loading())
         polacz()
         loading_t.terminate()
     except:
         print("COŚ POSZŁO NIE TAK - NIE WYSŁANO")
     else:
         print(f"\nSUKCES! Komendy poszły do {hostname} jako {username}")
+
 
 
 #do testow bezposrednich z cmd
