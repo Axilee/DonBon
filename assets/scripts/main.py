@@ -32,18 +32,16 @@ print (f"CONFIG: {zmienne}")
 def sprawdz(typ,nazwa):
     config.get(typ, nazwa)
 
-
-
-
-
+    
 
 
 
 #----------------------------------------------------------------------------------------
 class Bot(commands.Bot):
+    
     def __init__(self):
         super().__init__(token=ACCESS_TOKEN, prefix = PREFIX, initial_channels=INITIAL_CHANNELS)    
-    
+     
     async def event_ready(self):
         print(f'Zalogowano jako {self.nick}')
         print(f'user ID {self.user_id}')
@@ -128,10 +126,12 @@ class ps():
 if __name__ == "__main__":
     bot = Bot()
     ps()
-
     bot.update_komendy()
     ssh.execute()
+    print(f"\n\n\bLogowanie do kanalu {INITIAL_CHANNELS[0]}")
     bot.run()
+    
+    
     
 
     
