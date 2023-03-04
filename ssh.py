@@ -1,9 +1,15 @@
 import paramiko
+
+hostname='172.30.85.163'
+username='donbon'
+password='qwe!@#'
+
 def polacz():
+
     ssh = paramiko.SSHClient()
 
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(hostname='172.30.85.163', username='fitas', password='qwe!@#')
+    ssh.connect(hostname, username='fitas', password='qwe!@#')
 
     sciezka_lokalna = '.\\zmienne.ini'
     sciezka_zdalna = '/home/fitas/bot/zmienne.ini'
@@ -16,6 +22,13 @@ def polacz():
     with sftp.open(sciezka_zdalna, 'wb') as plik_zdalny:
         plik_zdalny.write(plik_content)
     sftp.close()
-    ssh.close() 
-if __name__ == "__main__":
+    ssh.close()
+
+try:
+    print(f"Wysyłanie komend do {hostname}")
     polacz()
+except:
+    print("COŚ POSZŁO NIE TAK")
+finally:
+    print(f"Wysłano komendy do {hostname} jako {username}")
+
