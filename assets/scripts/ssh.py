@@ -1,13 +1,17 @@
 import paramiko
-
+import multiprocessing
+import time
+import assets
 hostname='172.30.85.163'
 username='donbon'
 password='qwe!@#'
 
+
+loading_t = multiprocessing.Process(target=loading)
+
 def polacz():
 
     ssh = paramiko.SSHClient()
-
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(hostname, username='fitas', password='qwe!@#')
 
@@ -17,18 +21,25 @@ def polacz():
     with open(sciezka_lokalna, 'rb') as plik_lokalny:
         plik_content = plik_lokalny.read()
 
-
     sftp = ssh.open_sftp()
     with sftp.open(sciezka_zdalna, 'wb') as plik_zdalny:
         plik_zdalny.write(plik_content)
     sftp.close()
     ssh.close()
 
-try:
-    print(f"Wysyłanie komend do {hostname}")
-    polacz()
-except:
-    print("COŚ POSZŁO NIE TAK")
-finally:
-    print(f"Wysłano komendy do {hostname} jako {username}")
+def execute():
+    try:
+        print(f"Wysyłanie komend do {hostname}")
+        loading_t.start()
+        polacz()
+        loading_t.terminate()
+    except:
+        print("COŚ POSZŁO NIE TAK - NIE WYSŁANO")
+    else:
+        print(f"\nSUKCES! Komendy poszły do {hostname} jako {username}")
+
+
+#do testow bezposrednich z cmd
+if __name__ == '__main__':
+    execute()
 

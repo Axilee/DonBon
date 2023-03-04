@@ -8,6 +8,12 @@ import win32api
 import win32con
 import configparser
 import ssh
+import multiprocessing 
+
+
+
+
+
 
 wsh = comclt.Dispatch("WScript.Shell")
 ap = comclt.Dispatch("Shell.Application")
@@ -21,11 +27,19 @@ INITIAL_CHANNELS=["Aaxile"]
 config = configparser.ConfigParser()
 zmienne = config.read("zmienne.ini")
 print (f"CONFIG: {zmienne}")
+#--------------------------------------GLOBALNE FUNKCJE ---------------------------------
 #sprawdz status komendy z zmienne ini
 def sprawdz(typ,nazwa):
     config.get(typ, nazwa)
 
 
+
+
+
+
+
+
+#----------------------------------------------------------------------------------------
 class Bot(commands.Bot):
     def __init__(self):
         super().__init__(token=ACCESS_TOKEN, prefix = PREFIX, initial_channels=INITIAL_CHANNELS)    
@@ -97,7 +111,6 @@ class Bot(commands.Bot):
         print (0)
 #wyślij liste komend do zmienne.ini
     def update_komendy(self):
-        d = {}
         for command in self.commands.values():
             print(command.name)
             if not command.name in config["KOMENDY"]:   
@@ -115,8 +128,10 @@ class ps():
 if __name__ == "__main__":
     bot = Bot()
     ps()
+
     bot.update_komendy()
-    ssh
+    ssh.execute()
     bot.run()
+    
 
     
