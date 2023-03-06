@@ -3,6 +3,7 @@ import time
 import asyncio
 from twitchio.ext import commands
 from twitchio.ext import pubsub
+import twitchio
 import win32com.client as comclt
 import win32api
 import win32con
@@ -116,19 +117,31 @@ class Bot(commands.Bot):
         with open('zmienne.ini', 'w') as plik:
             config.write(plik)
 
-class ps():
-    async def event_ready():
-        await pubsub.subscribe('channel-bits-events-v2',channel=bot.channel_id)
-        print('work PS')
+
+
+#async def main():
+  #  ps = twitchio.AsyncIOMain()
+ #   pubsub = ps.pubsub
+#
+ #   topic = f"chat_messages.{ps.nick}.{ps.channel}"
+#    await pubsub.listen(topic, wiadomosc)
+    
+ #   await ps.start()
+
+
+
+
+
+
 
 
 
 if __name__ == "__main__":
+    #asyncio.run(main())
     bot = Bot()
-    ps()
     bot.update_komendy()
     ssh.execute()
-    print(f"\n\n\bLogowanie do kanalu {INITIAL_CHANNELS[0]}")
+    print(f"\n\n\bLogowanie do kanalu {INITIAL_CHANNELS[0]}...")
     bot.run()
     
     
