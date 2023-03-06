@@ -3,6 +3,7 @@ import time
 import asyncio
 from twitchio.ext import commands
 from twitchio.ext import pubsub
+from twitchio import Message
 import twitchio
 import win32com.client as comclt
 import win32api
@@ -22,7 +23,7 @@ ap = comclt.Dispatch("Shell.Application")
 #dane połączenia
 ACCESS_TOKEN = 'mdigv4lzgkn7durd4ww44812riy6dk'
 PREFIX = "$"
-INITIAL_CHANNELS=["Aaxile"]
+INITIAL_CHANNELS=["AxileBot"]
 
 #wczytaj konfig zmienne.ini
 config = configparser.ConfigParser()
@@ -42,11 +43,19 @@ class Bot(commands.Bot):
     
     def __init__(self):
         super().__init__(token=ACCESS_TOKEN, prefix = PREFIX, initial_channels=INITIAL_CHANNELS)    
-     
+    
+    async def start(ctx):
+        ctx.send("here")
     async def event_ready(self):
         print(f'Zalogowano jako {self.nick}')
         print(f'user ID {self.user_id}')
-
+        #powitanie po właczeniu i wejsciu na kanał
+    async def event_join(self,channel,user):
+        await channel.send("Bążur!")
+        #debug event na wiadomosc 
+    #async def event_message(self, message: Message):
+    #    if not message.author is None:
+    #        await message.channel.send("Wiad")
     @commands.command(name = "drop")
     async def drop(self, ctx: commands.Context):
         await ctx.send(f'{ctx.author.name} wyrzucił broń LUL')
@@ -108,6 +117,9 @@ class Bot(commands.Bot):
     @commands.command(name = "test")
     async def test(self):
         print (0)
+    
+   
+
 #wyślij liste komend do zmienne.ini
     def update_komendy(self):
         for command in self.commands.values():
@@ -117,7 +129,12 @@ class Bot(commands.Bot):
         with open('zmienne.ini', 'w') as plik:
             config.write(plik)
 
-
+@Bot.event
+async def cheer(ctx):
+    bits = ctx.bits
+    print("BEBEBEBBEBEBEBE WORKING BITS")
+    await ctx.send("bits test")
+    
 
 #async def main():
   #  ps = twitchio.AsyncIOMain()
