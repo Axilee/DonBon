@@ -3,7 +3,7 @@ import time
 import asyncio
 from twitchio.ext import commands
 from twitchio.ext import pubsub
-from twitchio import Message
+from twitchio import Message, Channel, User
 import twitchio
 import win32com.client as comclt
 import win32api
@@ -21,7 +21,7 @@ wsh = comclt.Dispatch("WScript.Shell")
 ap = comclt.Dispatch("Shell.Application")
 
 #dane połączenia
-ACCESS_TOKEN = 'mdigv4lzgkn7durd4ww44812riy6dk'
+ACCESS_TOKEN = 'lw67ad2urz33ic8zj4c930wkgop5wu'
 PREFIX = "$"
 INITIAL_CHANNELS=["AxileBot"]
 
@@ -40,22 +40,26 @@ def sprawdz(typ,nazwa):
 
 #----------------------------------------------------------------------------------------
 class Bot(commands.Bot):
+    #startup
     
     def __init__(self):
         super().__init__(token=ACCESS_TOKEN, prefix = PREFIX, initial_channels=INITIAL_CHANNELS)    
     
-    async def start(ctx):
-        ctx.send("here")
     async def event_ready(self):
         print(f'Zalogowano jako {self.nick}')
         print(f'user ID {self.user_id}')
+    
         #powitanie po właczeniu i wejsciu na kanał
     async def event_join(self,channel,user):
         await channel.send("Bążur!")
-        #debug event na wiadomosc 
+    
+    async def event_bits(self,data,channel):
+        await channel.send("bits")
+    #debug event na wiadomosc 
     #async def event_message(self, message: Message):
     #    if not message.author is None:
     #        await message.channel.send("Wiad")
+    
     @commands.command(name = "drop")
     async def drop(self, ctx: commands.Context):
         await ctx.send(f'{ctx.author.name} wyrzucił broń LUL')
@@ -66,9 +70,6 @@ class Bot(commands.Bot):
     async def ping(self, ctx: commands.Context):
         await ctx.send(f'{ctx.author} pingnął KEKW')
         wsh.SendKeys("z")
-    @commands.command(name = "cof")
-    async def cof(self, ctx: commands.Context):
-        wsh.SendKeys("")
     @commands.command(name = "notepad")
     async def notepad(self, ctx:commands.Context):
         wsh.Run("notepad.exe") 
@@ -129,21 +130,9 @@ class Bot(commands.Bot):
         with open('zmienne.ini', 'w') as plik:
             config.write(plik)
 
-@Bot.event
-async def cheer(ctx):
-    bits = ctx.bits
-    print("BEBEBEBBEBEBEBE WORKING BITS")
-    await ctx.send("bits test")
-    
 
-#async def main():
-  #  ps = twitchio.AsyncIOMain()
- #   pubsub = ps.pubsub
-#
- #   topic = f"chat_messages.{ps.nick}.{ps.channel}"
-#    await pubsub.listen(topic, wiadomosc)
-    
- #   await ps.start()
+
+
 
 
 

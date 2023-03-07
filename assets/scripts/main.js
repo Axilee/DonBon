@@ -44,8 +44,13 @@ $("#dataConfig").submit(function(event){
   var i=0;
   $checkboxValues.each(function(){
     if($(this).prop("checked")){
+<<<<<<< HEAD
       keyVal.forEach(element => {
       console.log("[Element]" + element);
+=======
+      valueVal.forEach(element => {
+      console.log("[elementy] = " + element[i]);
+>>>>>>> b76b2a8 (load.php)
       });
       i++;
       console.log("[checkboxy] wykryto zmiane"); // wyjebać 
