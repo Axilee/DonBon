@@ -17,7 +17,6 @@ html, body {
   width: 100%;
   font-family: 'Poppins', sans-serif;
   color: #222;
-  overflow: hidden;
 }
 
 /*body{
@@ -42,37 +41,27 @@ html, body {
 
 .form-check-input {
   width: 3rem !important; 
-  color: #1dbf9f;
-  background: #1dbf9f;
-  background-color: #1dbf9f !important; 
-  border-color: #1dbf9f !important; 
-  border: none;
-  outline: none;
-  cursor: pointer;
+}
+
+.form-check-input:checked {
+  width: 3rem !important; 
+  background-color: #1dbf9f !important;
+  border-color: #1dbf9f !important;
+}
+
+.form-check-input:focus {
+  border-color: #108d74 !important;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(14, 112, 96, 0.25) !important;
 }
 
 #checks .form-check {
    width: 10rem;
 }
 
-/*--------------------------------------------------------------
-# Kolorystyka
---------------------------------------------------------------*/
-
-/*
-#navigation {
-  background: #BDCDD6 !important;
+#checks .form-check {
+  width: 10rem;
 }
-
-h1, h2, h3, p, a {
-  color: #6096B4 !important;
-}
-
-body {
-  background-color: #EEE9DA!important;
-}
-
-*/
 
 /*--------------------------------------------------------------
 # Navbar
@@ -315,6 +304,7 @@ body {
   align-items: center;
   min-height: 10vh;
   width: 100%;
+  margin-top: 30px;
   
 }
 
@@ -423,6 +413,25 @@ top: -5px;
 }
 
 .register p a:hover{
+  text-decoration: underline;
+
+}
+
+.haveAccount {
+  font-size: 0.9em;
+  color: black;
+  text-align: center;
+  margin: 25px 0 10px;
+  margin-top: 2px;
+}
+
+.haveAccount p a{
+  text-decoration: none;
+  color: #1dbf9f;
+  font-weight: 600;
+}
+
+.haveAccount p a:hover{
   text-decoration: underline;
 
 }
