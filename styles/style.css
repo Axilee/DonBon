@@ -53,7 +53,6 @@ html, body {
     height: 80px;
   }
   
-  
   .navbar-nav .nav-item {
     position: relative;
   }
@@ -80,33 +79,6 @@ html, body {
     transform-origin: left;
     transform: scaleX(0);
   }
-
-  .navigation .btnLogin-popup {
-    width: 130px;
-    height: 50px;
-    background: transparent;
-    border: 2px solid #fff;
-    outline: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1.1em;
-    color: #fff;
-    font-weight: 500;
-    margin-left: 40px;
-    transition: .5s;
-  }
-  
-  .navigation .btnLogin-popup:hover {
-    background: #fff;
-    color: #162938;
-  }
-
-
-  
-  
-
-  
-
 
 
 
