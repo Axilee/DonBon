@@ -1,19 +1,23 @@
 <?php
   if(isset($_POST['content'])) {
     $content = $_POST['content'];
+<<<<<<< HEAD
 
     // Ustaw ścieżkę do pliku i folderu
     $filename = 'data_save.ini';
     $folder = 'data';
+=======
+>>>>>>> 2814c02 (Calkowicie zreworkowany main.js)
 
-    // Sprawdź, czy folder istnieje, jeśli nie, utwórz go
     if(!file_exists($folder)) {
       mkdir($folder);
     }
     
-    // Otwórz plik w trybie do zapisu i zapisz wartość
-    $file = fopen("$folder/$filename", "a");
-    fwrite($file, "$content\n");
+    $file = fopen("data/data_save.ini", "w");
+    fwrite($file, "[KOMENDY]\n");
+    foreach ($content as $line) {
+        fwrite($file, $line."\n");
+    }
     fclose($file);
 
     echo "Wartość została zapisana w pliku $filename";
