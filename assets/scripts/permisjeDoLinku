@@ -1,5 +1,4 @@
 chat:read
-chat:edit
 bits:read
 channel:read:polls
 channel:read:redemptions

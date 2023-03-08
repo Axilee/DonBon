@@ -130,7 +130,6 @@ class Bot(commands.Bot):
         with open('zmienne.ini', 'w') as plik:
             config.write(plik)
 
-client = twitchio.Client(token=ACCESS_TOKEN)
 
 
 
@@ -141,7 +140,6 @@ client = twitchio.Client(token=ACCESS_TOKEN)
 
 
 if __name__ == "__main__":
-    #asyncio.run(main())
     bot = Bot()
     bot.update_komendy()
     ssh.execute()
