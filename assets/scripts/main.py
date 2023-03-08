@@ -37,18 +37,21 @@ def sprawdz(typ,nazwa):
 
 #----------------------------------------------------------------------------------------
 class Bot(commands.Bot):
-    
+#logowanie do IRC    
     def __init__(self):
         super().__init__(token=ACCESS_TOKEN, prefix = PREFIX, initial_channels=INITIAL_CHANNELS)    
 
     async def event_ready(self):
         print(f'Zalogowano jako {self.nick}')
         print(f'user ID {self.user_id}')
-        #powitanie po właczeniu i wejsciu na kanał
+#powitanie po właczeniu i wejsciu na kanał
+    async def event_channel_joined(self,channel):    
+        await channel.send(f"Bążur @{channel.name}!")
+#logowanie eventu dołączania viewerów (wtf)
     async def event_join(self,channel,user):
         with open("viewers.log","a") as log:
             log.write(f"{datetime.now()} Stream @{channel.name} User: {user.name}\n")
-        #debug event na wiadomosc 
+#debug event na wiadomosc 
     #async def event_message(self, message: Message):
     #    if not message.author is None:
     #        await message.channel.send("Wiad")
