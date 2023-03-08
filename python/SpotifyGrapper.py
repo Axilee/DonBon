@@ -1,8 +1,8 @@
 import requests
 import json 
 
-def getCurrentlyPlaying():
-    oAuthToken = input("Paste oAuth Token :") #daj input tutaj tokenu ----UWAGA----
+def getCurrentlyPlaying(oAuthToken):
+    #daj input tutaj tokenu ----UWAGA----
     #curl -X "GET" "https://api.spotify.com/v1/me/player/currently-playing" -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: Bearer BQCxM462V2lEG6WNyFwrXeK80CyzFxYNlZjIw8DAZSZWVLqi7PKwtnytjC-kMGe2G3_Ke5mbtMA9T73mj696at1naASSvSvwb7Ra2zrzc-mcoi3v2IpwSNvePb4ErIOqa1mTyz_H9Oc_b1KcXcWgCO-SJEKNAqVAkuCRvnNKHy2CPTbuPusKM1N4R-SvO0ZJfQ0vij3LLg"
     headers = {
         'Accept': 'application/json',
