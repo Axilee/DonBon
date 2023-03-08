@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
+/*--------------------------------------------------------------
+# Ogólne zmienne/edycja bootstrap
+--------------------------------------------------------------*/
+
 * {
   margin: 0;
   padding: 0;
@@ -7,8 +11,6 @@
   font-family: 'Poppins', sans-serif;
 
 }
-
-
 
 html, body {
   height: 100%;
@@ -25,6 +27,7 @@ html, body {
 
 #btnMode {
   margin-top: 50px;
+  justify-content: center;
 }
 
 #mode {
@@ -33,6 +36,27 @@ html, body {
 
 #checks {
   padding-top: 3rem;
+  text-align: center;
+}
+
+.form-check-input {
+  width: 3rem !important; 
+  color: #1dbf9f;
+  background: #1dbf9f;
+  background-color: #1dbf9f !important; 
+  border-color: #1dbf9f !important; 
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+#checks .form-check {
+   width: 10rem;
+}
+
+footer {
+  margin-top: 10000px;
+  font-size: ;
 }
 
 
@@ -43,8 +67,6 @@ html, body {
 .navbar {
   padding: .8rem;
 }
-
-
 
 .navbar-nav li {
   padding-right: 20px;
