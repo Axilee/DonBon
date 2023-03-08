@@ -1,14 +1,6 @@
 <?php
   if(isset($_POST['content'])) {
     $content = $_POST['content'];
-<<<<<<< HEAD
-
-    // Ustaw ścieżkę do pliku i folderu
-    $filename = 'data_save.ini';
-    $folder = 'data';
-=======
->>>>>>> 2814c02 (Calkowicie zreworkowany main.js)
-
     if(!file_exists($folder)) {
       mkdir($folder);
     }
@@ -20,7 +12,7 @@
     }
     fclose($file);
 
-    echo "Wartość została zapisana w pliku $filename";
+    echo "Wartość została zapisana w pliku";
   } else {
     echo "Nie udało się zapisać wartości.";
   }
