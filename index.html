@@ -35,10 +35,24 @@
 </head>
 
 <body onload="loadconfig();">
-  
+
+
+<!-- Loader strony -->  
+<div class="loader-wrapper">
+  <div class="loader">
+  </div>
+  <div class="loader-section section-left"></div>
+  <div class="loader-section section-right"></div>
+</div>
+
+
+<!-- Efekt kursora/blur pod elementami strony -->
+<div id="cursorEfect"></div>
+<div id="blur">
+
 <!-- Navbar -->
 
-<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" id="navigation">
 
     <div class="container-fluid">
 
@@ -199,6 +213,7 @@
 </div>
 
 
+
   
 <!-- Footer -->
 
@@ -219,7 +234,8 @@
     </footer>
   </div>
 
- 
+<!-- Zamknięcie blura na całej stronie -->
+</div>
 
 </body>
 </html>
