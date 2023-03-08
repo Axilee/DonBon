@@ -1,6 +1,7 @@
 import os
 import time
 import asyncio
+from datetime import datetime
 from twitchio.ext import commands
 from twitchio.ext import pubsub
 from twitchio import Message
@@ -21,9 +22,9 @@ wsh = comclt.Dispatch("WScript.Shell")
 ap = comclt.Dispatch("Shell.Application")
 
 #dane połączenia
-ACCESS_TOKEN = 'mdigv4lzgkn7durd4ww44812riy6dk'
+ACCESS_TOKEN = 'dji7vy3dlc0szw4vz28ai6cllt4p9b'
 PREFIX = "$"
-INITIAL_CHANNELS=["AxileBot"]
+INITIAL_CHANNELS=["Aaxile"]
 
 #wczytaj konfig zmienne.ini
 config = configparser.ConfigParser()
@@ -34,25 +35,23 @@ print (f"CONFIG: {zmienne}")
 def sprawdz(typ,nazwa):
     config.get(typ, nazwa)
 
-    
-
-
-
 #----------------------------------------------------------------------------------------
 class Bot(commands.Bot):
-    
+#logowanie do IRC    
     def __init__(self):
         super().__init__(token=ACCESS_TOKEN, prefix = PREFIX, initial_channels=INITIAL_CHANNELS)    
-    
-    async def start(ctx):
-        ctx.send("here")
+
     async def event_ready(self):
         print(f'Zalogowano jako {self.nick}')
         print(f'user ID {self.user_id}')
-        #powitanie po właczeniu i wejsciu na kanał
+#powitanie po właczeniu i wejsciu na kanał
+    async def event_channel_joined(self,channel):    
+        await channel.send(f"Bążur @{channel.name}!")
+#logowanie eventu dołączania viewerów (wtf)
     async def event_join(self,channel,user):
-        await channel.send("Bążur!")
-        #debug event na wiadomosc 
+        with open("viewers.log","a") as log:
+            log.write(f"{datetime.now()} Stream @{channel.name} User: {user.name}\n")
+#debug event na wiadomosc 
     #async def event_message(self, message: Message):
     #    if not message.author is None:
     #        await message.channel.send("Wiad")
@@ -114,9 +113,6 @@ class Bot(commands.Bot):
         s = ctx.message.content
         s = s.replace("$skill ", "")
         wsh.SendKeys(s)
-    @commands.command(name = "test")
-    async def test(self):
-        print (0)
     
    
 
@@ -129,21 +125,7 @@ class Bot(commands.Bot):
         with open('zmienne.ini', 'w') as plik:
             config.write(plik)
 
-@Bot.event
-async def cheer(ctx):
-    bits = ctx.bits
-    print("BEBEBEBBEBEBEBE WORKING BITS")
-    await ctx.send("bits test")
-    
-
-#async def main():
-  #  ps = twitchio.AsyncIOMain()
- #   pubsub = ps.pubsub
-#
- #   topic = f"chat_messages.{ps.nick}.{ps.channel}"
-#    await pubsub.listen(topic, wiadomosc)
-    
- #   await ps.start()
+client = twitchio.Client(token=ACCESS_TOKEN)
 
 
 

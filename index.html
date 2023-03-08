@@ -17,15 +17,12 @@
     <!-- AwesomeFonts -->
     <script src="https://kit.fontawesome.com/bd626f218f.js" crossorigin="anonymous"></script>
 
-
     <!-- Główny JS -->
-    <script src="scripts/app.js"></script>
-
-    <script src="scripts/glightbox/js/glightbox.min.js"></script>
-    <script src="scripts/glightbox/js/glightbox.js"></script>
+    <script src="assets/scripts/app.js"></script>
+    <script src="assets/scripts/main.js"></script>
 
     <!-- Bootstrap JS -->
-    <script src="scripts/bootstrap/bootstrap.min.js"></script>
+    <script src="assets/scripts/bootstrap/bootstrap.min.js"></script>
 
     <!-- JQuery JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -37,13 +34,31 @@
 
 </head>
 
-<body>
-  
+    <!-- Bootstrap JS -->
+    <script src="scripts/bootstrap/bootstrap.min.js"></script>
+
+
+<!-- Loader strony -->  
+<div class="loader-wrapper">
+  <div class="loader">
+  </div>
+  <div class="loader-section section-left"></div>
+  <div class="loader-section section-right"></div>
+</div>
+
+
+<!-- Efekt kursora/blur pod elementami strony 
+<div id="cursorEfect"></div>
+<div id="blur">-->
+
 <!-- Navbar -->
 
-<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" id="navigation">
+
     <div class="container-fluid">
+
       <a href="#" class="navbar-brand"><img src="assets/img/logo.png" class="watermark"> Hoeman</a>
+
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -58,7 +73,7 @@
             <div class="nav-underline"></div>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">Logowanie</a>
+            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#login">Logowanie</a>
             <div class="nav-underline"></div>
           </li>
         </ul>
@@ -72,31 +87,135 @@
     <div class="row">
       <div class="col-md-8 offset-md-2 text-center">
         <h2>Wybierz tryb bota</h2>
-        <p>Wybierz jeden z przycisków poniżej, aby wybrać tryb działania DonBona.</p>
+        <p>Wybierz jeden z przycisków poniżej, aby wybrać tryb DonBona.</p>
         <div class="d-grid gap-2 col-6 mx-auto">
-          <button class="btn btn-primary btn-lg" type="button">Punkty</button>
-          <button class="btn btn-secondary btn-lg" type="button">Komendy</button>
+          <button class="btn btn-primary btn-lg" type="button" id="points-btn">Punkty</button>
+          <button class="btn btn-primary btn-lg" type="button" id="commands-btn">Komendy</button>
+        </div>
+        <div id="mode">
+          <h2>Obecny tryb: <span id="current-mode"></span></h2>
         </div>
       </div>
     </div>
   </div>
 
 <!-- Sekcja z checkami -->
-<hr class="my-4">
-<div class="container">
+
+<div class="container" id="checks">
     <div class="row">
-      <div class="col-sm-12 col-md-6">
-        <h1>Komendy za Punkty</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed hendrerit mi at risus pellentesque, vel consequat mi eleifend. Etiam vitae sapien a mauris malesuada placerat eu ac augue. Nulla vel ante ut urna molestie fringilla. Sed scelerisque libero eget erat sodales luctus.</p>
+      <div id="data-checkboxes" class="col-sm-12 col-md-6">
+        <h1>Komendy</h1>
+        <hr class="my-3">
+        <div class="form-check form-switch">
+          <form id="form-checkboxes">
+          <!--<input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+          <label class="form-check-label" for="flexSwitchCheckChecked">command</label>-->
+          </form>
+          <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+          <label class="form-check-label" for="flexSwitchCheckChecked" >command</label>
+        </div>
       </div>
       <div class="col-sm-12 col-md-6">
-        <h1>Komendy za Bitsy</h1>
-        <p>Sed id pretium orci. Integer at odio eget leo gravida maximus. Nullam a eros sit amet magna ultrices lacinia. Fusce ultrices, nulla in blandit dignissim, velit lectus malesuada est, ac efficitur lacus augue a arcu. Praesent efficitur lectus eu lobortis pulvinar.</p>
+        <h1>Punkty</h1>
+        <hr class="my-3">
+        <div class="form-check form-switch">
+          <!--<input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+          <label class="form-check-label" for="flexSwitchCheckChecked">command</label>-->
+        </div>
       </div>
     </div>
+
   </div>
   
 
+<!-- Modal Logowanie/Rejestracja -->
+
+<!-- Logowanie -->
+<div class="modal fade" id="login" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-header p-2 pb-2 border-bottom-0">
+      </div>
+      <div class="modal-body p-5 pt-0">
+
+        <section class="modal-logowanie">
+          <div class="form-box">
+            <div class="form-value">
+              <form action="">
+                <h2>Logowanie</h2>
+                <div class="inputbox">
+                  <i class="fa-solid fa-envelope"></i>
+                  <input type="email" required>
+                  <label for="">E-mail</label>
+                </div>
+                <div class="inputbox">
+                  <i class="fa-sharp fa-solid fa-lock"></i>
+                  <input type="password" required>
+                  <label for="">Hasło</label>
+                </div>
+                <div class="forget">
+                  <label for="" style = "position: relative; left: -1rem;"><input type="checkbox">Pamiętaj mnie</label>
+                  <a href="" style = "position: relative; left: 1rem;">Zapomniałem hasła</a>
+                </div>
+                <button class="loginBtn">Zaloguj się</button>
+                <div class="register"> 
+                  <p>Nie masz konta? <a href="#" data-bs-toggle="modal" data-bs-target="#register" data-bs-dismiss="modal">Zarejestruj się</a></p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Rejestracja -->
+
+<div class="modal fade" id="register" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-header p-2 pb-2 border-bottom-0">
+      </div>
+      <div class="modal-body p-5 pt-0">
+
+        <section class="modal-logowanie">
+          <div class="form-box">
+            <div class="form-value">
+              <form action="">
+                <h2>Rejestracja</h2>
+                <div class="inputbox">
+                  <i class="fa-solid fa-user"></i>
+                  <input type="email" required>
+                  <label for="">Nazwa użytkownika</label>
+                </div>
+                <div class="inputbox">
+                  <i class="fa-solid fa-envelope"></i>
+                  <input type="email" required>
+                  <label for="">E-mail</label>
+                </div>
+                <div class="inputbox">
+                  <i class="fa-sharp fa-solid fa-lock"></i>
+                  <input type="password" required>
+                  <label for="">Hasło</label>
+                </div>
+                <button class="loginBtn">Zarejestruj się</button>
+                <div class="register"> 
+                  <p>Zakładając konto aceptujesz <a href="">regulamin.</a> </p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  
 <!-- Footer -->
 
 <div class="container">
@@ -111,11 +230,11 @@
       <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
         <li class="ms-3"><a class="text-muted" href="https://www.tiktok.com/@homanszoty"><i class="fab fa-tiktok"></i></a></li>
         <li class="ms-3"><a class="text-muted" href="https://www.twitch.tv/donhoman"><i class="fab fa-twitch"></i></a></li>
-        <li class="ms-3"><a class="text-muted" href="#"><i class="fab fa-twitter"></i></a></li>
+        <li class="ms-3"><a class="text-muted" href="https://discord.com/invite/vFmZkNVYeT"><i class="fab fa-discord"></i></a></li>
+        <li class="ms-3"><a class="text-muted" href="https://www.youtube.com/channel/UCS0avOKrSsiDR6Z805dw33Q/videos"><i class="fab fa-youtube"></i></a></li>
       </ul>
     </footer>
   </div>
-
 
 </body>
 </html>
