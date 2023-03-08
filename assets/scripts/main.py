@@ -119,9 +119,14 @@ class Bot(commands.Bot):
 #wyślij liste komend do zmienne.ini
     def update_komendy(self):
         for command in self.commands.values():
-            print(command.name)
+            if not config.read("zmienne.ini"):
+                open("zmienne.ini","w")
+                print("\nKonfig Pusty, tworze nowy")
+                config.add_section("KOMENDY")
+                print("Stworzono sekcje KOMENDY")
             if not command.name in config["KOMENDY"]:   
                 config['KOMENDY'][command.name] = "0"
+                print(f"Dodaje komendę {command.name}...")
         with open('zmienne.ini', 'w') as plik:
             config.write(plik)
 
