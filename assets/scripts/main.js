@@ -42,12 +42,21 @@ $("#commands-btn").click(function(){
         });
     });
 var i = 0;
-$("input[type=checkbox]").change(function(){
-  console.log("[START] dziala sumbit") // wyjebać
-  $checkboxValues = $("input[type=checkbox]");
-  if ($(this).is(":checked")){
-    console.log("[checkboxy] wykryto zmiane w " + $(this).prop("value")); // wyjebać 
-  }
+$('input[type="checkbox"]').click(function() {
+  var allCheckBoxes = $('input[type="checkbox"]');
+  var serializedCheckBoxes = [];
+  var i = 0;
+  allCheckBoxes.each(function(){
+    if($(this).prop('checked')){
+      //console.log($(this).val() + "=1");
+      serializedCheckBoxes[i] = $(this).val() + " = 1"
+    }else{
+      //console.log($(this).val() + "=0");
+      serializedCheckBoxes[i] = $(this).val() + " = 0"
+    }
+    i++
+  });
+  console.log(serializedCheckBoxes);
 });
 });
 });
