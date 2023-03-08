@@ -17,6 +17,7 @@ function loadconfig(){
             valueVal.push(value);
         }
     });
+
 $("#points-btn").click(function(){
   $("#current-mode").text("Punkty");
   $.post("save.php", { content: "punkty = 1", folder: "data", filename: "data_save.ini" })

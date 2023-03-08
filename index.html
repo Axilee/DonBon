@@ -17,13 +17,12 @@
     <!-- AwesomeFonts -->
     <script src="https://kit.fontawesome.com/bd626f218f.js" crossorigin="anonymous"></script>
 
-
     <!-- Główny JS -->
-    <script src="scripts/app.js"></script>
-    <script src="scripts/main.js"></script>
+    <script src="assets/scripts/app.js"></script>
+    <script src="assets/scripts/main.js"></script>
 
     <!-- Bootstrap JS -->
-    <script src="scripts/bootstrap/bootstrap.min.js"></script>
+    <script src="assets/scripts/bootstrap/bootstrap.min.js"></script>
 
     <!-- JQuery JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -48,7 +47,7 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item active">
-            <a href="#" class="nav-link">Strona Główna</a>
+            <a href="#" class="nav-link active">Strona Główna</a>
             <div class="nav-underline"></div>
           </li>
           <li class="nav-item">
@@ -56,7 +55,7 @@
             <div class="nav-underline"></div>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">Logowanie</a>
+            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#login">Logowanie</a>
             <div class="nav-underline"></div>
           </li>
         </ul>
@@ -99,6 +98,93 @@
   </div>
   
 
+<!-- Modal Logowanie/Rejestracja -->
+
+<!-- Logowanie -->
+<div class="modal fade" id="login" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-header p-2 pb-2 border-bottom-0">
+      </div>
+      <div class="modal-body p-5 pt-0">
+
+        <section class="modal-logowanie">
+          <div class="form-box">
+            <div class="form-value">
+              <form action="">
+                <h2>Logowanie</h2>
+                <div class="inputbox">
+                  <i class="fa-solid fa-envelope"></i>
+                  <input type="email" required>
+                  <label for="">E-mail</label>
+                </div>
+                <div class="inputbox">
+                  <i class="fa-sharp fa-solid fa-lock"></i>
+                  <input type="password" required>
+                  <label for="">Hasło</label>
+                </div>
+                <div class="forget">
+                  <label for="" style = "position: relative; left: -1rem;"><input type="checkbox">Pamiętaj mnie</label>
+                  <a href="" style = "position: relative; left: 1rem;">Zapomniałem hasła</a>
+                </div>
+                <button class="loginBtn">Zaloguj się</button>
+                <div class="register"> 
+                  <p>Nie masz konta? <a href="#" data-bs-toggle="modal" data-bs-target="#register" data-bs-dismiss="modal">Zarejestruj się</a></p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Rejestracja -->
+
+<div class="modal fade" id="register" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-header p-2 pb-2 border-bottom-0">
+      </div>
+      <div class="modal-body p-5 pt-0">
+
+        <section class="modal-logowanie">
+          <div class="form-box">
+            <div class="form-value">
+              <form action="">
+                <h2>Rejestracja</h2>
+                <div class="inputbox">
+                  <i class="fa-solid fa-user"></i>
+                  <input type="email" required>
+                  <label for="">Nazwa użytkownika</label>
+                </div>
+                <div class="inputbox">
+                  <i class="fa-solid fa-envelope"></i>
+                  <input type="email" required>
+                  <label for="">E-mail</label>
+                </div>
+                <div class="inputbox">
+                  <i class="fa-sharp fa-solid fa-lock"></i>
+                  <input type="password" required>
+                  <label for="">Hasło</label>
+                </div>
+                <button class="loginBtn">Zarejestruj się</button>
+                <div class="register"> 
+                  <p>Zakładając konto aceptujesz <a href="">regulamin.</a> </p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  
 <!-- Footer -->
 
 <div class="container">
@@ -118,7 +204,7 @@
     </footer>
   </div>
 
-
+ 
 
 </body>
 </html>
