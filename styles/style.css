@@ -1,90 +1,40 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
 
 html, body {
   height: 100%;
   width: 100%;
   font-family: 'Poppins', sans-serif;
   color: #222;
+  
 }
-
-.navbar {
-  padding: .8rem;
-}
-
-.navbar-nav li {
-  padding-right: 20px;
-}
-
-.nav-link {
-  font-size: 1.1em !important;
-}
-
-.carousel-inner img {
-  width: 100%;
-  height: 100%;
-}
-
-.carousel-caption {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-30%);
-}
-
-.carousel-caption h1 {
-  font-size: 500%;
-  text-transform: uppercase;
-  text-shadow: 1px 1px 15px #000;
-}
-
-.carousel-caption h3 {
-  font-size: 200%;
-  font-weight: 500;
-  text-shadow: 1px 1px 10px #000;
-  padding-bottom: 1rem;
-}
-
-.jumbotron {
-  padding: 1rem;
-  border-radius: 0;
-  background-color: #E7E9ED;
-}
-
 
 #btnMode {
   margin-top: 50px;
 }
 
 
-hr {
-  border: none;
-  border-top: 1px solid #ccc;
-}
-
-
   /*--------------------------------------------------------------
-  # Okrągłe buttony
-  --------------------------------------------------------------*/
-  .rounded-button {
-    width: 35px;
-    height: 35px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border-radius: 50%;
-    border: none;
-    text-decoration: none;
-  }
-  .rounded-button:hover {
-    background-color: #f9f9f9;
-  }
-
-  /*--------------------------------------------------------------
-  # Navbar animacja
+  # Navbar
   --------------------------------------------------------------*/
 
-
+  .navbar {
+    padding: .8rem;
+  }
+  
+  .navbar-nav li {
+    padding-right: 20px;
+  }
+  
+  .nav-link {
+    font-size: 1.1em !important;
+  }
   
   .navbar-brand .watermark {
     font-size: 2rem;
@@ -131,7 +81,31 @@ hr {
     transform: scaleX(0);
   }
 
+  .navigation .btnLogin-popup {
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid #fff;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #fff;
+    font-weight: 500;
+    margin-left: 40px;
+    transition: .5s;
+  }
+  
+  .navigation .btnLogin-popup:hover {
+    background: #fff;
+    color: #162938;
+  }
 
+
+  
+  
+
+  
 
 
 
@@ -219,34 +193,6 @@ Extra (xl) large devices (large desktops, 1200px and up)
 
 
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-
-
-
-.navigation .btnLogin-popup {
-  width: 130px;
-  height: 50px;
-  background: transparent;
-  border: 2px solid #fff;
-  outline: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1.1em;
-  color: #fff;
-  font-weight: 500;
-  margin-left: 40px;
-  transition: .5s;
-}
-
-.navigation .btnLogin-popup:hover {
-  background: #fff;
-  color: #162938;
-}
 
 
 
