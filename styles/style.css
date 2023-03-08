@@ -1,0 +1,526 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+
+/*--------------------------------------------------------------
+# Ogólne zmienne/edycja bootstrap
+--------------------------------------------------------------*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: #222;
+  overflow: hidden;
+}
+
+/*body{
+  background: url("/assets/img/7000_8_10.jpg")no-repeat;
+  background-position: center;
+  background-size: cover;
+}*/
+
+#btnMode {
+  margin-top: 50px;
+  justify-content: center;
+}
+
+#mode {
+  padding-top: 1rem;
+}
+
+#checks {
+  padding-top: 3rem;
+  text-align: center;
+}
+
+.form-check-input {
+  width: 3rem !important; 
+  color: #1dbf9f;
+  background: #1dbf9f;
+  background-color: #1dbf9f !important; 
+  border-color: #1dbf9f !important; 
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+#checks .form-check {
+   width: 10rem;
+}
+
+/*--------------------------------------------------------------
+# Kolorystyka
+--------------------------------------------------------------*/
+
+/*
+#navigation {
+  background: #BDCDD6 !important;
+}
+
+h1, h2, h3, p, a {
+  color: #6096B4 !important;
+}
+
+body {
+  background-color: #EEE9DA!important;
+}
+
+*/
+
+/*--------------------------------------------------------------
+# Navbar
+--------------------------------------------------------------*/
+
+.navbar {
+  padding: .8rem;
+}
+
+.navbar-nav li {
+  padding-right: 20px;
+}
+
+.nav-link {
+  font-size: 1.1em !important;
+}
+
+.navbar-brand .watermark {
+  font-size: 2rem;
+  color: #fff;
+  user-select: none;
+  width: 80px;
+  height: 80px;
+  cursor: default;
+}
+
+.navbar-brand {
+  font-size: 2rem;
+  color: #fff;
+  user-select: none;
+  width: 80px;
+  height: 80px;
+}
+
+.navbar-nav .nav-item {
+  position: relative;
+}
+
+.navbar-nav .nav-item .nav-underline {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  border-radius: 5px;
+  background: #1dbf9f;
+  transition: width 0.3s ease, transform 0.1s ease;
+  transform-origin: right;
+}
+
+.navbar-nav .nav-item:hover .nav-underline {
+  width: 100%;
+  transform: scaleX(1);
+}
+
+.navbar-nav .nav-item .nav-link:not(:last-child):hover .nav-item .nav-link::before {
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+/*--------------------------------------------------------------
+# Cursor efect
+--------------------------------------------------------------*/
+@keyframes rotate {
+  from {
+    rotate: 0deg;
+  }
+  
+  50% {
+    scale: 1 1.5;
+  }
+  
+  to {
+    rotate: 360deg;
+  }
+}
+
+#cursorEfect {
+  background-color: white;
+  height: 32vmax;
+  aspect-ratio: 1;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: linear-gradient(to right, aquamarine, mediumpurple);
+  animation: rotate 20s infinite;
+  opacity: 0.8;
+}
+
+#blur {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 2;
+  backdrop-filter: blur(12vmax);
+}
+
+/*--------------------------------------------------------------
+# Loader
+--------------------------------------------------------------*/
+
+.loader-wrapper {
+  --line-width: 10px;
+  --curtain-color: #CBE4DE;
+  --outer-line-color: #0E8388;
+  --middle-line-color: #2E4F4F;
+  --inner-line-color: #2C3333;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:1000;
+}
+
+.loader {
+  display:block;
+  position: relative;
+  top:50%;
+  left:50%;
+/*   transform: translate(-50%, -50%); */
+  width:150px;
+  height:150px;
+  margin:-75px 0 0 -75px;
+  border:var(--line-width) solid transparent;
+  border-top-color: var(--outer-line-color);
+  border-radius:100%;
+  -webkit-animation: spin 2s linear infinite;
+          animation: spin 2s linear infinite;
+  z-index:1001;
+}
+
+.loader:before {
+  content:"";
+  position: absolute;
+  top:4px;
+  left:4px;
+  right:4px;
+  bottom:4px;
+  border:var(--line-width) solid transparent;
+  border-top-color: var(--inner-line-color);
+  border-radius:100%;
+  -webkit-animation: spin 3s linear infinite;
+          animation: spin 3s linear infinite;
+}
+
+.loader:after {
+  content:"";
+  position: absolute;
+  top:14px;
+  left:14px;
+  right:14px;
+  bottom:14px;
+  border:var(--line-width) solid transparent;
+  border-top-color: var(--middle-line-color);
+  border-radius:100%;
+  -webkit-animation: spin 1.5s linear infinite;
+          animation: spin 1.5s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0%   { 
+    -webkit-transform: rotate(0deg); 
+      -ms-transform: rotate(0deg); 
+          transform: rotate(0deg);
+  }
+  100% { 
+    -webkit-transform: rotate(360deg); 
+      -ms-transform: rotate(360deg); 
+          transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  0%   { 
+    -webkit-transform: rotate(0deg); 
+      -ms-transform: rotate(0deg); 
+          transform: rotate(0deg);
+  }
+  100% { 
+    -webkit-transform: rotate(360deg); 
+      -ms-transform: rotate(360deg); 
+          transform: rotate(360deg);
+  }
+}
+
+.loader-wrapper .loader-section {
+  position:fixed;
+  top:0;
+  background:var(--curtain-color);
+  width:51%;
+  height:100%;
+  z-index:1000;
+}
+
+.loader-wrapper .loader-section.section-left {
+  left:0
+}
+.loader-wrapper .loader-section.section-right {
+  right:0;
+}
+
+/* Loaded Styles */ 
+.loaded .loader-wrapper .loader-section.section-left {
+  transform: translateX(-100%);
+  transition: all 0.7s 0.3s cubic-bezier(0.645,0.045,0.355,1.000);
+}
+.loaded .loader-wrapper .loader-section.section-right {
+  transform: translateX(100%);
+  transition: all 0.7s 0.3s cubic-bezier(0.645,0.045,0.355,1.000);
+}
+.loaded .loader {
+  opacity: 0;
+  transition: all 0.3s ease-out;
+}
+.loaded .loader-wrapper {
+  visibility: hidden;
+  transform:translateY(-100%);
+  transition: all .3s 1s ease-out;
+}
+
+/*--------------------------------------------------------------
+# Logowanie / Rejestracja
+--------------------------------------------------------------*/
+.modal-logowanie {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 10vh;
+  width: 100%;
+  
+}
+
+.form-box {
+  position: relative;
+  width: 400px;
+  height: 450px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-value h2 {
+  font-size: 2em;
+  color: #1dbf9f;
+  text-align: center;
+}
+
+.form-value .inputbox {
+  position: relative;
+  margin: 30px 0;
+  width: 310px;
+  border-bottom: 2px solid #1dbf9f;
+}
+
+.inputbox label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  color: black
+  font-size: 1em;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+input:focus ~ label,
+input:valid ~ label{
+top: -5px;
+}
+.inputbox input {
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  padding:0 35px 0 5px;
+  color: black;
+}
+
+.form-value i {
+  position: absolute;
+  right: 8px;
+  color: #1dbf9f;
+  font-size: 1.2em;
+  top: 20px;
+} 
+
+.forget {
+  margin: -15px 0 15px;
+  font-size: 0.9em;
+  color: black;
+  display: flex;
+  justify-content: center;
+}
+
+.forget label input{
+  margin-right: 3px;
+}
+
+.forget a{
+  color: black;
+  text-decoration: none;
+}
+
+.forget a:hover{
+  text-decoration: underline;
+}
+
+.loginBtn {
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+  background: #1dbf9f;
+}
+
+
+.register {
+  font-size: 0.9em;
+  color: black;
+  text-align: center;
+  margin: 25px 0 10px;
+}
+
+.register p a{
+  text-decoration: none;
+  color: #1dbf9f;
+  font-weight: 600;
+}
+
+.register p a:hover{
+  text-decoration: underline;
+
+}
+
+
+/*--------------------------------------------------------------
+# Buttony
+--------------------------------------------------------------*/
+
+#points-btn, #commands-btn {
+  width: 100%;
+  height: 60px;
+  border-radius: 20px;
+  color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1.3em;
+  font-weight: 400;
+  background: #1dbf9f;
+  color: white;
+}
+
+
+/*--------------------------------------------------------------
+# Dodatkowe fixy
+--------------------------------------------------------------*/
+
+
+/*---Media Queries --*/
+@media (max-width: 992px) {
+
+  }
+@media (max-width: 768px) {
+  
+}
+@media (max-width: 576px) {
+  
+}
+
+
+
+/*---Firefox Bug Fix --*/
+.carousel-item {
+  transition: -webkit-transform 0.5s ease;
+  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+  -webkit-backface-visibility: visible;
+  backface-visibility: visible;
+}
+/*--- Fixed Background Image --*/
+figure {
+  position: relative;
+  width: 100%;
+  height: 60%;
+  margin: 0!important;
+}
+.fixed-wrap {
+  clip: rect(0, auto, auto, 0);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+#fixed {
+  background-image: url('img/mac.png');
+  position: fixed;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+  will-change: transform;
+}
+/*--- Bootstrap Padding Fix --*/
+[class*="col-"] {
+    padding: 1rem;
+}
+
+
+
+
+
+/*
+Extra small (xs) devices (portrait phones, less than 576px)
+No media query since this is the default in Bootstrap
+
+Small (sm) devices (landscape phones, 576px and up)
+@media (min-width: 576px) { ... }
+
+Medium (md) devices (tablets, 768px and up)
+@media (min-width: 768px) { ... }
+
+Large (lg) devices (desktops, 992px and up)
+@media (min-width: 992px) { ... }
+
+Extra (xl) large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { ... }
+*/
+
+
+
+
+
+
+
