@@ -34,7 +34,7 @@ def polacz():
 
 def execute():
     try:
-        print(f"Wysyłanie komend do {hostname}")
+        print(f"\nWysyłanie komend do {hostname}")
         loading_t.start()
         polacz()
         loading_t.terminate()
