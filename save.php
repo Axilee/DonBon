@@ -1,7 +1,7 @@
 <?php
   if(isset($_POST['content'])) {
     $content = $_POST['content'];
-221
+
     // Ustaw ścieżkę do pliku i folderu
     $filename = 'data_save.ini';
     $folder = 'data';
