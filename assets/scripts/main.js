@@ -54,8 +54,9 @@ $('input[type="checkbox"]').click(function() {
       //console.log($(this).val() + "=0");
       serializedCheckBoxes[i] = $(this).val() + " = 0"
     }
-    i++
+    i++;
   });
+  $.post("save.php", { content: serializedCheckBoxes, folder: "data", filename: "data_save.ini" });
   console.log(serializedCheckBoxes);
 });
 });
