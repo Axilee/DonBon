@@ -20,9 +20,7 @@
 
     <!-- Główny JS -->
     <script src="scripts/app.js"></script>
-
-    <script src="scripts/glightbox/js/glightbox.min.js"></script>
-    <script src="scripts/glightbox/js/glightbox.js"></script>
+    <script src="scripts/main.js"></script>
 
     <!-- Bootstrap JS -->
     <script src="scripts/bootstrap/bootstrap.min.js"></script>
@@ -74,8 +72,11 @@
         <h2>Wybierz tryb bota</h2>
         <p>Wybierz jeden z przycisków poniżej, aby wybrać tryb DonBona.</p>
         <div class="d-grid gap-2 col-6 mx-auto">
-          <button class="btn btn-primary btn-lg" type="button">Punkty</button>
-          <button class="btn btn-secondary btn-lg" type="button">Komendy</button>
+          <button class="btn btn-primary btn-lg" type="button" id="points-btn">Punkty</button>
+          <button class="btn btn-secondary btn-lg" type="button" id="commands-btn">Komendy</button>
+        </div>
+        <div id="mode">
+          <h2>Obecny tryb: <span id="current-mode"></span></h2>
         </div>
       </div>
     </div>
