@@ -21,9 +21,9 @@ wsh = comclt.Dispatch("WScript.Shell")
 ap = comclt.Dispatch("Shell.Application")
 
 #dane połączenia
-ACCESS_TOKEN = 'mdigv4lzgkn7durd4ww44812riy6dk'
+ACCESS_TOKEN = 'u52hgntzrfokb7bgoa24gub1l5ghf6'
 PREFIX = "$"
-INITIAL_CHANNELS=["AxileBot"]
+INITIAL_CHANNELS=["Aaxile","AxileBot"]
 
 #wczytaj konfig zmienne.ini
 config = configparser.ConfigParser()
@@ -129,21 +129,7 @@ class Bot(commands.Bot):
         with open('zmienne.ini', 'w') as plik:
             config.write(plik)
 
-@Bot.event
-async def cheer(ctx):
-    bits = ctx.bits
-    print("BEBEBEBBEBEBEBE WORKING BITS")
-    await ctx.send("bits test")
-    
-
-#async def main():
-  #  ps = twitchio.AsyncIOMain()
- #   pubsub = ps.pubsub
-#
- #   topic = f"chat_messages.{ps.nick}.{ps.channel}"
-#    await pubsub.listen(topic, wiadomosc)
-    
- #   await ps.start()
+client = twitchio.Client(token=ACCESS_TOKEN)
 
 
 
