@@ -8,7 +8,7 @@ def getOAuth(service_name,client_id,link,redirect_uri):
     if(service_name == "twitch"):
         print("TWITCH")
         client_uri = f"authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&scope="
-        with open("permisjeDoLinku") as permisje:
+        with open("permisjeDoLinku", "r") as permisje:
             linie = permisje.readlines()
             for l in linie:
                 l = l.replace(":","%3A")
@@ -19,7 +19,7 @@ def getOAuth(service_name,client_id,link,redirect_uri):
     elif(service_name =="spotify"):
         print("SPOTIFY")
         client_uri = f"authorize?client_id={client_id}&response_type=code&redirect_uri={redirect_uri}&scope="
-        with open("permisjeDoLinkuSpotify") as permisje:
+        with open("permisjeDoLinkuSpotify","r") as permisje:
             linie = permisje.readlines()
             for l in linie:
                 l = l.replace(":","%3A")

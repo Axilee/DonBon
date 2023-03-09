@@ -1,7 +1,7 @@
 from flask import Flask, request
 from urllib.parse import urlencode
 import requests
-import generateOauthUnified #TYMCZASOWE - zeby sie odpalało przy właczeniu 'python webhook.py'
+import AuthorizationOauth2 #TYMCZASOWE - zeby sie odpalało przy właczeniu 'python webhook.py'
 import base64
 
 app = Flask(__name__)
@@ -13,7 +13,6 @@ def flaskAppWebhook(service_name,client_id,client_secret,redirect_uri):
     base64_bytes = base64.b64encode(sample_string_bytes)
     base64_string = base64_bytes.decode("ascii")
 
-    #generateOauthUnified.getOAuth("spotify","4ea71c707b2b4345b495f5edbba034a0","https://accounts.spotify.com/","http%3A%2F%2Flocalhost%3A5000%2Fcallback")
     @app.route('/', methods=['GET'])
     def handle_webhook():
 
@@ -24,7 +23,7 @@ def flaskAppWebhook(service_name,client_id,client_secret,redirect_uri):
             access_token = json.get('access_token')
             print(access_token)
             return f"<H1 style='font-size:5em'>TOKEN ODEBRANY WOOHOO<br><br>TOKEN: {access_token}<br> WYGASA ZA: {round(json.get('expires_in')/60,1)}min<br>REFRESH TOKEN: {json.get('refresh_token')}"
-
+            return access_token
     @app.route('/callback', methods=['GET'])
     def handle_callback():
 
@@ -74,16 +73,3 @@ def flaskAppWebhook(service_name,client_id,client_secret,redirect_uri):
         return json #wysyla json do handle_webhook
     return app
 
-#init
-#if __name__ == '__main__':
-#    app.run(host='0.0.0.0', port=5000)
-
-
-    
-# przyklad parametrow linka do wyslania postem, zeby kodem odebrac auth token 
-
-# client_id=hof5gwx0su6owfnys0yan9c87zr6t
-# &client_secret=41vpdji4e9gif29md0ouet6fktd2
-# &code=gulfwdmys5lsm6qyz4xiz9q32l10
-# &grant_type=authorization_code
-# &redirect_uri=http://localhost:3000

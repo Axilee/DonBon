@@ -1,6 +1,6 @@
-import generateOauthUnified
-import webhookUnified
-from webhookUnified import flaskAppWebhook
+import AuthorizationOauth2
+import webhook
+from webhook import flaskAppWebhook
 import urllib.parse
 def test():
     service_name = "spotify"
@@ -10,10 +10,10 @@ def test():
     redirect_uri = 'http://localhost:5000/callback'
     if(service_name == "spotify"):
         redirect_parsed_uri = urllib.parse.quote(redirect_uri, safe="")
-        oAuth = generateOauthUnified.getOAuth(service_name,client_id,uri,redirect_parsed_uri)
+        oAuth = AuthorizationOauth2.getOAuth(service_name,client_id,uri,redirect_parsed_uri)
     elif(service_name == "twitch"):
-        oAuth = generateOauthUnified.getOAuth(service_name,client_id,uri,redirect_parsed_uri)
-app = flaskAppWebhook(service_name,client_id,client_secret,redirect_uri)
-
-if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+        oAuth = AuthorizationOauth2.getOAuth(service_name,client_id,uri,redirect_parsed_uri)
+    app = flaskAppWebhook(service_name,client_id,client_secret,redirect_uri)
+    if __name__ == '__main__':
+        app.run(host="0.0.0.0", port=5000)
+test()
