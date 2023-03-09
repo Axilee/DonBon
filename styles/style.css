@@ -1,5 +1,38 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
+:root[data-theme="light"] {
+
+
+  --page-bg: #fff;
+  --muted-text: #b1b0b5;
+
+  --switch-bg: #1dbf9f;
+  --switch-circle-bg: #FFD371;
+  --switch-circle-pos: 0.11rem;
+  --icon-sun: #997f44;
+  --icon-moon: var(--muted-text);
+  --icon-size: 1.2rem;
+
+}
+
+:root[data-theme="dark"] {
+  --page-bg: #3C3A47;
+  --muted-text: #77757E;
+
+  --switch-bg: #2D2C35;
+  --switch-circle-bg: #7190FF;
+  --switch-circle-pos: 2.06rem;
+  --icon-sun: var(--muted-text);
+  --icon-moon: #dce3ff;
+
+
+  --default-border-radius: 8px;
+  --default-transition: color .3s ease-in-out, background-color .3s ease-in-out, border-color .3s ease-in-out, fill .3s
+  ease-in-out, transform 0.3s ease-in-out;
+}
+
+
+
 /*--------------------------------------------------------------
 # Ogólne zmienne/edycja bootstrap
 --------------------------------------------------------------*/
@@ -400,8 +433,47 @@ top: -5px;
 /*--------------------------------------------------------------
 # Dark mode button
 --------------------------------------------------------------*/
+#theme-switcher {
+  background-color: var(--switch-bg);
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 1.33rem;
+  cursor: pointer;
+  padding: 0.66rem;
+  position: relative;
+  width: 70px;
+  height: 40px;
+  transition: var(--default-transition);
+}
 
+#theme-switcher::before {
+  content: '';
+  position: absolute;
+  width: 2.22rem;
+  height: 2.22rem;
+  background-color: var(--switch-circle-bg);
+  border-radius: 50px;
+  z-index: 0;
+  left: 0;
+  transform: translateX(var(--switch-circle-pos));
+  transition: var(--default-transition);
+}
 
+#theme-switcher svg{
+  z-index: 1;
+}
+
+#icon-sun {
+  fill: var(--icon-sun);
+  color: var(--icon-sun);
+}
+
+#icon-moon {
+  fill: var(--icon-moon);
+  color: var(--icon-moon);
+  font-size: var(--icon-size);
+}
 
 /*--------------------------------------------------------------
 # Dodatkowe fixy

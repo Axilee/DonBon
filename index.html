@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <base href="#">
     <title>Hoeman Bot</title>
 
     <!--===== Importy =====-->
@@ -18,7 +20,6 @@
     <script src="https://kit.fontawesome.com/bd626f218f.js" crossorigin="anonymous"></script>
 
     <!-- Główny JS -->
-    <script src="assets/scripts/app.js"></script>
     <script src="assets/scripts/main.js"></script>
 
     <!-- Bootstrap JS -->
@@ -30,10 +31,9 @@
     <!-- Popper -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     
-
 </head>
 <body onload="loadconfig()">
-  
+
 <!-- Loader strony -->  
 <div class="loader-wrapper">
   <div class="loader">
@@ -65,7 +65,13 @@
             <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#login">Logowanie</a>
             <div class="nav-underline"></div>
           </li>
+          <li class="nav-item-switch">
+            <div id="theme-switcher">
+ 
+            </div>
 
+          </li>
+         
         </ul>
       </div>
     </div>
@@ -231,6 +237,9 @@
       </ul>
     </footer>
   </div>
+
+<!-- JS aplikacji WEB -->
+<script src="assets/scripts/app.js"></script>
 
 </body>
 </html>
