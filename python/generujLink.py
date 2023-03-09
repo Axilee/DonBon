@@ -1,7 +1,7 @@
 import webbrowser
-from main import ACCESS_TOKEN
+#from main import ACCESS_TOKEN
 #do zmiany na publiczny adres redirect po autoryzacji, tam wysyla sie token oauth2 (narazie jest w linku po prostu XD)
-redirect_uri="http://localhost"
+redirect_uri="http://localhost:5000"
 
 
 

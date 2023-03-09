@@ -3,7 +3,6 @@ import time
 import asyncio
 from datetime import datetime
 from twitchio.ext import commands
-from twitchio.ext import pubsub
 from twitchio import Message
 import twitchio
 import win32com.client as comclt
@@ -11,7 +10,7 @@ import win32api
 import win32con
 import configparser
 import ssh
-import multiprocessing 
+from SpotifyGrapper import getCurrentlyPlaying
 
 
 
@@ -44,17 +43,15 @@ class Bot(commands.Bot):
     async def event_ready(self):
         print(f'Zalogowano jako {self.nick}')
         print(f'user ID {self.user_id}')
+        
 #powitanie po właczeniu i wejsciu na kanał
     async def event_channel_joined(self,channel):    
         await channel.send(f"Bążur @{channel.name}!")
+
 #logowanie eventu dołączania viewerów (wtf)
     async def event_join(self,channel,user):
         with open("viewers.log","a") as log:
             log.write(f"{datetime.now()} Stream @{channel.name} User: {user.name}\n")
-#debug event na wiadomosc 
-    #async def event_message(self, message: Message):
-    #    if not message.author is None:
-    #        await message.channel.send("Wiad")
     @commands.command(name = "drop")
     async def drop(self, ctx: commands.Context):
         await ctx.send(f'{ctx.author.name} wyrzucił broń LUL')
@@ -113,8 +110,7 @@ class Bot(commands.Bot):
         s = ctx.message.content
         s = s.replace("$skill ", "")
         wsh.SendKeys(s)
-    
-   
+
 
 #wyślij liste komend do zmienne.ini
     def update_komendy(self):
@@ -132,13 +128,7 @@ class Bot(commands.Bot):
 
 
 
-
-
-
-
-
-
-
+#inicjalizacja komendą python main.py
 if __name__ == "__main__":
     bot = Bot()
     bot.update_komendy()
