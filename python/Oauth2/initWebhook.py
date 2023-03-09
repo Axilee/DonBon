@@ -11,8 +11,9 @@ def test():
     if(service_name == "spotify"):
         redirect_parsed_uri = urllib.parse.quote(redirect_uri, safe="")
         oAuth = generateOauthUnified.getOAuth(service_name,client_id,uri,redirect_parsed_uri)
+    elif(service_name == "twitch"):
+        oAuth = generateOauthUnified.getOAuth(service_name,client_id,uri,redirect_parsed_uri)
+app = flaskAppWebhook(service_name,client_id,client_secret,redirect_uri)
 
-    app = flaskAppWebhook(service_name,client_id,client_secret,redirect_uri)
-
-    if __name__ == '__main__':
-        app.run(host="0.0.0.0", port=5000)
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=5000)
