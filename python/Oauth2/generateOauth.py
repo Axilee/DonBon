@@ -2,6 +2,7 @@ import webbrowser
 #from main import ACCESS_TOKEN
 #do zmiany na publiczny adres redirect po autoryzacji, tam wysyla sie token oauth2 (narazie jest w linku po prostu XD)
 #budujemy webook w flasku po to zeby callback pobierac z clienta a nie z serwera, jak zrobimy z serwera to potem bedzie trzeba to do klienta jakos wyslac bez sensu
+
 redirect_uri="http://localhost:5000"
 
 
