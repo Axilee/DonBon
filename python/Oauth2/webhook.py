@@ -29,6 +29,7 @@ def send(code):
 
     #wyślij POST z kodem, zwraca access token
     odp = requests.post(uri, data = dane, headers = headers) 
+    print(requests.post(uri, data = dane, headers = headers))
     json = odp.json()
     print("WYSŁANO POST\n")
     print(f"KOD ODPOWIEDZI: {odp.status_code}")

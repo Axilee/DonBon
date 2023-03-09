@@ -11,7 +11,11 @@ import win32con
 import configparser
 import ssh
 from SpotifyGrapper import getCurrentlyPlaying
-
+import Oauth2.generateOauthUnified
+import Oauth2.webhookUnified
+from Oauth2.webhookUnified import flaskAppWebhook
+import Oauth2.initWebhook
+import urllib.parse
 
 
 
@@ -125,7 +129,9 @@ class Bot(commands.Bot):
                 print(f"Dodaje komendę {command.name}...")
         with open('zmienne.ini', 'w') as plik:
             config.write(plik)
-
+    def info(self):
+        id = Bot.user_id
+        print(id)
 
 
 #inicjalizacja komendą python main.py
@@ -133,6 +139,7 @@ if __name__ == "__main__":
     bot = Bot()
     bot.update_komendy()
     ssh.execute()
+    bot.info()
     print(f"\n\n\bLogowanie do kanalu {INITIAL_CHANNELS[0]}...")
     bot.run()
     
