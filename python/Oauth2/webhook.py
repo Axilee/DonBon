@@ -1,14 +1,15 @@
 from flask import Flask, request
 from urllib.parse import urlencode
 import requests
-import AuthorizationOauth2 #TYMCZASOWE - zeby sie odpalało przy właczeniu 'python webhook.py'
+#import AuthorizationOauth2 #TYMCZASOWE - zeby sie odpalało przy właczeniu 'python webhook.py'
 import base64
 import time
+import asyncio
 
 start_time = time.time()
 
 app = Flask(__name__)
-def flaskAppWebhook(service_name,client_id,client_secret,redirect_uri):
+async def flaskAppWebhook(service_name,client_id,client_secret,redirect_uri):
 
     client_encoded = client_id + ":" + client_secret
     sample_string_bytes = client_encoded.encode("ascii")

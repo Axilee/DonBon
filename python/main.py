@@ -11,13 +11,8 @@ import win32con
 import configparser
 import ssh
 from SpotifyGrapper import getCurrentlyPlaying
-import Oauth2.generateOauthUnified
-import Oauth2.webhookUnified
-from Oauth2.webhookUnified import flaskAppWebhook
-import Oauth2.initWebhook
 import urllib.parse
-
-
+from Oauth2 import initWebhook
 
 
 
@@ -42,11 +37,14 @@ def sprawdz(typ,nazwa):
 class Bot(commands.Bot):
 #logowanie do IRC    
     def __init__(self):
-        super().__init__(token=ACCESS_TOKEN, prefix = PREFIX, initial_channels=INITIAL_CHANNELS)    
+        super().__init__(token=ACCESS_TOKEN, prefix = PREFIX, initial_channels=INITIAL_CHANNELS)  
+        
 
     async def event_ready(self):
         print(f'Zalogowano jako {self.nick}')
         print(f'user ID {self.user_id}')
+        print(" AUTH \n\n")
+        await initWebhook.inicjalizuj.wybor()  
         
 #powitanie po właczeniu i wejsciu na kanał
     async def event_channel_joined(self,channel):    
