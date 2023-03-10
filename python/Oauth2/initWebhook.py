@@ -4,6 +4,8 @@ import urllib.parse
 import configparser
 import tkinter as tk
 import multiprocessing
+import os
+from PIL import ImageTk, Image #pip install pillow
 #global config load
 config = configparser.ConfigParser()
 dane = config.read("identity.ini")
@@ -29,12 +31,19 @@ class inicjalizuj():
             redirect_parsed_uri = urllib.parse.quote(c['redirect_uri'], safe="")
             oAuth = AuthorizationOauth2.getOAuth('spotify',c['client_id'],c['uri'],redirect_parsed_uri)
         okno = tk.Tk()
-        okno.geometry('1280x300')
+        okno.geometry('804x410')
         okno.title('Autoryzacja')
-        btntw = tk.Button(okno, text="Twitch", command=btn_tw, font="'Arial', 72")
-        btnsp = tk.Button(okno, text="Spotify", command=btn_sp, font="'Arial', 72")
-        btntw.place(x=10,y=50, width=640, height=200)
-        btnsp.place(x=660,y=50,width=640, height=200)
+        okno.configure(bg="#1c1b22")
+        imgtw = Image.open("./ikonki/twitch.png")
+        imgsp = Image.open("./ikonki/spotify.png")
+        resizedtw = imgtw.resize((400,400),Image.LANCZOS)
+        resizedsp = imgsp.resize((400,400),Image.LANCZOS)
+        twico = ImageTk.PhotoImage(resizedtw)
+        spico = ImageTk.PhotoImage(resizedsp)
+        btntw = tk.Button(okno,bd=0, command=btn_tw,image=twico, bg="#1c1b22")
+        btnsp = tk.Button(okno,bd=0, command=btn_sp,image=spico, bg="#1c1b22")
+        btntw.grid(row=0,column=0)
+        btnsp.grid(row=0,column=1)
         okno.mainloop()
     # app = webhook.flaskAppWebhook(service_name,client_id,client_secret,redirect_uri)
     # if __name__ == '__main__':
