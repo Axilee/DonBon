@@ -14,8 +14,6 @@
 
 Projekt tworzny przez 3 osoby, bez celu, planu i nadzieji na koniec.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 <!-- GETTING STARTED -->
 ## Instrukcje instalacji:
 
@@ -33,9 +31,3 @@ This is an example of how to list things you need to use the software and how to
    
 <!-- LICENSE -->
 ## License
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
