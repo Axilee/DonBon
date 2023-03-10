@@ -1,0 +1,5 @@
+chat:read
+bits:read
+channel:read:polls
+channel:read:redemptions
+channel:read:subscriptions

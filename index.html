@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <base href="#">
     <title>Hoeman Bot</title>
 
     <!--===== Importy =====-->
@@ -18,7 +20,6 @@
     <script src="https://kit.fontawesome.com/bd626f218f.js" crossorigin="anonymous"></script>
 
     <!-- Główny JS -->
-    <script src="assets/scripts/app.js"></script>
     <script src="assets/scripts/main.js"></script>
 
     <!-- Bootstrap JS -->
@@ -30,12 +31,8 @@
     <!-- Popper -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     
-
-
 </head>
-
-<body onload="loadconfig();">
-
+<body onload="loadconfig()">
 
 <!-- Loader strony -->  
 <div class="loader-wrapper">
@@ -45,15 +42,12 @@
   <div class="loader-section section-right"></div>
 </div>
 
-
 <!-- Navbar -->
 
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" id="navigation">
 
     <div class="container-fluid">
-
       <a href="#" class="navbar-brand"><img src="assets/img/logo.png" class="watermark"> Hoeman</a>
-
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -64,35 +58,24 @@
             <div class="nav-underline"></div>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">Funkcje</a>
+            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#function">Funkcje</a>
             <div class="nav-underline"></div>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#login">Logowanie</a>
             <div class="nav-underline"></div>
           </li>
+          <li class="nav-item-switch">
+            <div id="theme-switcher">
+ 
+            </div>
+
+          </li>
+         
         </ul>
       </div>
     </div>
   </nav>
-
-
-<!-- Buttony dla bota -->
-<div class="container" id="btnMode">
-    <div class="row">
-      <div class="col-md-8 offset-md-2 text-center">
-        <h2>Wybierz tryb bota</h2>
-        <p>Wybierz jeden z przycisków poniżej, aby wybrać tryb DonBona.</p>
-        <div class="d-grid gap-2 col-6 mx-auto">
-          <button class="btn btn-primary btn-lg" type="button" id="points-btn">Punkty</button>
-          <button class="btn btn-primary btn-lg" type="button" id="commands-btn">Komendy</button>
-        </div>
-        <div id="mode">
-          <h2>Obecny tryb: <span id="current-mode"></span></h2>
-        </div>
-      </div>
-    </div>
-  </div>
 
 <!-- Sekcja z checkami -->
 
@@ -106,8 +89,8 @@
           <!--<input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
           <label class="form-check-label" for="flexSwitchCheckChecked">command</label>-->
           </form>
-          <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-          <label class="form-check-label" for="flexSwitchCheckChecked" >command</label>
+          <!--<input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+          <label class="form-check-label" for="flexSwitchCheckChecked" >command</label>-->
         </div>
       </div>
       <div class="col-sm-12 col-md-6">
@@ -165,6 +148,7 @@
     </div>
   </div>
 </div>
+
 <!-- Rejestracja -->
 
 <div class="modal fade" id="register" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
@@ -181,7 +165,7 @@
                 <h2>Rejestracja</h2>
                 <div class="inputbox">
                   <i class="fa-solid fa-user"></i>
-                  <input type="email" required>
+                  <input type="username" required>
                   <label for="">Nazwa użytkownika</label>
                 </div>
                 <div class="inputbox">
@@ -198,6 +182,9 @@
                 <div class="register"> 
                   <p>Zakładając konto aceptujesz <a href="">regulamin.</a> </p>
                 </div>
+                <div class="haveAccount"> 
+                  <p>Posiadasz już konto? <a href="#" data-bs-toggle="modal" data-bs-target="#login" data-bs-dismiss="modal">Zaloguj się</a></p>
+                </div>
               </form>
             </div>
           </div>
@@ -209,8 +196,28 @@
 </div>
 
 
+<!-- Modal Funkcje -->
+<div class="modal fade" id="function" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
 
-  
+      <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-3 shadow">
+          <div class="modal-body p-4 text-center">
+            <h5 class="mb-0">Wystąpił błąd.</h5>
+            <hr class="my-4">
+            <p class="mb-0">Ta opcja jest dostępna tylko dla zalogowanych użytkowników.</p>
+          </div>
+          <div class="modal-footer flex-nowrap p-1">
+            <button type="button" class="loginBtn" data-bs-toggle="modal" data-bs-target="#login" data-bs-dismiss="modal">Zaloguj</button>
+            <button type="button" class="loginBtn" data-bs-toggle="modal" data-bs-target="#register" data-bs-dismiss="modal">Zarejestruj</button>
+            
+          </div>
+        </div>
+      </div>
+
+  </div>
+</div>
+
 <!-- Footer -->
 
 <div class="container">
@@ -230,6 +237,9 @@
       </ul>
     </footer>
   </div>
+
+<!-- JS aplikacji WEB -->
+<script src="assets/scripts/app.js"></script>
 
 </body>
 </html>
