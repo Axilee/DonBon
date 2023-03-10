@@ -1,8 +1,5 @@
 import webbrowser
 
-#do zmiany na publiczny adres redirect po autoryzacji, tam wysyla sie token oauth2 (narazie jest w linku po prostu XD)
-#budujemy webook w flasku po to zeby callback pobierac z clienta a nie z serwera, jak zrobimy z serwera to potem bedzie trzeba to do klienta jakos wyslac bez sensu
-
 def getOAuth(service_name,client_id,link,redirect_uri):
     scope=""
     if(service_name == "twitch"):
@@ -36,6 +33,7 @@ def getOAuth(service_name,client_id,link,redirect_uri):
         link = link+client_uri+scope+"&state=c3ab8aa609ea11e793ae92361f002671"
     print(link)
     webbrowser.open(link)
-
+if __name__ == "__main__":
+    getOAuth()
 #https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=nohxc0resfams2ui1ftvvs07awax2c&redirect_uri=http://localhost&scope=channel%3Amanage%3Apolls+channel%3Aread%3Apolls+bits%3Aread&state=c3ab8aa609ea11e793ae92361f002671
 
