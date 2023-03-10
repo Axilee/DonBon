@@ -24,12 +24,16 @@ class inicjalizuj():
             c = config['TWITCH']
             print("twitch przycisk")
             redirect_parsed_uri = urllib.parse.quote(c['redirect_uri'], safe="")
-            oAuth = AuthorizationOauth2.getOAuth("twitch",c['client_id'],c['uri'],redirect_parsed_uri)
+            oAuth = AuthorizationOauth2.getOAuth(c['service_name'],c['client_id'],c['uri'],redirect_parsed_uri)
+            app = webhook.flaskAppWebhook(c['service_name'],c['client_id'],c['client_secret'],c['redirect_uri'])
+            zlapWebhook(app)
         def btn_sp():
             c = config['SPOTIFY']
             print("spotify przycisk")
             redirect_parsed_uri = urllib.parse.quote(c['redirect_uri'], safe="")
-            oAuth = AuthorizationOauth2.getOAuth('spotify',c['client_id'],c['uri'],redirect_parsed_uri)
+            oAuth = AuthorizationOauth2.getOAuth(c['service_name'],c['client_id'],c['uri'],redirect_parsed_uri)
+            app = webhook.flaskAppWebhook(c['service_name'],c['client_id'],c['client_secret'],c['redirect_uri'])
+            zlapWebhook(app)
         okno = tk.Tk()
         okno.geometry('804x410')
         okno.title('Autoryzacja')
@@ -45,8 +49,9 @@ class inicjalizuj():
         btntw.grid(row=0,column=0)
         btnsp.grid(row=0,column=1)
         okno.mainloop()
-    # app = webhook.flaskAppWebhook(service_name,client_id,client_secret,redirect_uri)
-    # if __name__ == '__main__':
-    #     app.run(host="0.0.0.0", port=5000)
+    #   app = webhook.flaskAppWebhook(service_name,client_id,client_secret,redirect_uri)
+def zlapWebhook(app):        
+    if __name__ == '__main__':
+        app.run(host="0.0.0.0", port=5000)
 
 inicjalizuj.wybor()

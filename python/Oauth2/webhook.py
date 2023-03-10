@@ -3,6 +3,9 @@ from urllib.parse import urlencode
 import requests
 import AuthorizationOauth2 #TYMCZASOWE - zeby sie odpalało przy właczeniu 'python webhook.py'
 import base64
+import time
+
+start_time = time.time()
 
 app = Flask(__name__)
 def flaskAppWebhook(service_name,client_id,client_secret,redirect_uri):
@@ -69,6 +72,13 @@ def flaskAppWebhook(service_name,client_id,client_secret,redirect_uri):
         print(f"REFRESH_TOKEN = {json.get('refresh_token')}")
         #print(f"WYGASA ZA = {round(json.get('expires_in')/60,2)}min")
         
+        #while True:
+        #    current_time = time.time()
+        #    elapsed_time = current_time - start_time
+        #    if elapsed_time >= 120:
+        #        print("Minął czas")
+        #        break
+        #    time.sleep(1)
 
         return json #wysyla json do handle_webhook
     return app
