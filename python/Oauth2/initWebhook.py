@@ -6,7 +6,7 @@ from Oauth2 import AuthorizationOauth2  #<- najwyrazniej trzeba tak importowac z
 import urllib.parse
 import configparser
 import tkinter as tk
-import asyncio
+import _tkinter
 import os
 from PIL import ImageTk, Image #pip install pillow
 #global config load
@@ -15,22 +15,22 @@ dane = config.read("identity.ini")
 print(dane)
 
 class inicjalizuj():
-    async def wybor():
+    def wybor():
         print ("WYBOR")
-        async def btn_tw():
+        def btn_tw():
             c = config['TWITCH']
             print("twitch przycisk")
             redirect_parsed_uri = urllib.parse.quote(c['redirect_uri'], safe="")
             oAuth = AuthorizationOauth2.getOAuth(c['service_name'],c['client_id'],c['uri'],redirect_parsed_uri)
             app = webhook.flaskAppWebhook(c['service_name'],c['client_id'],c['client_secret'],c['redirect_uri'])
-            await app.run()
-        async def btn_sp():
+            app.run()
+        def btn_sp():
             c = config['SPOTIFY']
             print("spotify przycisk")
             redirect_parsed_uri = urllib.parse.quote(c['redirect_uri'], safe="")
             oAuth = AuthorizationOauth2.getOAuth(c['service_name'],c['client_id'],c['uri'],redirect_parsed_uri)
             app = webhook.flaskAppWebhook(c['service_name'],c['client_id'],c['client_secret'],c['redirect_uri'])
-            await app.run()
+            app.run()
 
 
              
