@@ -13,7 +13,7 @@ import ssh
 from SpotifyGrapper import getCurrentlyPlaying
 import urllib.parse
 from Oauth2 import initWebhook
-
+from Chat import chat
 
 
 wsh = comclt.Dispatch("WScript.Shell")
@@ -22,7 +22,7 @@ ap = comclt.Dispatch("Shell.Application")
 #dane połączenia
 ACCESS_TOKEN = 'dji7vy3dlc0szw4vz28ai6cllt4p9b'
 PREFIX = "$"
-INITIAL_CHANNELS=["Aaxile"]
+INITIAL_CHANNELS=["DonHoman"]
 
 #wczytaj konfig zmienne.ini
 config = configparser.ConfigParser()
@@ -43,12 +43,12 @@ class Bot(commands.Bot):
     async def event_ready(self):
         print(f'Zalogowano jako {self.nick}')
         print(f'user ID {self.user_id}')
-        print(" AUTH \n\n")
-        await initWebhook.inicjalizuj.wybor()  
+        # print(" AUTH \n\n")
+        # await initWebhook.inicjalizuj.wybor() #test autoryzacji - tymczasowe / potem ma byc gdzies indziej/oddzielnie 
         
 #powitanie po właczeniu i wejsciu na kanał
-    async def event_channel_joined(self,channel):    
-        await channel.send(f"Bążur @{channel.name}!")
+    # async def event_channel_joined(self,channel):    
+    #     await channel.send(f"Bążur @{channel.name}!")
 
 #logowanie eventu dołączania viewerów (wtf)
     async def event_join(self,channel,user):
@@ -112,6 +112,14 @@ class Bot(commands.Bot):
         s = ctx.message.content
         s = s.replace("$skill ", "")
         wsh.SendKeys(s)
+    @commands.command(name = "czesc")
+    async def czesc(self,ctx:commands.Context):
+        await ctx.send("siemano byku")
+    @commands.command(name = "chatgpt")
+    async def chatgpt(self,ctx:commands.Context):
+        odpowiedz = await chat.chatgpt(ctx.message.content.replace("$chatgpt", ""))
+        print(ctx.message.content)
+        await ctx.send(odpowiedz)
 
 
 #wyślij liste komend do zmienne.ini
