@@ -1,245 +1,102 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <base href="#">
-    <title>Hoeman Bot</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DonBon</title>
+</head>
 
     <!--===== Importy =====-->
 
     <!-- Główny CSS -->
     <link href="styles/style.css" rel="stylesheet">
 
-    <!-- Bootstrap CSS -->
-    <link href="styles/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="styles/bootstrap/bootstrap.css" rel="stylesheet">
+    <!-- Główny JS -->
+    <script src="assets/scripts/main.js"></script>
 
     <!-- AwesomeFonts -->
     <script src="https://kit.fontawesome.com/bd626f218f.js" crossorigin="anonymous"></script>
 
-    <!-- Główny JS -->
-    <script src="assets/scripts/main.js"></script>
-
-    <!-- Bootstrap JS -->
-    <script src="assets/scripts/bootstrap/bootstrap.min.js"></script>
-
-    <!-- JQuery JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-    <!-- Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    
-</head>
-<body onload="loadconfig()">
+<body>
 
 <!-- Loader strony -->  
 <div class="loader-wrapper">
-  <div class="loader">
-  </div>
-  <div class="loader-section section-left"></div>
-  <div class="loader-section section-right"></div>
+    <div class="loader">
+    </div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
 </div>
 
 <!-- Navbar -->
-
-<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" id="navigation">
-
-    <div class="container-fluid">
-      <a href="#" class="navbar-brand"><img src="assets/img/logo.png" class="watermark"> Hoeman</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item active">
-            <a href="#" class="nav-link active">Strona Główna</a>
-            <div class="nav-underline"></div>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#function">Funkcje</a>
-            <div class="nav-underline"></div>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#login">Logowanie</a>
-            <div class="nav-underline"></div>
-          </li>
-          <li class="nav-item-switch">
-            <div id="theme-switcher">
- 
-            </div>
-
-          </li>
-         
-        </ul>
-      </div>
+<div class="nav-right visible-xs">
+    <div class="button" id="btn">
+    <div class="bar top"></div>
+    <div class="bar middle"></div>
+    <div class="bar bottom"></div>
     </div>
-  </nav>
-
-<!-- Sekcja z checkami -->
-
-<div class="container" id="checks">
-    <div class="row">
-      <div id="data-checkboxes" class="col-sm-12 col-md-6">
-        <h1>Komendy</h1>
-        <hr class="my-3">
-        <div class="form-check form-switch">
-          <form id="form-checkboxes">
-          <!--<input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-          <label class="form-check-label" for="flexSwitchCheckChecked">command</label>-->
-          </form>
-          <!--<input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-          <label class="form-check-label" for="flexSwitchCheckChecked" >command</label>-->
-        </div>
-      </div>
-      <div class="col-sm-12 col-md-6">
-        <h1>Punkty</h1>
-        <hr class="my-3">
-        <div class="form-check form-switch">
-          <!--<input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-          <label class="form-check-label" for="flexSwitchCheckChecked">command</label>-->
-        </div>
-      </div>
-    </div>
-
-  </div>
-  
-
-<!-- Modal Logowanie/Rejestracja -->
-
-<!-- Logowanie -->
-<div class="modal fade" id="login" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content rounded-4 shadow">
-      <div class="modal-header p-2 pb-2 border-bottom-0">
-      </div>
-      <div class="modal-body p-5 pt-0">
-
-        <section class="modal-logowanie">
-          <div class="form-box">
-            <div class="form-value">
-              <form action="">
-                <h2>Logowanie</h2>
-                <div class="inputbox">
-                  <i class="fa-solid fa-envelope"></i>
-                  <input type="email" required>
-                  <label for="">E-mail</label>
-                </div>
-                <div class="inputbox">
-                  <i class="fa-sharp fa-solid fa-lock"></i>
-                  <input type="password" required>
-                  <label for="">Hasło</label>
-                </div>
-                <div class="forget">
-                  <label for="" style = "position: relative; left: -1rem;"><input type="checkbox">Pamiętaj mnie</label>
-                  <a href="" style = "position: relative; left: 1rem;">Zapomniałem hasła</a>
-                </div>
-                <button class="loginBtn">Zaloguj się</button>
-                <div class="register"> 
-                  <p>Nie masz konta? <a href="#" data-bs-toggle="modal" data-bs-target="#register" data-bs-dismiss="modal">Zarejestruj się</a></p>
-                </div>
-              </form>
-            </div>
-          </div>
-        </section>
-
-      </div>
-    </div>
-  </div>
 </div>
 
-<!-- Rejestracja -->
-
-<div class="modal fade" id="register" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content rounded-4 shadow">
-      <div class="modal-header p-2 pb-2 border-bottom-0">
-      </div>
-      <div class="modal-body p-5 pt-0">
-
-        <section class="modal-logowanie">
-          <div class="form-box">
-            <div class="form-value">
-              <form action="">
-                <h2>Rejestracja</h2>
-                <div class="inputbox">
-                  <i class="fa-solid fa-user"></i>
-                  <input type="username" required>
-                  <label for="">Nazwa użytkownika</label>
-                </div>
-                <div class="inputbox">
-                  <i class="fa-solid fa-envelope"></i>
-                  <input type="email" required>
-                  <label for="">E-mail</label>
-                </div>
-                <div class="inputbox">
-                  <i class="fa-sharp fa-solid fa-lock"></i>
-                  <input type="password" required>
-                  <label for="">Hasło</label>
-                </div>
-                <button class="loginBtn">Zarejestruj się</button>
-                <div class="register"> 
-                  <p>Zakładając konto aceptujesz <a href="">regulamin.</a> </p>
-                </div>
-                <div class="haveAccount"> 
-                  <p>Posiadasz już konto? <a href="#" data-bs-toggle="modal" data-bs-target="#login" data-bs-dismiss="modal">Zaloguj się</a></p>
-                </div>
-              </form>
-            </div>
-          </div>
-        </section>
+<div class="sidebar">
+    <ul class="sidebar-list">
+        <li class="sidebar-item"><a href="#" class="sidebar-anchor">Strona Główna</a></li>
+        <li class="sidebar-item"><a href="#" class="sidebar-anchor">Funkcje</a></li>
+        <li class="sidebar-item"><a href="#" class="sidebar-anchor">Twitch</a></li>
+        <li class="sidebar-item"><a href="#" class="sidebar-anchor">Logowanie</a></li>
+        <button class="settings"><li class="settings-item"><a href="#settings" class="sidebar-anchor">Ustawienia</a></li></button>
+    </ul>    
+    <ul class="settings-list">       
+        <li class="settings-items"><a href="#" class="sidebar-anchor">Strona Główna</a></li>
+    </ul>   
         
-      </div>
-    </div>
-  </div>
+    
 </div>
 
 
-<!-- Modal Funkcje -->
-<div class="modal fade" id="function" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
 
-      <div class="modal-dialog" role="document">
-        <div class="modal-content rounded-3 shadow">
-          <div class="modal-body p-4 text-center">
-            <h5 class="mb-0">Wystąpił błąd.</h5>
-            <hr class="my-4">
-            <p class="mb-0">Ta opcja jest dostępna tylko dla zalogowanych użytkowników.</p>
-          </div>
-          <div class="modal-footer flex-nowrap p-1">
-            <button type="button" class="loginBtn" data-bs-toggle="modal" data-bs-target="#login" data-bs-dismiss="modal">Zaloguj</button>
-            <button type="button" class="loginBtn" data-bs-toggle="modal" data-bs-target="#register" data-bs-dismiss="modal">Zarejestruj</button>
+<!-- Page Content -->
+<div class="content">
+
+    <div class="checks">
+        <h1 data-value="DONBON" id="txt-effect">DONBON</h1>
+        <section class="columns">
+            <div class="column">
+                <h2 class="check">Komendy</h2>
+                <hr class="my-3">
+
+                <div class="komendy">
+                    <input id="s1" type="checkbox" class="switch"><label for="s1">Switch</label>
+                </div>
+               
+            </div>
             
-          </div>
-        </div>
-      </div>
+            <div class="column">
+                <h2 class="check">Bitsy</h2>
+                <hr class="my-3">
 
-  </div>
+                <div class="bitsy">
+                    <input id="s1" type="checkbox" class="switch"><label for="s1">Switch</label>
+                </div>
+
+            </div>
+
+        </section>	
+    </div>
+
 </div>
+
 
 <!-- Footer -->
 
-<div class="container">
-    <footer class="d-flex flex-wrap justify-content-center align-items-center py-3 my-4 border-top fixed-bottom" id="footer">
-      <div class="col-md-4 d-flex align-items-center">
-        <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-          <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-        </a>
-        <span class="mb-3 mb-md-0 text-muted">&copy; 2022 DonHomanTTV</span>
-      </div>
-  
-      <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-        <li class="ms-3"><a class="text-muted" href="https://www.tiktok.com/@homanszoty"><i class="fab fa-tiktok"></i></a></li>
-        <li class="ms-3"><a class="text-muted" href="https://www.twitch.tv/donhoman"><i class="fab fa-twitch"></i></a></li>
-        <li class="ms-3"><a class="text-muted" href="https://discord.com/invite/vFmZkNVYeT"><i class="fab fa-discord"></i></a></li>
-        <li class="ms-3"><a class="text-muted" href="https://www.youtube.com/channel/UCS0avOKrSsiDR6Z805dw33Q/videos"><i class="fab fa-youtube"></i></a></li>
-      </ul>
-    </footer>
-  </div>
 
-<!-- JS aplikacji WEB -->
-<script src="assets/scripts/app.js"></script>
 
+    <!-- JQuery JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Modernizr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+    <!-- Główny JS -->
+    <script src="assets/scripts/app.js"></script>
 </body>
 </html>
