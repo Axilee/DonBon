@@ -24,6 +24,13 @@ $.getJSON("load.php", function(data) {
       $("#data-checkboxes").append(div);      
     }
   });
+
+  // TO JEST NOWY SWITCH DO DYNAMICZNEGO DRUKOWANIA
+  // <div class="komendy">
+  // <input id="s1" type="checkbox" class="switch"><label for="s1">Switch</label>
+  // </div>
+
+
 $('#switchForBot[type="checkbox"]').click(function() {
   console.log("dziala submit");
   var allCheckBoxes = $('#switchForBot[type="checkbox"]');
