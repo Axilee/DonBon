@@ -1,26 +1,26 @@
 function loadconfig(){
 $(document).ready(function() {
-$.getJSON("load.php", function(data) {
+$.get("load.php", function(data) {
   console.log(data);
   $.each(data, function(key, value){
     if(value == 1){
-      var checkbox = $("<input>").addClass("form-check-input").attr({
+      var checkbox = $("<input>").addClass("switch").attr({
         type: "checkbox",
-        id: "switchForBot",
+        id: "s1",
         value: key,
         checked : true
       });
-      var label = $("<label>").addClass("form-check-label").attr("for", "switchForBot").text(key);
-      var div = $("<div>").addClass("form-check form-switch").append(checkbox, label);
+      var label = $("<label>").attr("for", "s1").text(key);
+      var div = $("<div>").append(checkbox, label);
       $("#data-checkboxes").append(div);      
     }else{
-      var checkbox = $("<input>").addClass("form-check-input").attr({
+      var checkbox = $("<input>").addClass("switch").attr({
         type: "checkbox",
-        id: "switchForBot",
+        id: "s1",
         value: key
       });
-      var label = $("<label>").addClass("form-check-label").attr("for", "switchForBot").text(key);
-      var div = $("<div>").addClass("form-check form-switch").append(checkbox, label);
+      var label = $("<label>").attr("for", "s1").text(key);
+      var div = $("<div>").append(checkbox, label);
       $("#data-checkboxes").append(div);      
     }
   });
@@ -31,9 +31,9 @@ $.getJSON("load.php", function(data) {
   // </div>
 
 
-$('#switchForBot[type="checkbox"]').click(function() {
+$('#s1[type="checkbox"]').click(function() {
   console.log("dziala submit");
-  var allCheckBoxes = $('#switchForBot[type="checkbox"]');
+  var allCheckBoxes = $('#s1[type="checkbox"]');
   var serializedCheckBoxes = [];
   var i = 0;
   allCheckBoxes.each(function(){
@@ -46,10 +46,9 @@ $('#switchForBot[type="checkbox"]').click(function() {
     }
     i++;
   });
+  console.log(serializedCheckBoxes);
   var dataToWrite = {
     content: serializedCheckBoxes,
-    folder: "data",
-    filename: "data_save.ini"
   };
   $.post("save.php", dataToWrite);   
   console.log(serializedCheckBoxes);
