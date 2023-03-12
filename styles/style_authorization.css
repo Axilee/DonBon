@@ -1,0 +1,328 @@
+:root{
+
+    --color1: #2C3333;
+    --color2: #2E4F4F;
+    --color3: #0E8388;
+    --color4: #CBE4DE;
+  
+  
+    /* Switche i checkboxy */
+    --active: #2E4F4F;
+    --active-inner: #fff;
+    --focus: 2px rgba(22, 94, 112, 0.3);
+    --border: #b4cec8;
+    --border-hover: #0E8388;
+    --background: #fff;
+    --disabled: #f6f8ff;
+    --disabled-inner: #e1e6f9;
+  
+  }
+  
+  
+  
+  /* Kolorstyka strony LIGHT MODE*/
+  body {
+      background-color: var(--color1);
+      transition: background-color 0.7s ease;
+      color: var(--color4);
+      overflow: hidden;
+      font-family: 'Arimo', sans-serif;
+  }
+
+
+/* Unauthorized */
+ .container  {
+    position: absolute;
+    right: 330px;
+    top: 80px;
+}
+
+  .message {
+    font-family: 'Arimo', sans-serif;
+    font-size: 48px;
+    color: var(--color4);
+    font-weight: 500;
+    position: absolute;
+    top: 330px;
+    left: 360px;
+  }
+
+  .message2 {
+    font-family: 'Arimo', sans-serif;
+    font-size: 28px;
+    color: var(--color4);
+    font-weight: 300;
+    position: absolute;
+    top: 380px;
+    left: 360px;
+  }
+
+  .neon {
+    text-align: center;
+    width: 300px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-family: 'Space Mono', sans-serif;
+    font-size: 90px;
+    color: var(--color4);
+    letter-spacing: 3px;
+    text-shadow: 0 0 50px #5ae6c3;
+    animation: flux 2s linear infinite;
+  }
+
+  .door-frame  {
+    height: 495px;
+    width: 295px;
+    border-radius: 90px 90px 0 0;
+    background-color: #8594a5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .door {
+    height: 450px;
+    width: 250px;
+    border-radius: 70px 70px 0 0;
+    background-color: #A0AEC0;
+  }
+
+  .eye{
+    top: 15px;
+    left: 25px;
+    height: 5px;
+    width: 15px;
+    border-radius: 50%;
+    background-color: white;
+    animation: eye 7s ease-in-out infinite;
+    position: absolute;
+  }
+
+  .eye2{
+    left: 65px;
+  }
+
+  .window {
+    height: 40px;
+    width: 130px;
+    background-color: #1C2127;
+    border-radius: 3px;
+    margin: 80px auto;
+    position: relative;
+  }
+
+  .leaf{
+    height: 40px;
+    width: 130px;
+    background-color: #8594A5;
+    border-radius: 3px;
+    margin: 80px auto;
+    animation: leaf 7s infinite;
+    transform-origin: right;
+  }
+  
+  .handle {
+    height: 8px;
+    width: 50px;
+    border-radius: 4px;
+    background-color: #EBF3FC;
+    position: absolute;
+    margin-top: 250px;
+    margin-left: 30px;
+  }
+  
+  .rectangle {
+    height: 70px;
+    width: 25px;
+    background-color: #CBD8E6;
+    border-radius: 4px;
+    position: absolute;
+    margin-top: 220px;
+    margin-left: 20px;
+  }
+  
+  @keyframes leaf {
+    0% {
+      transform: scaleX(1);
+    }
+    5% {
+      transform: scaleX(0.2);
+    } 
+    70%{
+      transform: scaleX(0.2);
+    }
+    75%{
+      transform: scaleX(1);
+    }
+    100% {
+      transform: scaleX(1);
+    }
+  }
+  
+  @keyframes eye {
+    0% {
+      opacity: 0;
+      transform: translateX(0)
+    }
+    5% {
+      opacity: 0;
+    }
+    15%{
+      opacity: 1;
+      transform: translateX(0)
+    }
+    20% {
+      transform: translateX(15px)
+    }
+    35%{
+      transform: translateX(15px)
+    }
+    40%{
+      transform: translateX(-15px)
+    }
+    60%{
+      transform: translateX(-15px)
+    }
+    65% {
+      transform: translateX(0)
+    }
+  }
+  
+  @keyframes flux {
+    0%,
+    100% {
+      text-shadow: 0 0 5px #00FFC6, 0 0 15px #00FFC6, 0 0 50px #00FFC6, 0 0 50px #00FFC6, 0 0 2px #B9FFE8, 2px 2px 3px #12E29C;
+      color: #4BFFEF;
+    }
+    50% {
+      text-shadow: 0 0 3px #00B58D, 0 0 7px #00B58D, 0 0 25px #00B58D, 0 0 25px #00B58D, 0 0 2px #00B58D, 2px 2px 3px #006A60;
+      color: #63D3AE;
+    }
+  }
+  
+
+/* Authorized */
+ .container_a  {
+    position: absolute;
+    right: 330px;
+    top: 80px;
+}
+
+  .message_a {
+    font-family: 'Arimo', sans-serif;
+    font-size: 48px;
+    color: var(--color4);
+    font-weight: 500;
+    position: absolute;
+    top: 330px;
+    left: 360px;
+  }
+
+  .message2_a {
+    font-family: 'Arimo', sans-serif;
+    font-size: 28px;
+    color: var(--color4);
+    font-weight: 300;
+    position: absolute;
+    top: 380px;
+    left: 360px;
+  }
+
+  .neon_a {
+    text-align: center;
+    width: 300px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-family: 'Space Mono', sans-serif;
+    font-size: 90px;
+    color: var(--color4);
+    letter-spacing: 3px;
+    text-shadow: 0 0 50px #5ae6c3;
+    animation: flux 2s linear infinite;
+  }
+
+
+
+  .door-frame_a  {
+    height: 495px;
+    width: 295px;
+    border-radius: 90px 90px 0 0;
+    background-color: #8594a5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  .door_a {
+    height: 450px;
+    width: 250px;
+    border-radius: 70px 70px 0 0;
+    background-color: #A0AEC0;
+    -webkit-animation: otwieranie 2.75s ease 0s infinite alternate;
+  }
+
+
+
+  .window_a {
+    height: 40px;
+    width: 130px;
+    background-color: #1C2127;
+    border-radius: 3px;
+    margin: 80px auto;
+    position: relative;
+  }
+
+  .leaf_a {
+    height: 40px;
+    width: 130px;
+    background-color: #8594A5;
+    border-radius: 3px;
+    margin: 80px auto;
+    transform-origin: right;
+  }
+  
+  .handle_a {
+    height: 8px;
+    width: 50px;
+    border-radius: 4px;
+    background-color: #EBF3FC;
+    position: absolute;
+    margin-top: 250px;
+    margin-left: 30px;
+  }
+  
+  .rectangle_a {
+    height: 70px;
+    width: 25px;
+    background-color: #CBD8E6;
+    border-radius: 4px;
+    position: absolute;
+    margin-top: 220px;
+    margin-left: 20px;
+  }
+  
+  
+  @keyframes flux {
+    0%,
+    100% {
+      text-shadow: 0 0 5px #00FFC6, 0 0 15px #00FFC6, 0 0 50px #00FFC6, 0 0 50px #00FFC6, 0 0 2px #B9FFE8, 2px 2px 3px #12E29C;
+      color: #4BFFEF;
+    }
+    50% {
+      text-shadow: 0 0 3px #00B58D, 0 0 7px #00B58D, 0 0 25px #00B58D, 0 0 25px #00B58D, 0 0 2px #00B58D, 2px 2px 3px #006A60;
+      color: #63D3AE;
+    }
+  }
+  
+
+  @-webkit-keyframes otwieranie {
+    from {
+       -webkit-transform: perspective(700) rotateY(80deg);
+       -webkit-transform-origin: 100% 100%;
+    }
+    to {
+       -webkit-transform: perspective(700) rotateY(0deg);
+        -webkit-transform-origin: 100% 100%;
+    }
+}

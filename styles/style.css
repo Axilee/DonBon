@@ -316,11 +316,11 @@ html {
   }
   
   .sidebar-item:last-child {
-    -webkit-transition: all .7s .8s ease-in-out;
-    -moz-transition: all .7s .8s ease-in-out;
-    -ms-transition: all .7s .8s ease-in-out;
-    -o-transition: all .7s .8s ease-in-out;
-    transition: all .7s .8s ease-in-out;
+    -webkit-transition: all .5s .8s ease-in-out;
+    -moz-transition: all .5s .8s ease-in-out;
+    -ms-transition: all .5s .8s ease-in-out;
+    -o-transition: all .5s .8s ease-in-out;
+    transition: all .5s .8s ease-in-out;
   }
   
   .sidebar-item.active {
