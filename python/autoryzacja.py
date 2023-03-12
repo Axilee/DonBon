@@ -17,5 +17,7 @@ webhookProcess = multiprocessing.Process(target=wlacz_webhook)
 if __name__ == "__main__":
         webhookProcess.start()
         okno()
-        webhookProcess.join() # usun zeby sie zamknal webhook po zamknieciu okna, jak to tu jest, webhook wskoczy na główny proces z powrotem
+        #webhookProcess.join() # usun zeby sie zamknal webhook po zamknieciu okna, jak to tu jest, webhook wskoczy na główny proces z powrotem
 
+for key, value in os.environ.items():
+        print(key + " = " + value)
