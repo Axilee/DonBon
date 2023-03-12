@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DonBon</title>
+</head>
+
+    <!--===== Importy =====-->
+
+    <!-- Główny CSS -->
+    <link href="html/styles/style.css" rel="stylesheet">
+
+    <!-- Główny JS -->
+    <script src="html/scripts/main.js"></script>
+
+    <!-- AwesomeFonts -->
+    <script src="https://kit.fontawesome.com/bd626f218f.js" crossorigin="anonymous"></script>
+
+<body onload="loadconfig()">
+
+<!-- Loader strony -->  
+<div class="loader-wrapper">
+    <div class="loader">
+    </div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
+
+<!-- Navbar -->
+<div class="nav-right visible-xs">
+    <div class="button" id="btn">
+    <div class="bar top"></div>
+    <div class="bar middle"></div>
+    <div class="bar bottom"></div>
+    </div>
+</div>
+
+<div class="sidebar">
+    <ul class="sidebar-list">
+        <li class="sidebar-item"><a href="#" class="sidebar-anchor">Strona Główna</a></li>
+        <li class="sidebar-item"><a href="#" class="sidebar-anchor">Funkcje</a></li>
+        <li class="sidebar-item"><a href="#" class="sidebar-anchor">Twitch</a></li>
+        <li class="sidebar-item"><a href="#" class="sidebar-anchor">Logowanie</a></li>
+        <button class="settings settings-open"><li class="sidebar-item"><a href="#settings" class="sidebar-anchor">Ustawienia</a></li></button>
+    </ul>    
+
+        
+    
+</div>
+
+
+
+<!-- Page Content -->
+<div class="content">
+
+    <!--Później do wyjebania póki co dla testów-->
+    <a href="/authorized.html" style="color: white;">Zatwierdzona autoryzacja</a>
+    <a href="/notauthorized.html" style="color: white;">Zjebana autoryzacja</a>
+
+    <div class="checks">
+        <h1 data-value="DONBON" id="txt-effect">DONBON</h1>
+        <section class="columns">
+            <div class="column">
+                <h2 class="check">Komendy</h2>
+                <hr class="my-3">
+                <form method="post">
+                <div class="komendy" id="data-checkboxes">
+                    <!--<input id="s1" type="checkbox" class="switch"><label for="s1">Switch</label>-->
+                </div>
+               </form>
+            </div>
+            
+            <div class="column">
+                <h2 class="check">Bitsy</h2>
+                <hr class="my-3">
+
+                <div class="bitsy">
+                    <!--<input id="s1" type="checkbox" class="switch"><label for="s1">Switch</label>-->
+                </div>
+
+            </div>
+
+        </section>	
+    </div>
+
+
+</div>
+
+
+
+<dialog class="modal" id="modal">
+    <button class="settings-close">X</button>
+
+    <div class="modal-content">
+        <h1>Ustawienia</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum esse nisi, laboriosam illum temporibus ipsam?</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, quo.</p>
+
+        <ul class="setting-items">
+            <li class="settings-item"><a href="#">Item 1</a></li>
+            <li class="settings-item"><a href="#">Item 1</a></li>
+            <li class="settings-item"><a href="#">Item 1</a></li>
+            <li class="settings-item"><a href="#">Item 1</a></li>
+        </ul>    
+        <div class="setting-buttons">
+            <button class="save-settings">Zapisz</button>
+            <button class="restore-settings">Przywróć</button>
+        </div>
+
+
+    </div>
+    
+  
+</dialog>
+
+
+
+    <!-- JQuery JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Modernizr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+    <!-- Główny JS -->
+    <script src="html/scripts/app.js"></script>
+    <script src="html/scripts/main.js"></script>
+</body>
+</html>
