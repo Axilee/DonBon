@@ -26,7 +26,7 @@ body {
     background-color: var(--color1);
     transition: background-color 0.7s ease;
     color: var(--color4);
-    overflow: hidden;
+  
     font-family: 'Arimo', sans-serif;
 }
 
@@ -62,7 +62,8 @@ body {
 }  
 
 #txt-effect{
-  color: var(--color4)
+  color: var(--color4);
+
 }
 
 /* Kolorstyka strony DARK MODE*/
@@ -602,6 +603,10 @@ html {
  }
 }
 
+
+
+
+
 /* =============== Page content ============*/
 .wrapper {
     padding: 5px;
@@ -680,11 +685,15 @@ footer {
 
 .check{
   text-align: center;
+  margin-top: -4.7rem;
 }
 
 .komendy {
   padding-top: 1rem;
   padding-left: 0.8rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
 }
 
 .bitsy {
@@ -734,7 +743,7 @@ footer {
         min-height: 100vh;
         padding-left: 10%;
         padding-right: 20%;
-        padding-top: 6%;
+        padding-top: -10%;
         box-sizing: border-box;
         overflow: hidden;
         transition: all .3s ease-in-out;
