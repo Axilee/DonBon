@@ -12,9 +12,13 @@ import configparser
 import ssh
 from SpotifyGrapper import getCurrentlyPlaying
 import urllib.parse
+#from Chat import chat
+import sys
+import multiprocessing
+sys.path.append('Oauth2')
+from Oauth2 import webhook
+from Oauth2 import AuthorizationOauth2 
 from Oauth2 import initWebhook
-from Chat import chat
-
 
 wsh = comclt.Dispatch("WScript.Shell")
 ap = comclt.Dispatch("Shell.Application")
@@ -22,12 +26,30 @@ ap = comclt.Dispatch("Shell.Application")
 #dane połączenia
 ACCESS_TOKEN = 'dji7vy3dlc0szw4vz28ai6cllt4p9b'
 PREFIX = "$"
-INITIAL_CHANNELS=["DonHoman"]
+INITIAL_CHANNELS=["aaxile"]
+
+def wlacz_webhook():
+            print("zaczyna webhook")
+            webhook.flaskAppWebhook.app.run(host="0.0.0.0", port=5000)
+def okno():
+        initWebhook.inicjalizuj.wybor()
+webhookProcess = multiprocessing.Process(target=wlacz_webhook)
+
+
+
 
 #wczytaj konfig zmienne.ini
 config = configparser.ConfigParser()
 zmienne = config.read("zmienne.ini")
+
+identity = configparser.ConfigParser()
+identityFile = identity.read("Oauth2/identity.ini")
+
+auth = identity['TWITCH']['access_token'] #zaczyt tokenu auth dla twitch
+refresh = identity['TWITCH']['refresh_token'] #imo lepiej tutac execowac refresh token bedzie latwiej go responsem odnawiac 
+#ewentualnie odczyt/zapis konfiguracji co godzine a generowanie tokenu gdzie indziej
 print (f"CONFIG: {zmienne}")
+
 #--------------------------------------GLOBALNE FUNKCJE ---------------------------------
 #sprawdz status komendy z zmienne ini
 def sprawdz(typ,nazwa):
@@ -38,18 +60,22 @@ class Bot(commands.Bot):
 #logowanie do IRC    
     def __init__(self):
         super().__init__(token=ACCESS_TOKEN, prefix = PREFIX, initial_channels=INITIAL_CHANNELS)  
-        
+
+    if __name__ == "__main__":
+            webhookProcess.start()
+            okno()
 
     async def event_ready(self):
         print(f'Zalogowano jako {self.nick}')
         print(f'user ID {self.user_id}')
-        # print(" AUTH \n\n")
+        #print(" AUTH \n\n")
+        print()
         # await initWebhook.inicjalizuj.wybor() #test autoryzacji - tymczasowe / potem ma byc gdzies indziej/oddzielnie 
         
 #powitanie po właczeniu i wejsciu na kanał
     # async def event_channel_joined(self,channel):    
     #     await channel.send(f"Bążur @{channel.name}!")
-
+    
 #logowanie eventu dołączania viewerów (wtf)
     async def event_join(self,channel,user):
         with open("viewers.log","a") as log:
@@ -114,12 +140,12 @@ class Bot(commands.Bot):
         wsh.SendKeys(s)
     @commands.command(name = "czesc")
     async def czesc(self,ctx:commands.Context):
-        await ctx.send("siemano byku")
-    @commands.command(name = "chatgpt")
-    async def chatgpt(self,ctx:commands.Context):
-        odpowiedz = await chat.chatgpt(ctx.message.content.replace("$chatgpt", ""))
-        print(ctx.message.content)
-        await ctx.send(odpowiedz)
+        await ctx.send(auth)
+    #@commands.command(name = "chatgpt")
+    #async def chatgpt(self,ctx:commands.Context):
+    #    odpowiedz = await chat.chatgpt(ctx.message.content.replace("$chatgpt", ""))
+    #    print(ctx.message.content)
+    #    await ctx.send(odpowiedz)
 
 
 #wyślij liste komend do zmienne.ini
