@@ -5,6 +5,7 @@ import requests
 import base64
 import time
 import configparser
+
 start_time = time.time()
 config = configparser.ConfigParser()
 konfig = config.read("Oauth2/identity.ini")
@@ -76,15 +77,26 @@ class flaskAppWebhook():
             state = request.args.get('state')
             #znajdz czy to request ze spotify czy twitch
             if state:
-                 service_name = "TWITCH"
-                 c = config['TWITCH']
+                service_name = "TWITCH"
+                c = config[service_name]
+                json = flaskAppWebhook.send(code,c['service_name'],c['client_id'],c['client_secret'],c['redirect_uri'])#json z tokenem, z odpowiedzi po wyslaniu kodu
+                access_token = json.get('access_token')
+                refresh_token = json.get('refresh_token')
+                config.set(service_name,'access_token', access_token)
+                config.set(service_name,'refresh_token', refresh_token)
+                with open('Oauth2/identity.ini','w') as f:
+                     config.write(f)
             else:
-                 service_name = "SPOTIFY"
-                 c = config['SPOTIFY'] #nie jestem z tego dumny, ale działa (mozna sprawdzic czy to twitch czy spotify po zwroconym scope, czy zgadza sie z identity.ini, ale to trzeba przerabiać z urlencoded a mi sie nie chce)
-            json = flaskAppWebhook.send(code,service_name,c['client_id'],c['client_secret'],c['redirect_uri']) #json z tokenem, z odpowiedzi po wyslaniu kodu
-            access_token = json.get('access_token')
-            print(access_token)
-            return f"<H1 style='font-size:5em'>TOKEN ODEBRANY WOOHOO<br>Do serwisu: {service_name}<br>TOKEN: {access_token}<br><br>REFRESH TOKEN: {json.get('refresh_token')}"
+                service_name = "SPOTIFY"
+                c = config[service_name] #nie jestem z tego dumny, ale działa (mozna sprawdzic czy to twitch czy spotify po zwroconym scope, czy zgadza sie z identity.ini, ale to trzeba przerabiać z urlencoded a mi sie nie chce)
+                json = flaskAppWebhook.send(code,c['service_name'],c['client_id'],c['client_secret'],c['redirect_uri'])#json z tokenem, z odpowiedzi po wyslaniu kodu
+                access_token = json.get('access_token')
+                refresh_token = json.get('refresh_token')
+                config.set(service_name,'access_token', access_token)
+                config.set(service_name,'refresh_token', refresh_token)
+                with open('Oauth2/identity.ini','w') as f:
+                    config.write(f)
+            return f"<H1 style='font-size:5em'>TOKEN ODEBRANY WOOHOO<br>Do serwisu: {service_name}<br>TOKEN: {access_token}<br><br>REFRESH TOKEN: {refresh_token}"
 
         #print(f"WYGASA ZA = {round(json.get('expires_in')/60,2)}min")
         

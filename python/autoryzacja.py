@@ -5,6 +5,8 @@ from Oauth2 import webhook
 from Oauth2 import AuthorizationOauth2 
 from Oauth2 import initWebhook
 import multiprocessing
+import SpotifyGrapper
+
 
 def wlacz_webhook():
             print("zaczyna webhook")
@@ -17,5 +19,4 @@ webhookProcess = multiprocessing.Process(target=wlacz_webhook)
 if __name__ == "__main__":
         webhookProcess.start()
         okno()
-        webhookProcess.join() # usun zeby sie zamknal webhook po zamknieciu okna, jak to tu jest, webhook wskoczy na główny proces z powrotem
-
+        #webhookProcess.join() # usun zeby sie zamknal webhook po zamknieciu okna, jak to tu jest, webhook wskoczy na główny proces z powrotem
