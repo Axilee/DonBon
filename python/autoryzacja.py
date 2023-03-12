@@ -5,6 +5,7 @@ from Oauth2 import webhook
 from Oauth2 import AuthorizationOauth2 
 from Oauth2 import initWebhook
 import multiprocessing
+import os
 
 def wlacz_webhook():
             print("zaczyna webhook")
