@@ -1,8 +1,8 @@
 #tworzy okno wyboru autoryzacji spotify/twitch, pobiera z identity.ini parametry do autoryzacji, wlacza webhook i tworzy tokeny // TODO zwracanie tokenow gdzies
 
-
-from Oauth2 import webhook
-from Oauth2 import AuthorizationOauth2  #<- najwyrazniej trzeba tak importowac zeby sie dalo potem z gory importowac, pojebane
+import multiprocessing
+import webhook
+import AuthorizationOauth2  #<- najwyrazniej trzeba tak importowac zeby sie dalo potem z gory importowac, pojebane
 import urllib.parse
 import configparser
 import tkinter as tk
@@ -11,34 +11,26 @@ import os
 from PIL import ImageTk, Image #pip install pillow
 #global config load
 config = configparser.ConfigParser()
-dane = config.read("identity.ini")
-print(dane)
+dane = config.read("Oauth2/identity.ini")
+print(f"initWebhook wczytał config: {dane}")
 
 class inicjalizuj():
     def wybor():
         print ("WYBOR")
+        
+        
         def btn_tw():
             c = config['TWITCH']
             print("twitch przycisk")
             redirect_parsed_uri = urllib.parse.quote(c['redirect_uri'], safe="")
             oAuth = AuthorizationOauth2.getOAuth(c['service_name'],c['client_id'],c['uri'],redirect_parsed_uri)
-            app = webhook.flaskAppWebhook(c['service_name'],c['client_id'],c['client_secret'],c['redirect_uri'])
-            app.run()
         def btn_sp():
             c = config['SPOTIFY']
             print("spotify przycisk")
             redirect_parsed_uri = urllib.parse.quote(c['redirect_uri'], safe="")
             oAuth = AuthorizationOauth2.getOAuth(c['service_name'],c['client_id'],c['uri'],redirect_parsed_uri)
-            app = webhook.flaskAppWebhook(c['service_name'],c['client_id'],c['client_secret'],c['redirect_uri'])
-            app.run()
 
 
-             
-        # if __name__ == "__main__":
-        #     app.run(host="0.0.0.0", port=5000)
-        #     wh = multiprocessing.Process(target=zlapWebhook)
-        #     wh.start()  #rozpocznij proces webhook w tle
-        
 
         #------ okno wyboru/konfiguracja okna
         okno = tk.Tk()

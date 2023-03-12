@@ -1,20 +1,22 @@
 
 
 import openai
-openai.api_key = "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"
-prompt="Hello, ChatGPT! Can you generate a response for this message?"
-async def chatgpt(prompt):
+openai.api_key = "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"
+def chatgpt(prompt):
     
 
     response = openai.Completion.create(
-        engine="davinci",
+        engine="text-davinci-003",
         prompt=prompt,
-        max_tokens=100,
+        max_tokens=250,
         n=1,
-        stop=None,
-        temperature=0.3,
+        stop=">>>",
+        temperature=0.5,
     )
-
+    odpowiedz = response.choices[0]
     print(response.choices[0])
+    print(__file__)
+    # with open(__file__, "a") as p:
+    #     p.write(odpowiedz)
     return response.choices[0].text.strip()
-
+chatgpt("jak napisac program w pythonie")
