@@ -4,42 +4,22 @@ import requests
 #import AuthorizationOauth2 #TYMCZASOWE - zeby sie odpalało przy właczeniu 'python webhook.py'
 import base64
 import time
-
+import configparser
 start_time = time.time()
+config = configparser.ConfigParser()
+konfig = config.read("Oauth2/identity.ini")
+print(f"{konfig} CONFIG WEBHOOKA")
+class flaskAppWebhook():
+    app = Flask(__name__)
 
-app = Flask(__name__)
-def flaskAppWebhook(service_name,client_id,client_secret,redirect_uri):
-
-    client_encoded = client_id + ":" + client_secret
-    sample_string_bytes = client_encoded.encode("ascii")
+    # client_encoded = client_id + ":" + client_secret
+    # sample_string_bytes = client_encoded.encode("ascii")
     
-    base64_bytes = base64.b64encode(sample_string_bytes)
-    base64_string = base64_bytes.decode("ascii")
-
-    @app.route('/', methods=['GET'])
-    def handle_webhook():
-
-            #zbiera wyslane requesty do nas tutaj 
-            code = request.args.get('code') #pobiera ten jebany kod
-            scope = request.args.getlist('scope') #pobiera scope permisji //lista
-            json = send(code) #json z tokenem, z odpowiedzi po wyslaniu kodu
-            access_token = json.get('access_token')
-            print(access_token)
-            return f"<H1 style='font-size:5em'>TOKEN ODEBRANY WOOHOO<br><br>TOKEN: {access_token}<br> WYGASA ZA: {round(json.get('expires_in')/60,1)}min<br>REFRESH TOKEN: {json.get('refresh_token')}"
-            return access_token
-    @app.route('/callback', methods=['GET'])
-    def handle_callback():
-
-            #zbiera wyslane requesty do nas tutaj 
-            code = request.args.get('code') #pobiera ten jebany kod
-            scope = request.args.getlist('scope') #pobiera scope permisji //lista
-            json = send(code) #json z tokenem, z odpowiedzi po wyslaniu kodu
-            access_token = json.get('access_token')
-            print(access_token)
-            return f"<H1 style='font-size:5em'>TOKEN ODEBRANY WOOHOO<br>Do serwisu: {service_name}<br>TOKEN: {access_token}<br><br>REFRESH TOKEN: {json.get('refresh_token')}"
-
-    def send(code):
-        if service_name == "twitch":
+    # base64_bytes = base64.b64encode(sample_string_bytes)
+    # base64_string = base64_bytes.decode("ascii")
+    
+    def send(code, service_name,client_id,client_secret,redirect_uri):
+        if service_name.lower() == "twitch":
             dane = {
                 'client_id': client_id,
                 'client_secret': client_secret,
@@ -51,7 +31,12 @@ def flaskAppWebhook(service_name,client_id,client_secret,redirect_uri):
             headers = {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
-        elif service_name == "spotify":
+            base64_string = None #bo spotify takie ma
+        elif service_name.lower() == "spotify":
+            client_encoded = client_id + ":" + client_secret
+            sample_string_bytes = client_encoded.encode("ascii")    
+            base64_bytes = base64.b64encode(sample_string_bytes)
+            base64_string = base64_bytes.decode("ascii")
             dane = {
                 'code': code,
                 'grant_type': "authorization_code",
@@ -70,6 +55,37 @@ def flaskAppWebhook(service_name,client_id,client_secret,redirect_uri):
         print(f"KOD ODPOWIEDZI: {odp.status_code}")
         print(f"ACCESS_TOKEN = {json.get('access_token')}")
         print(f"REFRESH_TOKEN = {json.get('refresh_token')}")
+        return json
+    @app.route('/', methods=['GET'])
+    # def handle_webhook():
+
+    #         #zbiera wyslane requesty do nas tutaj 
+    #         code = request.args.get('code') #pobiera ten jebany kod
+    #         scope = request.args.getlist('scope') #pobiera scope permisji //lista
+    #         json = send(code) #json z tokenem, z odpowiedzi po wyslaniu kodu
+    #         access_token = json.get('access_token')
+    #         print(access_token)
+    #         return f"<H1 style='font-size:5em'>TOKEN ODEBRANY WOOHOO<br><br>TOKEN: {access_token}<br> WYGASA ZA: {round(json.get('expires_in')/60,1)}min<br>REFRESH TOKEN: {json.get('refresh_token')}"
+    #         return access_token
+    
+
+    @app.route('/callback', methods=['GET'])
+    def handle_callback():
+            code = request.args.get('code') #pobiera ten jebany kod
+            scope = request.args.getlist('scope') #pobiera scope permisji //lista
+            state = request.args.get('state')
+            #znajdz czy to request ze spotify czy twitch
+            if state:
+                 service_name = "TWITCH"
+                 c = config['TWITCH']
+            else:
+                 service_name = "SPOTIFY"
+                 c = config['SPOTIFY'] #nie jestem z tego dumny, ale działa (mozna sprawdzic czy to twitch czy spotify po zwroconym scope, czy zgadza sie z identity.ini, ale to trzeba przerabiać z urlencoded a mi sie nie chce)
+            json = flaskAppWebhook.send(code,service_name,c['client_id'],c['client_secret'],c['redirect_uri']) #json z tokenem, z odpowiedzi po wyslaniu kodu
+            access_token = json.get('access_token')
+            print(access_token)
+            return f"<H1 style='font-size:5em'>TOKEN ODEBRANY WOOHOO<br>Do serwisu: {service_name}<br>TOKEN: {access_token}<br><br>REFRESH TOKEN: {json.get('refresh_token')}"
+
         #print(f"WYGASA ZA = {round(json.get('expires_in')/60,2)}min")
         
         #while True:
@@ -80,6 +96,6 @@ def flaskAppWebhook(service_name,client_id,client_secret,redirect_uri):
         #        break
         #    time.sleep(1)
 
-        return json #wysyla json do handle_webhook
-    return app
+         #wysyla json do handle_webhook
+   
 

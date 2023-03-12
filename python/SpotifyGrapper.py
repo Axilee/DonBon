@@ -29,5 +29,5 @@ def getCurrentlyPlaying(oAuthToken):
     else:
         return 'Error:', response.status_code
 
-currentlyPlaying = getCurrentlyPlaying(apiToken)
-print(currentlyPlaying)
+# currentlyPlaying = getCurrentlyPlaying(apiToken) 
+# print(currentlyPlaying)
