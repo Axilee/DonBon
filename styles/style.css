@@ -188,43 +188,43 @@ html {
   }
 
  .sidebar-item:first-child {
-    -webkit-transition: all .7s .2s ease-in-out;
-    -moz-transition: all .7s .2s ease-in-out;
-    -ms-transition: all .7s .2s ease-in-out;
-    -o-transition: all .7s .2s ease-in-out;
-    transition: all .7s .2s ease-in-out;
+    -webkit-transition: all .4s .2s ease-in-out;
+    -moz-transition: all .4s .2s ease-in-out;
+    -ms-transition: all .4s .2s ease-in-out;
+    -o-transition: all .4s .2s ease-in-out;
+    transition: all .4s .2s ease-in-out;
   }
   
   .sidebar-item:nth-child(2) {
-    -webkit-transition: all .7s .4s ease-in-out;
-    -moz-transition: all .7s .4s ease-in-out;
-    -ms-transition: all .7s .4s ease-in-out;
-    -o-transition: all .7s .4s ease-in-out;
-    transition: all .7s .4s ease-in-out;
+    -webkit-transition: all .5s .4s ease-in-out;
+    -moz-transition: all .5s .4s ease-in-out;
+    -ms-transition: all .5s .4s ease-in-out;
+    -o-transition: all .5s .4s ease-in-out;
+    transition: all .5s .4s ease-in-out;
   }
   
   .sidebar-item:nth-child(3) {
-    -webkit-transition: all .7s .5s ease-in-out;
-    -moz-transition: all .7s .5s ease-in-out;
-    -ms-transition: all .7s .5s ease-in-out;
-    -o-transition: all .7s .5s ease-in-out;
-    transition: all .7s .5s ease-in-out;
+    -webkit-transition: all .5s .5s ease-in-out;
+    -moz-transition: all .5s .5s ease-in-out;
+    -ms-transition: all .5s .5s ease-in-out;
+    -o-transition: all .5s .5s ease-in-out;
+    transition: all .5s .5s ease-in-out;
   }
 
   .sidebar-item:nth-child(4) {
-    -webkit-transition: all .7s .6s ease-in-out;
-    -moz-transition: all .7s .6s ease-in-out;
-    -ms-transition: all .7s .6s ease-in-out;
-    -o-transition: all .7s .6s ease-in-out;
-    transition: all .7s .6s ease-in-out;
+    -webkit-transition: all .6s .6s ease-in-out;
+    -moz-transition: all .6s .6s ease-in-out;
+    -ms-transition: all .6s .6s ease-in-out;
+    -o-transition: all .6s .6s ease-in-out;
+    transition: all .6s .6s ease-in-out;
   }
   
   .sidebar-item:last-child {
-    -webkit-transition: all .5s .8s ease-in-out;
-    -moz-transition: all .5s .8s ease-in-out;
-    -ms-transition: all .5s .8s ease-in-out;
-    -o-transition: all .5s .8s ease-in-out;
-    transition: all .5s .8s ease-in-out;
+    -webkit-transition: all .7s .8s ease-in-out;
+    -moz-transition: all .7s .8s ease-in-out;
+    -ms-transition: all .7s .8s ease-in-out;
+    -o-transition: all .7s .8s ease-in-out;
+    transition: all .7s .8s ease-in-out;
   }
   
   .sidebar-item.active {

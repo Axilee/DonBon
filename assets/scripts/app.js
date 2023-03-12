@@ -57,6 +57,8 @@ window.addEventListener('load',function(){
   const modal = document.querySelector("#modal");
   const openModal = document.querySelector(".settings-open");
   const closeModal = document.querySelector(".settings-close");
+  const saveSettings = document.querySelector(".save-settings");
+  const restoreSettings = document.querySelector(".restore-settings"); 
   
   openModal.addEventListener("click", () => {
     modal.showModal();
@@ -65,4 +67,15 @@ window.addEventListener('load',function(){
   closeModal.addEventListener("click", () => {
     modal.close();
   });
+
+  saveSettings.addEventListener("click", () => {
+    modal.close();
+    //dodać opcje zapisywania ustawień do localstorage
+    //wsm to troche taka zapchaj dziura ze jak sie komus w X nie chce kliknonć
+    //to se wychodzi tym przyciskiem
+  });
   
+  restoreSettings.addEventListener("click", () => {
+    //dodać funkcje przywracania domyślnych ustawień
+    //tez kurwa nie wiem na chuj
+  });
