@@ -4,33 +4,15 @@ $(document).ready(function() {
     function toggleSidebar() {
         $(".button").toggleClass("active");
         $(".sidebar-item").toggleClass("active");
-        $(".settings-item").toggleClass("active");
         $("sidebar").toggleClass("nav-right visible-xs");
         $(".content").toggleClass("active");
+        $('.sidebar').toggleClass('active');
 
     }
   
     $(".button").on("click tap", function() {
         toggleSidebar();
     });
-});
-
-// Settings button
-$(document).ready(function() {
-    $('#btn').click(function() {
-        $('.sidebar').toggleClass('active');
-    });
-
-    $('.settings').click(function() {
-        $('.sidebar-item:not(.settings)').toggleClass('active');
-        $('.settings-items').toggleClass('active');
-        if($(".settings-item").attr("id") === "visible") {
-          $(".settings-item").removeAttr("id");
-        } else {
-          $(".settings-item").attr("id", "visible");
-        }
-    });
-
 });
 
 
@@ -70,4 +52,17 @@ window.addEventListener('load',function(){
       iteration += 1 / 3;
     }, 30);
   };
+
+// Otwieranie modalu z ustawieniami 
+  const modal = document.querySelector("#modal");
+  const openModal = document.querySelector(".settings-open");
+  const closeModal = document.querySelector(".settings-close");
+  
+  openModal.addEventListener("click", () => {
+    modal.showModal();
+  });
+  
+  closeModal.addEventListener("click", () => {
+    modal.close();
+  });
   

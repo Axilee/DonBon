@@ -324,5 +324,7 @@
     to {
        -webkit-transform: perspective(700) rotateY(0deg);
         -webkit-transform-origin: 100% 100%;
+        
     }
 }
+

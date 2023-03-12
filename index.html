@@ -43,13 +43,9 @@
         <li class="sidebar-item"><a href="#" class="sidebar-anchor">Funkcje</a></li>
         <li class="sidebar-item"><a href="#" class="sidebar-anchor">Twitch</a></li>
         <li class="sidebar-item"><a href="#" class="sidebar-anchor">Logowanie</a></li>
-        <button class="settings"><li class="settings-item"><a href="#settings" class="sidebar-anchor">Ustawienia</a></li></button>
+        <button class="settings settings-open"><li class="sidebar-item"><a href="#settings" class="sidebar-anchor">Ustawienia</a></li></button>
     </ul>    
-    <ul class="settings-list">       
-        <li class="settings-items"><a href="#" class="sidebar-anchor">Konto</a></li>
-        <li class="settings-items"><a href="#" class="sidebar-anchor">Bot</a></li>
-        <li class="settings-items"><a href="#" class="sidebar-anchor">Dark theme</a></li>
-    </ul>   
+
         
     
 </div>
@@ -79,6 +75,7 @@
                 <div class="bitsy">
                     <input id="s1" type="checkbox" class="switch"><label for="s1">Switch</label>
                 </div>
+                <button class="settings settings-open"><li class="sidebar-item"><a href="#settings" class="sidebar-anchor">Ustawienia</a></li></button>
 
             </div>
 
@@ -88,7 +85,31 @@
 </div>
 
 
-<!-- Footer -->
+
+<dialog class="modal" id="modal">
+    <button class="settings-close">X</button>
+
+    <div class="modal-content">
+        <h1>Ustawienia</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum esse nisi, laboriosam illum temporibus ipsam?</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, quo.</p>
+
+        <ul class="setting-items">
+            <li class="settings-item"><a href="#">Item 1</a></li>
+            <li class="settings-item"><a href="#">Item 1</a></li>
+            <li class="settings-item"><a href="#">Item 1</a></li>
+            <li class="settings-item"><a href="#">Item 1</a></li>
+        </ul>    
+        <div class="setting-buttons">
+            <button class="save-settings">Zapisz</button>
+            <button class="restore-settings">Przywróć</button>
+        </div>
+
+
+    </div>
+    
+  
+</dialog>
 
 
 
