@@ -15,29 +15,11 @@ import urllib.parse
 #from Chat import chat
 import sys
 import multiprocessing
+import requests
 sys.path.append('Oauth2')
 from Oauth2 import webhook
 from Oauth2 import AuthorizationOauth2 
 from Oauth2 import initWebhook
-
-wsh = comclt.Dispatch("WScript.Shell")
-ap = comclt.Dispatch("Shell.Application")
-
-#dane połączenia
-ACCESS_TOKEN = 'dji7vy3dlc0szw4vz28ai6cllt4p9b'
-PREFIX = "$"
-INITIAL_CHANNELS=["aaxile"]
-
-def wlacz_webhook():
-            print("zaczyna webhook")
-            webhook.flaskAppWebhook.app.run(host="0.0.0.0", port=5000)
-def okno():
-        initWebhook.inicjalizuj.wybor()
-webhookProcess = multiprocessing.Process(target=wlacz_webhook)
-
-
-
-
 #wczytaj konfig zmienne.ini
 config = configparser.ConfigParser()
 zmienne = config.read("zmienne.ini")
@@ -46,16 +28,49 @@ identity = configparser.ConfigParser()
 identityFile = identity.read("Oauth2/identity.ini")
 
 auth = identity['TWITCH']['access_token'] #zaczyt tokenu auth dla twitch
-refresh = identity['TWITCH']['refresh_token'] #imo lepiej tutac execowac refresh token bedzie latwiej go responsem odnawiac 
+refresh_token = identity['TWITCH']['refresh_token'] #imo lepiej tutac execowac refresh token bedzie latwiej go responsem odnawiac 
+client_id = identity["TWITCH"]['client_id']
+client_secret = identity["TWITCH"]['client_secret']
 #ewentualnie odczyt/zapis konfiguracji co godzine a generowanie tokenu gdzie indziej
 print (f"CONFIG: {zmienne}")
+
+
+#dane połączenia
+
+ACCESS_TOKEN = 'dji7vy3dlc0szw4vz28ai6cllt4p9b'
+
+PREFIX = "$"
+
+INITIAL_CHANNELS=["aaxile"]
+
+user_token = identity["TWITCH"]['access_token']
+
 
 #--------------------------------------GLOBALNE FUNKCJE ---------------------------------
 #sprawdz status komendy z zmienne ini
 def sprawdz(typ,nazwa):
     config.get(typ, nazwa)
 
+def wlacz_webhook():
+            print("zaczyna webhook")
+            webhook.flaskAppWebhook.app.run(host="0.0.0.0", port=5000)
+def okno():
+        initWebhook.inicjalizuj.wybor()
+webhookProcess = multiprocessing.Process(target=wlacz_webhook)
+
+def sprawdz_token(token):
+    headers = {'Authorization': f'Bearer{token}'}
+    url = 'https://api.twitch.tv/helix/users'
+    response = requests.get(url,headers=headers)
+    if response.status_code == 401:
+        webhook.flaskAppWebhook.refresh("twitch",refresh_token,client_id,client_secret)
+    else:
+        print(f"Token nadal ważny, odpowiedz z api = {response.status_code}")
+
 #----------------------------------------------------------------------------------------
+
+wsh = comclt.Dispatch("WScript.Shell")
+ap = comclt.Dispatch("Shell.Application")
 class Bot(commands.Bot):
 #logowanie do IRC    
     def __init__(self):
@@ -168,6 +183,7 @@ class Bot(commands.Bot):
 
 #inicjalizacja komendą python main.py
 if __name__ == "__main__":
+    sprawdz_token(user_token)
     bot = Bot()
     bot.update_komendy()
     ssh.execute()

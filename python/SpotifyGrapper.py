@@ -27,5 +27,5 @@ def getCurrentlyPlaying(oAuthToken):
     else:
         return 'Error:', response.status_code
 
-currentlyPlaying = getCurrentlyPlaying(config['SPOTIFY']['access_token']) 
-print(currentlyPlaying)
+# currentlyPlaying = getCurrentlyPlaying(config['SPOTIFY']['access_token']) 
+# print(currentlyPlaying)

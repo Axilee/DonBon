@@ -5,7 +5,6 @@ import requests
 import base64
 import time
 import configparser
-
 start_time = time.time()
 config = configparser.ConfigParser()
 konfig = config.read("Oauth2/identity.ini")
@@ -18,7 +17,38 @@ class flaskAppWebhook():
     
     # base64_bytes = base64.b64encode(sample_string_bytes)
     # base64_string = base64_bytes.decode("ascii")
-    
+    def refresh(service_name,refresh_token,client_id,client_secret):
+        print(f"Odświeżanie tokenu dla {client_id}")
+        dane = {
+            'client_id': client_id,
+            'client_secret': client_secret,
+            'grant_type': 'refresh_token',
+            'refresh_token': refresh_token
+        }
+        headers = {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        if service_name.lower() == "twitch":
+            uri = 'https://id.twitch.tv/oauth2/token'
+        elif service_name.lower() == "spotify":
+            uri = 'https://accounts.spotify.com/api/token'
+            #tu dopisac client_encoded jak bedzie potrzebny
+        response = requests.post(uri,headers = headers,data = dane)
+        json = response.json()
+        print ("JAK POSZLO REFRESHOWANIE?",service_name,json)
+        if json.get('access_token') != None:   
+            expires_in = json.get('expires_in')
+            expires_seconds = time.time() + expires_in
+            expires_at = time.localtime(expires_seconds)
+            expires_at = time.strftime("%m-%d %H:%M:%S",expires_at)
+            print ("Nowy token wygaśnie w dniu: ",expires_at)
+            config.set(service_name.upper(),'access_token',json.get('access_token'))
+            config.set(service_name.upper(),'expires_in',str(expires_seconds))
+            config.set(service_name.upper(),'data_waznosci',expires_at)
+            config.set(service_name.upper(),'refresh_token',json.get('refresh_token'))
+        
+        return json
+
     def send(code, service_name,client_id,client_secret,redirect_uri):
         if service_name.lower() == "twitch":
             dane = {
@@ -56,6 +86,9 @@ class flaskAppWebhook():
         print(f"KOD ODPOWIEDZI: {odp.status_code}")
         print(f"ACCESS_TOKEN = {json.get('access_token')}")
         print(f"REFRESH_TOKEN = {json.get('refresh_token')}")
+        config.set(service_name.upper(),'access_token',json.get('access_token'))
+        config.set(service_name.upper(),'refresh_token',json.get('refresh_token'))
+        
         return json
     @app.route('/', methods=['GET'])
     # def handle_webhook():
