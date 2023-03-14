@@ -12,6 +12,7 @@ import configparser
 import ssh
 from SpotifyGrapper import getCurrentlyPlaying
 import urllib.parse
+from wsgiref.simple_server import make_server
 #from Chat import chat
 import sys
 import multiprocessing
@@ -23,9 +24,9 @@ from Oauth2 import initWebhook
 #wczytaj konfig zmienne.ini
 config = configparser.ConfigParser()
 zmienne = config.read("zmienne.ini")
-
 identity = configparser.ConfigParser()
 identityFile = identity.read("Oauth2/identity.ini")
+
 
 auth = identity['TWITCH']['access_token'] #zaczyt tokenu auth dla twitch
 refresh_token = identity['TWITCH']['refresh_token'] #imo lepiej tutac execowac refresh token bedzie latwiej go responsem odnawiac 
@@ -52,8 +53,9 @@ def sprawdz(typ,nazwa):
     config.get(typ, nazwa)
 
 def wlacz_webhook():
-            print("zaczyna webhook")
-            webhook.flaskAppWebhook.app.run(host="0.0.0.0", port=5000)
+            httpd = make_server('localhost',5000,initWebhook.webhook.flaskAppWebhook.app)
+            httpd.serve_forever()
+            # webhook.flaskAppWebhook.app.run(host="0.0.0.0", port=5000)
 def okno():
         initWebhook.inicjalizuj.wybor()
 webhookProcess = multiprocessing.Process(target=wlacz_webhook)
@@ -158,9 +160,7 @@ class Bot(commands.Bot):
         await ctx.send(auth)
     #@commands.command(name = "chatgpt")
     #async def chatgpt(self,ctx:commands.Context):
-    #    odpowiedz = await chat.chatgpt(ctx.message.content.replace("$chatgpt", ""))
-    #    print(ctx.message.content)
-    #    await ctx.send(odpowiedz)
+
 
 
 #wyślij liste komend do zmienne.ini
@@ -188,7 +188,7 @@ if __name__ == "__main__":
     bot.update_komendy()
     ssh.execute()
     bot.info()
-    print(f"\n\n\bLogowanie do kanalu {INITIAL_CHANNELS[0]}...")
+    print(f"\nLogowanie do kanalu {INITIAL_CHANNELS[0]}...")
     bot.run()
     
     
