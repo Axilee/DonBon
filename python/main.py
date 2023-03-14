@@ -27,13 +27,12 @@ zmienne = config.read("zmienne.ini")
 identity = configparser.ConfigParser()
 identityFile = identity.read("Oauth2/identity.ini")
 
-
-auth = identity['TWITCH']['access_token'] #zaczyt tokenu auth dla twitch
+user_token = identity['TWITCH']['access_token'] #zaczyt tokenu auth dla twitch
 refresh_token = identity['TWITCH']['refresh_token'] #imo lepiej tutac execowac refresh token bedzie latwiej go responsem odnawiac 
 client_id = identity["TWITCH"]['client_id']
 client_secret = identity["TWITCH"]['client_secret']
 #ewentualnie odczyt/zapis konfiguracji co godzine a generowanie tokenu gdzie indziej
-print (f"CONFIG: {zmienne}")
+
 
 
 #dane połączenia
@@ -44,7 +43,7 @@ PREFIX = "$"
 
 INITIAL_CHANNELS=["aaxile"]
 
-user_token = identity["TWITCH"]['access_token']
+
 
 
 #--------------------------------------GLOBALNE FUNKCJE ---------------------------------
@@ -55,20 +54,19 @@ def sprawdz(typ,nazwa):
 def wlacz_webhook():
             httpd = make_server('localhost',5000,initWebhook.webhook.flaskAppWebhook.app)
             httpd.serve_forever()
-            # webhook.flaskAppWebhook.app.run(host="0.0.0.0", port=5000)
 def okno():
         initWebhook.inicjalizuj.wybor()
 webhookProcess = multiprocessing.Process(target=wlacz_webhook)
 
 def sprawdz_token(token):
-    headers = {'Authorization': f'Bearer{token}'}
-    url = 'https://api.twitch.tv/helix/users'
+    headers = {'Authorization': f'Bearer {token}'}
+    url = 'https://id.twitch.tv/oauth2/validate'
     response = requests.get(url,headers=headers)
     if response.status_code == 401:
         webhook.flaskAppWebhook.refresh("twitch",refresh_token,client_id,client_secret)
     else:
-        print(f"Token nadal ważny, odpowiedz z api = {response.status_code}")
-
+        print(f"Token ważny jeszcze przez {round((response.json().get('expires_in'))/3600,2)}godz")
+        return True
 #----------------------------------------------------------------------------------------
 
 wsh = comclt.Dispatch("WScript.Shell")
@@ -77,21 +75,15 @@ class Bot(commands.Bot):
 #logowanie do IRC    
     def __init__(self):
         super().__init__(token=ACCESS_TOKEN, prefix = PREFIX, initial_channels=INITIAL_CHANNELS)  
-
-    if __name__ == "__main__":
-            webhookProcess.start()
-            okno()
+            
 
     async def event_ready(self):
         print(f'Zalogowano jako {self.nick}')
-        print(f'user ID {self.user_id}')
-        #print(" AUTH \n\n")
-        print()
-        # await initWebhook.inicjalizuj.wybor() #test autoryzacji - tymczasowe / potem ma byc gdzies indziej/oddzielnie 
+        # print(f'user ID {self.user_id}')
         
 #powitanie po właczeniu i wejsciu na kanał
-    # async def event_channel_joined(self,channel):    
-    #     await channel.send(f"Bążur @{channel.name}!")
+    async def event_channel_joined(self,channel):    
+        await channel.send(f"Bążur @{channel.name}!")
     
 #logowanie eventu dołączania viewerów (wtf)
     async def event_join(self,channel,user):
@@ -119,7 +111,6 @@ class Bot(commands.Bot):
     async def allchat(self, ctx:commands.Context):
         msg = (ctx.message.content)
         msg = msg.replace("$allchat","")
-        print (msg)
         wsh.SendKeys("{Enter}")
         time.sleep(0.05)
         wsh.SendKeys("{/}")
@@ -131,7 +122,6 @@ class Bot(commands.Bot):
     async def teamchat(self, ctx:commands.Context):
         msg = (ctx.message.content)
         msg = msg.replace("$teamchat","")
-        print (msg)
         wsh.SendKeys("{Enter}")
         time.sleep(0.05)
         wsh.SendKeys("{/}")
@@ -157,7 +147,7 @@ class Bot(commands.Bot):
         wsh.SendKeys(s)
     @commands.command(name = "czesc")
     async def czesc(self,ctx:commands.Context):
-        await ctx.send(auth)
+        await ctx.send(user_token)
     #@commands.command(name = "chatgpt")
     #async def chatgpt(self,ctx:commands.Context):
 
@@ -176,18 +166,21 @@ class Bot(commands.Bot):
                 print(f"Dodaje komendę {command.name}...")
         with open('zmienne.ini', 'w') as plik:
             config.write(plik)
-    def info(self):
-        id = Bot.user_id
-        print(id)
+ 
 
 
 #inicjalizacja komendą python main.py
 if __name__ == "__main__":
-    sprawdz_token(user_token)
+    print (f"CONFIG: {zmienne}")
+    webhookProcess.start()
+    if sprawdz_token(user_token):
+         pass
+    else:
+        print("Token expired!")
+        okno()
     bot = Bot()
     bot.update_komendy()
     ssh.execute()
-    bot.info()
     print(f"\nLogowanie do kanalu {INITIAL_CHANNELS[0]}...")
     bot.run()
     
