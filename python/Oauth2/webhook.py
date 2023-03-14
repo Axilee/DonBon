@@ -1,24 +1,28 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 from urllib.parse import urlencode
 import requests
 #import AuthorizationOauth2 #TYMCZASOWE - zeby sie odpalało przy właczeniu 'python webhook.py'
 import base64
 import time
 import configparser
+import os
 start_time = time.time()
 config = configparser.ConfigParser()
-konfig = config.read("Oauth2/identity.ini")
-print(f"{konfig} CONFIG WEBHOOKA")
-class flaskAppWebhook():
-    app = Flask(__name__)
+config.read("Oauth2/identity.ini")
+htmldir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'html'))
+static = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'html'))
 
+
+class flaskAppWebhook():
+    app = Flask(__name__,template_folder=htmldir, static_folder=static)
+    
     # client_encoded = client_id + ":" + client_secret
     # sample_string_bytes = client_encoded.encode("ascii")
     
     # base64_bytes = base64.b64encode(sample_string_bytes)
     # base64_string = base64_bytes.decode("ascii")
     def refresh(service_name,refresh_token,client_id,client_secret):
-        print(f"Odświeżanie tokenu dla {client_id}")
+        print(f"WEBHOOK >> Odświeżanie tokenu dla >> {client_id}")
         dane = {
             'client_id': client_id,
             'client_secret': client_secret,
@@ -35,17 +39,19 @@ class flaskAppWebhook():
             #tu dopisac client_encoded jak bedzie potrzebny
         response = requests.post(uri,headers = headers,data = dane)
         json = response.json()
-        print ("JAK POSZLO REFRESHOWANIE?",service_name,json)
-        if json.get('access_token') != None:   
+        if json.get('access_token'):   
             expires_in = json.get('expires_in')
             expires_seconds = time.time() + expires_in
             expires_at = time.localtime(expires_seconds)
             expires_at = time.strftime("%m-%d %H:%M:%S",expires_at)
-            print ("Nowy token wygaśnie w dniu: ",expires_at)
+            print ("WEBHOOK >> Wygenerowano, nowy token wygaśnie w dniu >> ",expires_at)
             config.set(service_name.upper(),'access_token',json.get('access_token'))
             config.set(service_name.upper(),'expires_in',str(expires_seconds))
             config.set(service_name.upper(),'data_waznosci',expires_at)
             config.set(service_name.upper(),'refresh_token',json.get('refresh_token'))
+            with open ('Oauth2/identity.ini', 'w') as plik:
+                config.write(plik)
+            
         
         return json
 
@@ -80,27 +86,21 @@ class flaskAppWebhook():
         #wyślij POST z kodem, zwraca access token
         odp = requests.post(uri,headers = headers , data = dane)
         json = odp.json()
-        print("WYSŁANO POST\n")
-        print(f"Auth code: {code}")
-        print(f"Client encode {base64_string}")
-        print(f"KOD ODPOWIEDZI: {odp.status_code}")
-        print(f"ACCESS_TOKEN = {json.get('access_token')}")
-        print(f"REFRESH_TOKEN = {json.get('refresh_token')}")
-        config.set(service_name.upper(),'access_token',json.get('access_token'))
-        config.set(service_name.upper(),'refresh_token',json.get('refresh_token'))
+
+        print(f"WEBHOOK >> Autoryzacja {service_name} >> response {odp.status_code}")
         
         return json
-    @app.route('/', methods=['GET'])
-    # def handle_webhook():
+    
 
-    #         #zbiera wyslane requesty do nas tutaj 
-    #         code = request.args.get('code') #pobiera ten jebany kod
-    #         scope = request.args.getlist('scope') #pobiera scope permisji //lista
-    #         json = send(code) #json z tokenem, z odpowiedzi po wyslaniu kodu
-    #         access_token = json.get('access_token')
-    #         print(access_token)
-    #         return f"<H1 style='font-size:5em'>TOKEN ODEBRANY WOOHOO<br><br>TOKEN: {access_token}<br> WYGASA ZA: {round(json.get('expires_in')/60,1)}min<br>REFRESH TOKEN: {json.get('refresh_token')}"
-    #         return access_token
+
+
+
+
+
+    @app.route('/', methods=['GET'])
+    
+    def index():
+        return render_template('index.html')
     
 
     @app.route('/callback', methods=['GET'])
@@ -131,16 +131,6 @@ class flaskAppWebhook():
                     config.write(f)
             return f"<H1 style='font-size:5em'>TOKEN ODEBRANY WOOHOO<br>Do serwisu: {service_name}<br>TOKEN: {access_token}<br><br>REFRESH TOKEN: {refresh_token}"
 
-        #print(f"WYGASA ZA = {round(json.get('expires_in')/60,2)}min")
-        
-        #while True:
-        #    current_time = time.time()
-        #    elapsed_time = current_time - start_time
-        #    if elapsed_time >= 120:
-        #        print("Minął czas")
-        #        break
-        #    time.sleep(1)
 
-         #wysyla json do handle_webhook
    
 

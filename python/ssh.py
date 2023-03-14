@@ -3,7 +3,7 @@ import multiprocessing
 import time
 
 hostname='172.30.85.163'
-username='donbon'
+username='fitas'
 password='qwe!@#'
 
 def loading():
@@ -18,7 +18,7 @@ def polacz():
 
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(hostname, username='fitas', password='qwe!@#')
+    ssh.connect(hostname, username=username, password='qwe!@#')
 
     sciezka_lokalna = '.\\zmienne.ini'
     sciezka_zdalna = '/home/fitas/bot/zmienne.ini'
@@ -34,14 +34,15 @@ def polacz():
 
 def execute():
     try:
-        print(f"\nWysyłanie komend do {hostname}")
+        print(f"\nSSH >> Wysyłanie komend do {hostname}")
         loading_t.start()
         polacz()
         loading_t.terminate()
     except:
-        print("COŚ POSZŁO NIE TAK - NIE WYSŁANO")
+        loading_t.terminate()
+        print("SSH >> COŚ POSZŁO NIE TAK - NIE WYSŁANO")
     else:
-        print(f"\nSUKCES! Komendy poszły do {hostname} jako {username}")
+        print(f"\nSSH >> SUKCES! Wysłano komendy do {hostname} jako {username}")
 
 
 #do testow bezposrednich z cmd

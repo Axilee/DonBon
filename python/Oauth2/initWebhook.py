@@ -12,21 +12,15 @@ from PIL import ImageTk, Image #pip install pillow
 #global config load
 config = configparser.ConfigParser()
 dane = config.read("Oauth2/identity.ini")
-print(f"initWebhook wczytał config: {dane}")
 
 class inicjalizuj():
     def wybor():
-        print ("WYBOR")
-        
-        
         def btn_tw():
             c = config['TWITCH']
-            print("twitch przycisk")
             redirect_parsed_uri = urllib.parse.quote(c['redirect_uri'], safe="")
             oAuth = AuthorizationOauth2.getOAuth(c['service_name'],c['client_id'],c['uri'],redirect_parsed_uri)
         def btn_sp():
             c = config['SPOTIFY']
-            print("spotify przycisk")
             redirect_parsed_uri = urllib.parse.quote(c['redirect_uri'], safe="")
             oAuth = AuthorizationOauth2.getOAuth(c['service_name'],c['client_id'],c['uri'],redirect_parsed_uri)
 
