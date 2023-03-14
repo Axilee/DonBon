@@ -31,6 +31,8 @@ user_token = identity['TWITCH']['access_token'] #zaczyt tokenu auth dla twitch
 refresh_token = identity['TWITCH']['refresh_token'] #imo lepiej tutac execowac refresh token bedzie latwiej go responsem odnawiac 
 client_id = identity["TWITCH"]['client_id']
 client_secret = identity["TWITCH"]['client_secret']
+spotify_user_token = identity['SPOTIFY']['access_token']
+spotify_refresh_token = identity['SPOTIFY']['refresh_token']
 #ewentualnie odczyt/zapis konfiguracji co godzine a generowanie tokenu gdzie indziej
 
 
@@ -69,8 +71,17 @@ def sprawdz_token(token,service_name):
 
     elif service_name == 'spotify' :
         try:
-            print ("spotify to pierdole")
-            #ty to pisz bo to syf
+            headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': f'Bearer {token}'
+            }
+            url = "https://api.spotify.com/v1/me/player/currently-playing"
+            response = requests.get(url,headers=headers)
+            #There is no API endpoint for checking whether the access token is still valid. Usually you would store 
+            #it along with the expires_in value that tells you until when it is valid.
+            #An alternative is making a request to any endpoint from the Web API passing the access token. 
+            #You will get a 401 Unauthorized status code back if the token has expired.
         except:
             pass 
 
@@ -168,6 +179,9 @@ class Bot(commands.Bot):
     @commands.command(name = "czesc")
     async def czesc(self,ctx:commands.Context):
         await ctx.send(user_token)
+    @commands.command(name = "song")
+    async def song(self,ctx:commands.Context):
+        await ctx.send(getCurrentlyPlaying(identity['SPOTIFY']['access_token']))
     #@commands.command(name = "chatgpt")
     #async def chatgpt(self,ctx:commands.Context):
 
@@ -194,7 +208,7 @@ if __name__ == "__main__":
     print (f"CONFIG: {zmienne}")
     webhookProcess.start()
     sprawdz_token(user_token,'twitch')
-    # sprawdz_token(identity['SPOTIFY']['access_token'],'spotify') todo
+    sprawdz_token(identity['SPOTIFY']['access_token'],'spotify')
     bot = Bot()
     bot.update_komendy()
     ssh.execute()
