@@ -61,10 +61,12 @@ webhookProcess = multiprocessing.Process(target=wlacz_webhook)
 def sprawdz_token(token,service_name):
     response = None
     i = identity[service_name.upper()]
+
     if service_name == 'twitch':
         url = identity[service_name.upper()]['uri']  + "validate"
         headers = {'Authorization': f'Bearer {token}'}
         response = requests.get(url,headers=headers)
+
     elif service_name == 'spotify' :
         try:
             print ("spotify to pierdole")
@@ -72,19 +74,18 @@ def sprawdz_token(token,service_name):
         except:
             pass 
 
-    if response and response.status_code == 401:
-        webhook.flaskAppWebhook.refresh(service_name,i['refresh_token'],i['client_id'],i['client_secret'])
-        if response.status_code == 401:
+    if  response.status_code == 401:
+        json = webhook.flaskAppWebhook.refresh(service_name,i['refresh_token'],i['client_id'],i['client_secret'])
+        response = requests.get(url,headers=headers)
+        if response.status_code == 401 and i['access_token'] == "":
             print("Pierwsza autoryzacja")
             okno()
     else:
         try:
             print(f"Token ważny jeszcze przez {round((response.json().get('expires_in'))/3600,2)}godz")
         except:
-            try:
-                print("cos poszlo nie tak: ",response.content," kod ",response.status_code)
-            except: 
-                print("spotify") #cale to wszystko tu try/except ignoruje spotify
+            print("cos poszlo nie tak: ",response.content," kod ",response.status_code)
+            
         return True
 #----------------------------------------------------------------------------------------
 
@@ -193,7 +194,7 @@ if __name__ == "__main__":
     print (f"CONFIG: {zmienne}")
     webhookProcess.start()
     sprawdz_token(user_token,'twitch')
-    sprawdz_token(identity['SPOTIFY']['access_token'],'spotify')
+    # sprawdz_token(identity['SPOTIFY']['access_token'],'spotify') todo
     bot = Bot()
     bot.update_komendy()
     ssh.execute()
