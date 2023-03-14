@@ -747,6 +747,13 @@ footer {
 .bitsy {
   padding-top: 1rem;
   padding-left: 0.8rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
+}
+
+.check-section  {
+  margin-bottom: 3rem;
 }
 
 
@@ -810,6 +817,10 @@ footer {
       padding-top: 1rem;
       padding-left: 8.8rem;
       transition: all .8s ease-in-out;
+    }
+
+    .column {
+      padding-top: 2rem;
     }
   
   }
