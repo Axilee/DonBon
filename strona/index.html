@@ -91,23 +91,34 @@
 
 
 <dialog class="modal" id="modal">
-    <button class="settings-close">X</button>
+    <div class="top-bar">
+        <h1>Ustawienia</h1>
+        <button class="settings-close">X</button>
+    </div>
+
 
     <div class="modal-content">
-        <h1>Ustawienia</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum esse nisi, laboriosam illum temporibus ipsam?</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, quo.</p>
 
-        <ul class="setting-items">
-            <li class="settings-item"><a href="#">Item 1</a></li>
-            <li class="settings-item"><a href="#">Item 1</a></li>
-            <li class="settings-item"><a href="#">Item 1</a></li>
-            <li class="settings-item"><a href="#">Item 1</a></li>
-        </ul>    
-        <div class="setting-buttons">
+            <div class="settings-sidebar">
+                <ul class="setting-items">
+                    <button class="setting-btn"><a href="#"><i class="fa-solid fa-sliders"></i> Ogólne</a></button>
+                    <button class="setting-btn"><a href="#"><i class="fa-solid fa-user"></i> Konto</a></button>
+                    <button class="setting-btn"><a href="#"><i class="fa-solid fa-lock"></i> Prywatność</a></button>
+                    <button class="setting-btn"><a href="#"><i class="fa-solid fa-bars"></i> Strona</a></button>
+                </ul>
+                <div class="account">
+                        <img src="/strona/img/user.png" alt="profile" class="acc-img">NatalieSource
+                </div>    
+            </div>
+            <div class="settings-content">
+                
+            </div>
+
+
+        <!-- <div class="setting-buttons">
             <button class="save-settings">Zapisz</button>
             <button class="restore-settings">Przywróć</button>
-        </div>
+        </div> -->
 
 
     </div>
