@@ -58,14 +58,33 @@ def okno():
         initWebhook.inicjalizuj.wybor()
 webhookProcess = multiprocessing.Process(target=wlacz_webhook)
 
-def sprawdz_token(token):
-    headers = {'Authorization': f'Bearer {token}'}
-    url = 'https://id.twitch.tv/oauth2/validate'
-    response = requests.get(url,headers=headers)
-    if response.status_code == 401:
-        webhook.flaskAppWebhook.refresh("twitch",refresh_token,client_id,client_secret)
+def sprawdz_token(token,service_name):
+    response = None
+    i = identity[service_name.upper()]
+    if service_name == 'twitch':
+        url = identity[service_name.upper()]['uri']  + "validate"
+        headers = {'Authorization': f'Bearer {token}'}
+        response = requests.get(url,headers=headers)
+    elif service_name == 'spotify' :
+        try:
+            print ("spotify to pierdole")
+            #ty to pisz bo to syf
+        except:
+            pass 
+
+    if response and response.status_code == 401:
+        webhook.flaskAppWebhook.refresh(service_name,i['refresh_token'],i['client_id'],i['client_secret'])
+        if response.status_code == 401:
+            print("Pierwsza autoryzacja")
+            okno()
     else:
-        print(f"Token ważny jeszcze przez {round((response.json().get('expires_in'))/3600,2)}godz")
+        try:
+            print(f"Token ważny jeszcze przez {round((response.json().get('expires_in'))/3600,2)}godz")
+        except:
+            try:
+                print("cos poszlo nie tak: ",response.content," kod ",response.status_code)
+            except: 
+                print("spotify") #cale to wszystko tu try/except ignoruje spotify
         return True
 #----------------------------------------------------------------------------------------
 
@@ -173,11 +192,8 @@ class Bot(commands.Bot):
 if __name__ == "__main__":
     print (f"CONFIG: {zmienne}")
     webhookProcess.start()
-    if sprawdz_token(user_token):
-         pass
-    else:
-        print("Token expired!")
-        okno()
+    sprawdz_token(user_token,'twitch')
+    sprawdz_token(identity['SPOTIFY']['access_token'],'spotify')
     bot = Bot()
     bot.update_komendy()
     ssh.execute()
