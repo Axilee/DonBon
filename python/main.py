@@ -200,8 +200,27 @@ class Bot(commands.Bot):
                 print(f"Dodaje komendę {command.name}...")
         with open('zmienne.ini', 'w') as plik:
             config.write(plik)
- 
+    
+# class bitbot():
+#     client = twitchio.Client(ACCESS_TOKEN)
+#     @client.event()
+#     async def event_pubsub_bits(event: pubsub.PubSubBitsMessage):
+#         print('bitsy')
 
+#     @client.event()
+#     async def event_pubsub_channel_points(event: pubsub.PubSubChannelPointsMessage):
+#         if event.reward.id == "2f445287-bff8-401b-8011-e44e070c60ca":
+#             print('Odebrano wspólny wypad w gierce')
+#         else:
+#             print(f'Użytkownik {event.channel_id} odebrał {event.reward} o ID = {event.id}, jego input {event.input}, status {event.status}')
+
+#     async def main():
+#         topics = [
+#             pubsub.channel_points(users_oauth_token)[users_channel_id],
+#             pubsub.bits(users_oauth_token)[users_channel_id]
+#         ]
+#         await client.pubsub.subscribe_topics(topics)
+#         await client.start()
 
 #inicjalizacja komendą python main.py
 if __name__ == "__main__":

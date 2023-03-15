@@ -3,8 +3,8 @@ import asyncio
 from twitchio.ext import pubsub
 
 my_token = "dji7vy3dlc0szw4vz28ai6cllt4p9b"
-users_oauth_token = ""
-users_channel_id = 104929447
+users_oauth_token = "uc6wftw4zvot86y7o8t3wga6d2gnt7"
+users_channel_id = 161307951
 client = twitchio.Client(token=my_token)
 client.pubsub = pubsub.PubSubPool(client)
 

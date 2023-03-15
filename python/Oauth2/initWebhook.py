@@ -1,14 +1,15 @@
-#tworzy okno wyboru autoryzacji spotify/twitch, pobiera z identity.ini parametry do autoryzacji, wlacza webhook i tworzy tokeny // TODO zwracanie tokenow gdzies
+
 
 import multiprocessing
 import webhook
-import AuthorizationOauth2  #<- najwyrazniej trzeba tak importowac zeby sie dalo potem z gory importowac, pojebane
+import AuthorizationOauth2  
 import urllib.parse
 import configparser
 import tkinter as tk
 import _tkinter
 import os
 from PIL import ImageTk, Image #pip install pillow
+
 #global config load
 config = configparser.ConfigParser()
 dane = config.read("Oauth2/identity.ini")
