@@ -23,21 +23,36 @@ class flaskAppWebhook():
     # base64_string = base64_bytes.decode("ascii")
     def refresh(service_name,refresh_token,client_id,client_secret):
         print(f"WEBHOOK >> Odświeżanie tokenu dla >> {client_id}")
-        dane = {
-            'client_id': client_id,
-            'client_secret': client_secret,
-            'grant_type': 'refresh_token',
-            'refresh_token': refresh_token
-        }
-        headers = {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
         if service_name.lower() == "twitch":
             uri = 'https://id.twitch.tv/oauth2/token'
+            dane = {
+                'client_id': client_id,
+                'client_secret': client_secret,
+                'grant_type': 'refresh_token',
+                'refresh_token': refresh_token
+                }
+            headers = {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
         elif service_name.lower() == "spotify":
             uri = 'https://accounts.spotify.com/api/token'
-            #tu dopisac client_encoded jak bedzie potrzebny
-        response = requests.post(uri,headers = headers,data = dane)
+            tokenString = f'{client_id}:{client_secret}'
+            encoded_client = base64.b64encode(tokenString.encode("utf-8")).decode("utf-8") 
+
+            headers = {"Authorization": f'Basic {encoded_client}'}
+            dane = {
+            "grant_type": "refresh_token",
+            "refresh_token": refresh_token
+            }
+        try:
+            response = requests.post(uri,headers = headers,data = dane)
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as e:
+            print(f"Coś poszło nie tak, kod {e}")
+            print(headers)
+            print(dane)
+            print(uri)
+            if service_name == "spotify": print(f"string for encoded: {tokenString}, encoded string: {encoded_client}")
         json = response.json()
         if json.get('access_token'):   
             expires_in = json.get('expires_in')
@@ -48,7 +63,7 @@ class flaskAppWebhook():
             config.set(service_name.upper(),'access_token',json.get('access_token'))
             config.set(service_name.upper(),'expires_in',str(expires_seconds))
             config.set(service_name.upper(),'data_waznosci',expires_at)
-            config.set(service_name.upper(),'refresh_token',json.get('refresh_token'))
+            if service_name != 'spotify': config.set(service_name.upper(),'refresh_token',json.get('refresh_token'))
             with open ('Oauth2/identity.ini', 'w') as plik:
                 config.write(plik)
             
