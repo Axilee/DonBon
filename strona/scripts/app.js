@@ -79,3 +79,22 @@ window.addEventListener('load',function(){
     //dodać funkcje przywracania domyślnych ustawień
     //tez kurwa nie wiem na chuj
   });
+
+
+  $(function () {
+    "use strict";
+
+    $(".menu-box-tab:first").addClass("setting-active");
+    $(".settings-inside:first").addClass("setting-active");
+    
+    $(".menu-box-tab").on("click", function () {
+      $(".menu-box-tab").removeClass("setting-active");
+      $(this).addClass("setting-active");
+  
+
+      var targetContent = $(this).attr("href");
+      $(".settings-inside").removeClass("setting-active");
+      $(targetContent).addClass("setting-active");
+    });
+  });
+  
