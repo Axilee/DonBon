@@ -51,17 +51,21 @@ def config_sync():
     ssh.connect(hostname, username=username, password='qwe!@#')
     sftp = ssh.open_sftp()
 
-
-    with sftp.open('/home/fitas/bot/zmienne.ini','r') as config_remote, open('\\zmienne.ini') as config_local:
-        cl = config_local.read()
-        cr = config_remote.read()
-        if cl == cr:
-            pass
-        else:
-            print("Configi się różnią")
-            configreadlocal = config.read('\\zmienne.ini')
-            config_local.write(configreadlocal)
-            print(config_local)
+    while ssh:
+        with sftp.open('/home/fitas/bot/zmienne.ini','rb+') as config_remote, open('.\\zmienne.ini','rb+') as config_local:
+            cl = config_local.read()
+            cr = config_remote.read()
+            if cl == cr:
+                print("Configi są synced")
+                pass
+            else:
+                print (cl,"CL")
+                print (cr,"CR")
+                print("Configi się różnią")
+                config_local.write(cr)
+                print(config_local)
+            time.sleep(0.5)
+            print("loop")
     
     # sftp.close()
     # ssh.close()

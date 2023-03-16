@@ -1,12 +1,11 @@
 
 
 import multiprocessing
-import webhook
-import AuthorizationOauth2  
+from Oauth2 import webhook
+from Oauth2 import AuthorizationOauth2  
 import urllib.parse
 import configparser
 import tkinter as tk
-import _tkinter
 import os
 from PIL import ImageTk, Image #pip install pillow
 

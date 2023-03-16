@@ -10,6 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   foreach ($dataArray as $key => $value){
     $dataString .= "$key = $value\n";
   }
-  file_put_contents("..\python\zmienne.ini", "[KOMENDY]\n" . $dataString);
+  file_put_contents("../python/zmienne.ini", "[KOMENDY]\n" . $dataString);
 }
   ?>
