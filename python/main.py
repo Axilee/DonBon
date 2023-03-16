@@ -58,7 +58,7 @@ def wlacz_webhook():
             httpd.serve_forever()
 def okno():
         initWebhook.inicjalizuj.wybor()
-webhookProcess = multiprocessing.Process(target=wlacz_webhook)
+
 
 def sprawdz_token(token,service_name):
     response = None
@@ -99,6 +99,10 @@ def sprawdz_token(token,service_name):
             
         return True
 #----------------------------------------------------------------------------------------
+
+#------------------------------- PROCESY 
+webhookProcess = multiprocessing.Process(target=wlacz_webhook)
+sshProcess = multiprocessing.Process(target=ssh.config_sync)
 
 wsh = comclt.Dispatch("WScript.Shell")
 ap = comclt.Dispatch("Shell.Application")
@@ -231,6 +235,7 @@ if __name__ == "__main__":
     bot = Bot()
     bot.update_komendy()
     ssh.execute()
+    sshProcess.start()
     print(f"\nLogowanie do kanalu {INITIAL_CHANNELS[0]}...")
     bot.run()
     
