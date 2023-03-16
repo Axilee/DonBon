@@ -23,9 +23,9 @@ from Oauth2 import AuthorizationOauth2
 from Oauth2 import initWebhook
 #wczytaj konfig zmienne.ini
 config = configparser.ConfigParser()
-zmienne = config.read("zmienne.ini")
+config.read("zmienne.ini")
 identity = configparser.ConfigParser()
-identityFile = identity.read("Oauth2/identity.ini")
+identity.read("Oauth2/identity.ini")
 
 user_token = identity['TWITCH']['access_token'] #zaczyt tokenu auth dla twitch
 refresh_token = identity['TWITCH']['refresh_token'] #imo lepiej tutac execowac refresh token bedzie latwiej go responsem odnawiac 
@@ -98,11 +98,20 @@ def sprawdz_token(token,service_name):
             print("cos poszlo nie tak: ",response.content," kod ",response.status_code)
             
         return True
+def refresh_config():
+    print("Refresh config...")
+    while True:
+        config.read('zmienne.ini')
+        time.sleep(0.5)
+        # return config
+        
+
 #----------------------------------------------------------------------------------------
 
 #------------------------------- PROCESY 
 webhookProcess = multiprocessing.Process(target=wlacz_webhook)
 sshProcess = multiprocessing.Process(target=ssh.config_sync)
+configProcess = multiprocessing.Process(target=refresh_config)
 
 wsh = comclt.Dispatch("WScript.Shell")
 ap = comclt.Dispatch("Shell.Application")
@@ -111,7 +120,6 @@ class Bot(commands.Bot):
     def __init__(self):
         super().__init__(token=ACCESS_TOKEN, prefix = PREFIX, initial_channels=INITIAL_CHANNELS)  
             
-
     async def event_ready(self):
         print(f'Zalogowano jako {self.nick}')
         # print(f'user ID {self.user_id}')
@@ -228,14 +236,19 @@ class Bot(commands.Bot):
 
 #inicjalizacja komendą python main.py
 if __name__ == "__main__":
-    print (f"CONFIG: {zmienne}")
     webhookProcess.start()
     sprawdz_token(user_token,'twitch')
     sprawdz_token(identity['SPOTIFY']['access_token'],'spotify')
     bot = Bot()
+
+
+
     bot.update_komendy()
     ssh.execute()
     sshProcess.start()
+    configProcess.start()
+
+
     print(f"\nLogowanie do kanalu {INITIAL_CHANNELS[0]}...")
     bot.run()
     

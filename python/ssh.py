@@ -44,7 +44,7 @@ def execute():
     else:
         print(f"\nSSH >> SUKCES! Wysłano komendy do {hostname} jako {username}")
 def config_sync():
-
+    print("Config remote sync...")
     config = configparser.ConfigParser()
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -56,16 +56,16 @@ def config_sync():
             cl = config_local.read()
             cr = config_remote.read()
             if cl == cr:
-                print("Configi są synced")
                 pass
             else:
-                print (cl,"CL")
-                print (cr,"CR")
-                print("Configi się różnią")
-                config_local.write(cr)
-                print(config_local)
+                print ("SSH >> Lokalny config \n",cl)
+                print ("SSH >> Zdalny config \n",cr)
+                with open('.\\zmienne.ini','wb+') as config_local:
+                    print("SSH >> Config Updated")
+                    config_local.write(cr)
+                    config_local.close()
             time.sleep(0.5)
-            print("loop")
+            
     
     # sftp.close()
     # ssh.close()

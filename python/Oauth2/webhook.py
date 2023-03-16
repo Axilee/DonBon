@@ -48,11 +48,13 @@ class flaskAppWebhook():
             response = requests.post(uri,headers = headers,data = dane)
             response.raise_for_status()
         except requests.exceptions.HTTPError as e:
-            print(f"Coś poszło nie tak, kod {e}")
-            print(headers)
-            print(dane)
-            print(uri)
-            if service_name == "spotify": print(f"string for encoded: {tokenString}, encoded string: {encoded_client}")
+            
+            if service_name.lower() == "spotify": print(f"string for encoded: {tokenString}, encoded string: {encoded_client}")
+            elif service_name.lower() != "spotify":
+                print(f"Coś poszło nie tak, kod {e}")
+                print(headers)
+                print(dane)
+                print(uri)
         json = response.json()
         if json.get('access_token'):   
             expires_in = json.get('expires_in')
