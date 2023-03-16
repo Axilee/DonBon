@@ -9,7 +9,7 @@
 
 
   /* Switche i checkboxy */
-  --active: #2E4F4F;
+  --active: #2C3333;
   --active-inner: #fff;
   --focus: 2px rgba(22, 94, 112, 0.3);
   --border: #b4cec8;
@@ -31,26 +31,27 @@ body {
 }
 
 .sidebar {
-    background-color: var(--color4);
+    background-color: var(--color2);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 }
 
 .bar {
     background-color: var(--color4);
 }
 .button.active .top {
-    background-color: var(--color1);
+    background-color: var(--color4);
 }
 
 .button.active .bottom {
-    background-color: var(--color1);
+    background-color: var(--color4);
 }
 
 .button.active .middle {
-    background-color: var(--color1);
+    background-color: var(--color4);
 }
 
 .sidebar-anchor {
-    color: var(--color1);
+    color: var(--color4);
 }
 
 .sidebar-anchor:before {
@@ -272,40 +273,9 @@ html {
     position: relative;
 }
 
-/* Settings modal */
 
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: var(--color4);
-    z-index: 1;
-    border-radius: 4px;
-    border: none;
-    color: var(--color1);
-    animation: slide-in 0.8s ease-out;
-    width: 750px;
-    height: 750px;
 
-  }
-
-  .modal > * {
-    margin: 0 0 0.5rem 0;
-  }
-  .modal::backdrop {
-    background: rgb(0 0 0 / 0.4);
-  }
-
-  @keyframes slide-in {
-    from {
-      transform: translateY(-190%);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
-
-  /* =============== Page content ============*/
+/* =============== Page content ============*/
   .wrapper {
       padding: 5px;
       max-width: 960px;
@@ -344,7 +314,12 @@ html {
       box-sizing: border-box;
       overflow: hidden;
       transition: all .7s ease-in-out;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
+
   .content.active {
       width: 100%;
       min-height: 100vh;
@@ -353,13 +328,44 @@ html {
       box-sizing: border-box;
       overflow: hidden;
       transition: all .7s ease-in-out;
-
   }
 
   .checks {
+    margin-top: -2rem;
     opacity: 0;
     animation: fadeIn 2s ease-in-out forwards;
+
   }
+
+  .content-container{
+    background-color: var(--color2);
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    background-size: 300%;
+    
+
+    border-radius: 6px;
+    margin-left: 3%;
+    width: 70%;
+    height: 70%;
+    padding: 0 3rem 3rem 3rem;
+
+
+    box-shadow: 0px 8px 20px rgba(54, 121, 98, 0.1);
+  }
+
+  .upload-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+  }
+
+
+
+
 
   @keyframes fadeIn {
     from {
@@ -395,6 +401,14 @@ html {
   }
 
   .bitsy {
+    padding-top: 1rem;
+    padding-left: 0.8rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 16px;
+  }
+
+  .ch-points {
     padding-top: 1rem;
     padding-left: 0.8rem;
     display: grid;
@@ -454,18 +468,16 @@ html {
         transition: all .3s ease-in-out;
     }
     .my-3 {
-      width: 50%;
       transition: all .8s ease-in-out;
     }
     .komendy {
-      padding-top: 1rem;
-      padding-left: 8.8rem;
+
       transition: all .8s ease-in-out;
     }
     
     .bitsy {
       padding-top: 1rem;
-      padding-left: 8.8rem;
+
       transition: all .8s ease-in-out;
     }
 

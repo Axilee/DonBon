@@ -70,9 +70,7 @@ window.addEventListener('load',function(){
 
   saveSettings.addEventListener("click", () => {
     modal.close();
-    //dodać opcje zapisywania ustawień do localstorage
-    //wsm to troche taka zapchaj dziura ze jak sie komus w X nie chce kliknonć
-    //to se wychodzi tym przyciskiem
+    $(".Message--green").removeClass("is-hidden");
   });
   
   restoreSettings.addEventListener("click", () => {
@@ -96,5 +94,19 @@ window.addEventListener('load',function(){
       $(".settings-inside").removeClass("setting-active");
       $(targetContent).addClass("setting-active");
     });
+  });
+
+  $(document).ready(function() {
+    setInterval(function(){
+      $(".Message--green").addClass("is-hidden");
+    }, 5000); //Czas podany w milisekundach do ukrycia popup'u 
+  });
+
+  $(document).ready(function() {
+    setInterval(function(){
+      $(".Message--red").fadeOut(2000, function (){
+        $(this).addClass("is-hidden").show();
+      });
+    }, 5000); //Czas podany w milisekundach do ukrycia popup'u 
   });
   

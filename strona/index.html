@@ -58,45 +58,62 @@
 <!-- Page Content -->
 <div class="content">
 
-    <!--Później do wyjebania póki co dla testów-->
-    <a href="authorized.html" style="color: white;">Zatwierdzona autoryzacja</a>
-    <a href="notauthorized.html" style="color: white;">Zjebana autoryzacja</a>
+    <div class="content-container">
 
-    <div class="checks">
-        <h1 data-value="DONBON" id="txt-effect">DONBON</h1>
-        <section class="columns">
-            <div class="column">
-                <div class="check-section">
-                    <h2 class="check">Komendy</h2>
-                    <hr class="my-3">
-                    <form method="post">
-                    <div class="komendy" id="data-checkboxes">
-                        <!--<input id="s1" type="checkbox" class="switch"><label for="s1">Switch</label>-->
+        <div class="checks">
+            <h1 data-value="DONBON" id="txt-effect">DONBON</h1>
+            <section class="columns">
+                <div class="column">
+                    <div class="check-section">
+                        <h2 class="check">Komendy</h2>
+                        <hr class="my-3">
+                        <form method="post">
+                        <div class="komendy" id="komendy-checkboxes">
+                            <!--<input id="s1" type="checkbox" class="switch"><label for="s1">Switch</label>-->
+                        </div>
+                       </form>
                     </div>
-                   </form>
                 </div>
-            </div>
-            
-            <div class="column">
-                <div class="check-section">
-                    <h2 class="check">Bitsy</h2>
-                    <hr class="my-3">
-                    <form method="post">
-                    <div class="bitsy" id="data-checkboxes">
-                        <!--<input id="s1" type="checkbox" class="switch"><label for="s1">Switch</label>-->
+                <div class="column">
+                    <div class="check-section">
+                        <h2 class="check">Bitsy</h2>
+                        <hr class="my-3">
+                        <form method="post">
+                        <div class="bitsy" id="bitsy-checkboxes">
+                            <!--<input id="s1" type="checkbox" class="switch"><label for="s1">Switch</label>-->
+                        </div>
+                        </form>
                     </div>
-                    </form>
                 </div>
-            </div>
+                <div class="column">
+                    <div class="check-section">
+                        <h2 class="check">Channel Points</h2>
+                        <hr class="my-3">
+                        <form method="post">
+                        <div class="ch-points" id="pointsy-checkboxes">
+                            <!--<input id="s1" type="checkbox" class="switch"><label for="s1">Switch</label>-->
+                        </div>
+                        </form>
+                    </div>
+                </div>
 
-        </section>	
+            </section>	
+            <div class="upload-buttons">
+                <button class="save-settings">Zapisz</button>
+                <button class="restore-settings">Przywróć</button>
+            </div>
+        </div>
+
     </div>
 
-    <div class="test-modal">
+</div>
 
+<dialog class="modal" id="modal">
+    <div class="modal-content">
         <div class="top-bar">
-            <h1 class="settings-name">Ustawienia<button class="settings-close">&#10006;</button></h1>
+            <button class="settings-close">&#10006;</button>
         </div>
+
         <div class="settings-sidebar">
 
             <div class="menu-box block">
@@ -114,7 +131,6 @@
                         <a class="menu-box-tab" href="#application"><i class="icon fa-solid fa-arrow-up-from-bracket"></i>Aplikacja</a>
                     </li>
                 </ul>
-            
                 <div class="account-wrap user top dropdown">
                     <div class="picture filled">
                         <i class="far fa-user"></i>
@@ -135,19 +151,19 @@
                         </ul>
                     </div>
                 </div>
-
             </div>
+
         </div>
 
         <div class="settings-inside" id="account">
             <div class="settings-content">
-                Lorem ipsum dolor sit amet.
+               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem quasi pariatur ea a laudantium doloribus quo asperiores amet, molestiae autem ipsam repudiandae cum iste quam? Id doloribus dolore cum. Eius obcaecati eveniet labore saepe at aspernatur, sed sapiente omnis enim in, neque et animi magnam ipsam? Expedita quis voluptatem, numquam quasi perferendis dolores in facilis tenetur assumenda suscipit hic odit.
             </div>
         </div>
         <div class="settings-inside" id="privacy">
-           <div class="settings-content">
+        <div class="settings-content">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, suscipit.
-           </div>
+        </div>
         </div>
         <div class="settings-inside" id="functions">
             <div class="settings-content">
@@ -160,50 +176,31 @@
             </div>
         </div>
 
-
-    </div>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dialog class="modal" id="modal">
-    <div class="top-bar">
-        <h1>Ustawienia</h1>
-        <button class="settings-close">X</button>
-
-    </div>
-
-
-    <div class="modal-content">
-
-
-        <div class="setting-buttons">
-            <button class="save-settings">Zapisz</button>
-            <button class="restore-settings">Przywróć</button>
-        </div>
-
-
     </div>
     
-  
 </dialog>
 
+<!--Notifications-->
 
+<div class="Message Message--green is-hidden">
+    <div class="Message-icon">
+      <i class="fa fa-check"></i>
+    </div>
+    <div class="Message-body">
+      <p>Yikes, udało się zapisać ustawienia.</p>
+      <p class="good_job">Dobra robota!</p>
+    </div>
+</div>
+
+<div class="Message Message--red is-hidden">
+    <div class="Message-icon">
+      <i class="fa fa-times"></i>
+    </div>
+    <div class="Message-body">
+      <p>Coś sie spierdoliło, spróbuj jeszcze raz.</p>
+    </div>
+    <button class="Message-close js-messageClose"><i class="fa fa-times"></i></button>
+</div>
 
     <!-- JQuery JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
