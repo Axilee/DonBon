@@ -9,8 +9,8 @@ import os
 start_time = time.time()
 config = configparser.ConfigParser()
 config.read("Oauth2/identity.ini")
-htmldir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'html'))
-static = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'html'))
+htmldir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'strona'))
+static = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'strona'))
 
 
 class flaskAppWebhook():
@@ -84,18 +84,16 @@ class flaskAppWebhook():
     def background_token_refresh(self):
         while True:
 
-            print("WEBHOOK >> Sprawdzam ważność tokenu...")
             config.read("Oauth2/identity.ini")
             csp = float(config['SPOTIFY']['expires_in'])
             ctw = float(config['TWITCH']['expires_in'])
-            print (ctw)
             aktualny_czas = time.time()
             if csp < aktualny_czas:
                 self.refresh("SPOTIFY")
             elif ctw < aktualny_czas:
                 self.refresh("TWITCH")
             else:
-                print("Token dalej ważny")
+                pass
             time.sleep(1)
 
 
@@ -173,7 +171,8 @@ class flaskAppWebhook():
                 config.set(service_name,'refresh_token', refresh_token)
                 with open('Oauth2/identity.ini','w') as f:
                     config.write(f)
-            return f"<H1 style='font-size:5em'>TOKEN ODEBRANY WOOHOO<br>Do serwisu: {service_name}<br>TOKEN: {access_token}<br><br>REFRESH TOKEN: {refresh_token}"
+            return render_template("authorized.html")
+            # return f"<H1 style='font-size:5em'>TOKEN ODEBRANY WOOHOO<br>Do serwisu: {service_name}<br>TOKEN: {access_token}<br><br>REFRESH TOKEN: {refresh_token}"
 
 
    

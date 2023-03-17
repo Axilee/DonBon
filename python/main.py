@@ -89,7 +89,7 @@ def sprawdz_token(token,service_name):
             pass 
 
     if  response.status_code == 401:
-        json = webhook.flaskAppWebhook.refresh(service_name,i['refresh_token'],i['client_id'],i['client_secret'])
+        json = webhook.refresh(service_name)
         response = requests.get(url,headers=headers)
         if response.status_code == 401 and i['access_token'] == "":
             print("Pierwsza autoryzacja")
@@ -239,22 +239,19 @@ class Bot(commands.Bot):
 #         await client.pubsub.subscribe_topics(topics)
 #         await client.start()
 
+
+
 #inicjalizacja komendą python main.py
 if __name__ == "__main__":
     webhookProcess.start()
     sprawdz_token(user_token,'twitch')
     sprawdz_token(identity['SPOTIFY']['access_token'],'spotify')
     bot = Bot()
-
-
-
     bot.update_komendy()
     ssh.execute()
     sshProcess.start()
     configProcess.start()
     tokenRefreshProcess.start()
-
-
     print(f"\nLogowanie do kanalu {INITIAL_CHANNELS[0]}...")
     bot.run()
     
