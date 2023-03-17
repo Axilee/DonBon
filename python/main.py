@@ -61,11 +61,20 @@ def wlacz_webhook():
             httpd.serve_forever()
 def okno():
         initWebhook.inicjalizuj.wybor()
-
+        identity.read("Oauth2/identity.ini")
 
 def sprawdz_token(token,service_name):
     response = None
     i = identity[service_name.upper()]
+
+    if not i['access_token']:
+        print("Pierwsza autoryzacja")
+        okno()
+        return
+    if not i['refresh_token']:
+        print("Pierwsza autoryzacja")
+        okno()
+        return
 
     if service_name == 'twitch':
         url = identity[service_name.upper()]['uri']  + "validate"
@@ -87,7 +96,7 @@ def sprawdz_token(token,service_name):
             #You will get a 401 Unauthorized status code back if the token has expired.
         except:
             pass 
-
+    identity.read("Oauth2/identity.ini")
     if  response.status_code == 401:
         json = webhook.refresh(service_name)
         response = requests.get(url,headers=headers)
