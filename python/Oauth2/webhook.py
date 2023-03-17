@@ -21,7 +21,15 @@ class flaskAppWebhook():
     
     # base64_bytes = base64.b64encode(sample_string_bytes)
     # base64_string = base64_bytes.decode("ascii")
-    def refresh(service_name,refresh_token,client_id,client_secret):
+
+    
+    def refresh(self,service_name):
+
+        config.read('identity.ini')
+        c = config[service_name.upper()]
+        refresh_token = c['refresh_token']
+        client_id = c['client_id']
+        client_secret = c['client_secret']
         print(f"WEBHOOK >> Odświeżanie tokenu dla >> {client_id}")
         if service_name.lower() == "twitch":
             uri = 'https://id.twitch.tv/oauth2/token'
@@ -57,6 +65,7 @@ class flaskAppWebhook():
                 print(uri)
         json = response.json()
         if json.get('access_token'):   
+            print("WEBHOOK >> ACCESS TOKEN")
             expires_in = json.get('expires_in')
             expires_seconds = time.time() + expires_in
             expires_at = time.localtime(expires_seconds)
@@ -65,12 +74,30 @@ class flaskAppWebhook():
             config.set(service_name.upper(),'access_token',json.get('access_token'))
             config.set(service_name.upper(),'expires_in',str(expires_seconds))
             config.set(service_name.upper(),'data_waznosci',expires_at)
-            if service_name != 'spotify': config.set(service_name.upper(),'refresh_token',json.get('refresh_token'))
+            if service_name.lower() != 'spotify': config.set(service_name.upper(),'refresh_token',json.get('refresh_token'))
             with open ('Oauth2/identity.ini', 'w') as plik:
                 config.write(plik)
-            
         
         return json
+
+
+    def background_token_refresh(self):
+        while True:
+
+            print("WEBHOOK >> Sprawdzam ważność tokenu...")
+            config.read("Oauth2/identity.ini")
+            csp = float(config['SPOTIFY']['expires_in'])
+            ctw = float(config['TWITCH']['expires_in'])
+            print (ctw)
+            aktualny_czas = time.time()
+            if csp < aktualny_czas:
+                self.refresh("SPOTIFY")
+            elif ctw < aktualny_czas:
+                self.refresh("TWITCH")
+            else:
+                print("Token dalej ważny")
+            time.sleep(1)
+
 
     def send(code, service_name,client_id,client_secret,redirect_uri):
         if service_name.lower() == "twitch":

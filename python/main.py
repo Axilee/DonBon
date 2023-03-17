@@ -21,6 +21,9 @@ sys.path.append('Oauth2')
 from Oauth2 import webhook
 from Oauth2 import AuthorizationOauth2 
 from Oauth2 import initWebhook
+
+webhook = webhook.flaskAppWebhook()
+
 #wczytaj konfig zmienne.ini
 config = configparser.ConfigParser()
 config.read("zmienne.ini")
@@ -112,6 +115,8 @@ def refresh_config():
 webhookProcess = multiprocessing.Process(target=wlacz_webhook)
 sshProcess = multiprocessing.Process(target=ssh.config_sync)
 configProcess = multiprocessing.Process(target=refresh_config)
+tokenRefreshProcess = multiprocessing.Process(target=webhook.background_token_refresh)
+#-------------------------------
 
 wsh = comclt.Dispatch("WScript.Shell")
 ap = comclt.Dispatch("Shell.Application")
@@ -247,6 +252,7 @@ if __name__ == "__main__":
     ssh.execute()
     sshProcess.start()
     configProcess.start()
+    tokenRefreshProcess.start()
 
 
     print(f"\nLogowanie do kanalu {INITIAL_CHANNELS[0]}...")

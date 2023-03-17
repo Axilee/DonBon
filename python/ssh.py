@@ -65,10 +65,10 @@ def config_sync():
                     config_local.write(cr)
                     config_local.close()
             time.sleep(0.5)
-            
     
-    # sftp.close()
-    # ssh.close()
+    
+    sftp.close()
+    ssh.close()
 #do testow bezposrednich z cmd
 if __name__ == '__main__':
     execute()
