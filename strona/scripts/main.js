@@ -4,9 +4,8 @@ $.get("load.php", function(data) {
   console.log(data);
   $.each(data.KOMENDY, function(key, value){
     if(value == 1){
-      var checkbox = $("<input>").addClass("switch").attr({
+      var checkbox = $("<input>").addClass("switch switch-data").attr({
         type: "checkbox",
-        id: "data",
         value: key,
         checked : true
       });
@@ -14,9 +13,8 @@ $.get("load.php", function(data) {
       var div = $("<div>").append(checkbox, label).attr({id: 'KOMENDY'});
       $("#komendy-checkboxes").append(div);      
     }else{
-      var checkbox = $("<input>").addClass("switch").attr({
+      var checkbox = $("<input>").addClass("switch switch-data").attr({
         type: "checkbox",
-        id: "data",
         value: key
       });
       var label = $("<label>").attr("for", "s1").text(key);
@@ -27,9 +25,8 @@ $.get("load.php", function(data) {
   });
   $.each(data.BITSY, function(key, value){
     if(value == 1){
-      var checkbox = $("<input>").addClass("switch").attr({
+      var checkbox = $("<input>").addClass("switch switch-data").attr({
         type: "checkbox",
-        id: "data",
         value: key,
         checked : true
       });
@@ -37,9 +34,8 @@ $.get("load.php", function(data) {
       var div = $("<div>").append(checkbox, label).attr({id: 'BITSY'});
       $("#bitsy-checkboxes").append(div);      
     }else{
-      var checkbox = $("<input>").addClass("switch").attr({
+      var checkbox = $("<input>").addClass("switch switch-data").attr({
         type: "checkbox",
-        id: "data",
         value: key
       });
       var label = $("<label>").attr("for", "s1").text(key);
@@ -50,9 +46,8 @@ $.get("load.php", function(data) {
   });
   $.each(data.POINTSY, function(key, value){
     if(value == 1){
-      var checkbox = $("<input>").addClass("switch").attr({
+      var checkbox = $("<input>").addClass("switch switch-data").attr({
         type: "checkbox",
-        id: "data",
         value: key,
         checked : true
       });
@@ -60,9 +55,8 @@ $.get("load.php", function(data) {
       var div = $("<div>").append(checkbox, label).attr({id: 'POINTSY'});
       $("#pointsy-checkboxes").append(div);      
     }else{
-      var checkbox = $("<input>").addClass("switch").attr({
+      var checkbox = $("<input>").addClass("switch switch-data").attr({
         type: "checkbox",
-        id: "data",
         value: key
       });
       var label = $("<label>").attr("for", "s1").text(key);
@@ -73,30 +67,30 @@ $.get("load.php", function(data) {
   });
 
 
-$('#data[type="checkbox"]').click(function() {
-  wholeValues = [];
-  console.log("dziala submit");
-  console.log("aaa" + $(this).val())
+$('.switch-data').click(function() {
+  const checkboxObj = {
+    KOMENDY: [],
+    BITSY: [],
+    POINTSY: []
+  }
+  $('.switch-data').each(function () {
+    const prefix = $(this).parent().attr('id');
+    if($(this).prop('checked')){
+      checkboxObj[prefix].push(this.value + " = 1");
+    }else{
+      checkboxObj[prefix].push(this.value + " = 0");
+    }
+    });
+    const checkboxObjJson = JSON.stringify(checkboxObj)
+    console.log(checkboxObjJson)
+    dataToWrite = {
+      content: checkboxObjJson
+    }
+    //$.post("save.php", dataToWrite)
+    $.post("save.php", dataToWrite, function(response){
+      $(".upload-buttons").html(response);
+    })
 });
 });
 });
 }
-  // var allCheckBoxes = $('#[type="checkbox"]');
-  // var serializedCheckBoxes = [];
-  // var i = 0;
-  // allCheckBoxes.each(function(){
-  //   if($(this).prop('checked')){
-  //     //console.log($(this).val() + "=1");
-  //     serializedCheckBoxes[i] = $(this).val() + " = 1"
-  //   }else{
-  //     //console.log($(this).val() + "=0");
-  //     serializedCheckBoxes[i] = $(this).val() + " = 0"
-  //   }
-  //   i++;
-  // });
-  // console.log(serializedCheckBoxes);
-  // var dataToWrite = {
-  //   content: serializedCheckBoxes,
-  // };
-  // $.post("save.php", dataToWrite);   
-  // console.log(serializedCheckBoxes);
