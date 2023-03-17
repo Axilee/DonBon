@@ -7,6 +7,9 @@
   --color3: #0E8388;
   --color4: #CBE4DE;
 
+  --color5: rgba(42, 48, 48, 0.4);
+
+
 
   /* Switche i checkboxy */
   --active: #2C3333;
@@ -58,18 +61,12 @@ body {
     background-color: var(--color1);
 }
 
-.my-3 {
-    border-top: 1px solid var(--color4);
-}  
-
 #txt-effect{
   color: var(--color4);
 
 }
 
 /* Kolorstyka strony DARK MODE*/
-
-
 
 
 /* Main */
@@ -156,7 +153,6 @@ html {
 
 
 /* Sidebar */
-
 .sidebar {
     position: fixed;
     top: 0;
@@ -274,39 +270,8 @@ html {
 }
 
 
-
 /* =============== Page content ============*/
-  .wrapper {
-      padding: 5px;
-      max-width: 960px;
-      width: 95%;
-      margin: 20px auto;
-  }
-  header {
-      padding: 0 15px;
-  }
-  .columns {
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: center;
-      margin: 5px 0;
-  }
-  .column {
-      flex: 1;
-      margin: 2px;
-      padding: 10px;
-  }
-  .column:first-child {
-      margin-left: 0;
-  }
-  .column:last-child {
-      margin-right: 0;
-  }
-  footer {
-      padding: 0 15px;
-  }
-
-  .content {
+  .page-content {
       width: 100%;
       min-height: 100vh;
       padding-left: 10%;
@@ -320,7 +285,7 @@ html {
       align-items: center;
     }
 
-  .content.active {
+  .page-content.active {
       width: 100%;
       min-height: 100vh;
       padding-left: 10%;
@@ -330,124 +295,111 @@ html {
       transition: all .7s ease-in-out;
   }
 
-  .checks {
-    margin-top: -2rem;
+
+/* Kontener z aplikacją DonBon */
+
+.app-container {
+  position: absolute;
+
+  width: 75rem;
+  height: 43rem;
+
+  background-color: var(--color2);
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background-size: 300%;
+  
+  border-radius: 6px;
+
+  margin-left: 3%;
+  padding: 0 3rem 3rem 3rem;
+
+  box-shadow: 0px 8px 20px rgba(54, 121, 98, 0.1);
+  animation: fadeIn 2.5s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
     opacity: 0;
-    animation: fadeIn 2s ease-in-out forwards;
-
+    transform: translateY(-70px);
   }
-
-  .content-container{
-    background-color: var(--color2);
-    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
-    background-position: bottom center;
-    background-repeat: no-repeat;
-    background-size: 300%;
-    
-
-    border-radius: 6px;
-    margin-left: 3%;
-    width: 70%;
-    height: 70%;
-    padding: 0 3rem 3rem 3rem;
-
-
-    box-shadow: 0px 8px 20px rgba(54, 121, 98, 0.1);
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
 
-  .upload-buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#txt-effect {
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(3rem, 10vw, 10rem);
+  padding: none;
+  margin-top: 1rem;
+}
 
+.my-3 {
+  margin-top: -1rem;
+}  
 
-  }
+.komendy, .bitsy, .ch-points {
+  margin-top: 1rem;
+  padding-left: 0.8rem;
+  display: grid;
+  justify-content:  center;
+  align-items: center;
+  grid-template-columns: 150px 150px;
+  grid-gap: 16px;
+  
+}
 
+/* Kolumny dla main kontenera */
+.columns {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin: 5px 0;
+  padding: 0rem 2rem 2rem 2rem;
+  font-size: 1vw;
+  margin-top: -4rem;
+}
 
+.column {
+  flex: 1;
+  margin: 2px;
+  padding: 20px;
+  border-radius: 5px;
+  background: var(--color5);
+}
 
+.column:first-child {
+  margin-left: 0;
+}
 
+.column:last-child {
+  margin-right: 0;
+}
 
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+.column h2 {
+  margin-top: -0.3rem;
+  text-align: center;
+}
 
-
-  #txt-effect {
-    text-align: center;
-    font-family: 'Space Mono', monospace;
-    font-size: clamp(3rem, 10vw, 10rem);
-    padding: 0rem clamp(1rem, 2vw, 3rem);
-    border-radius: clamp(0.4rem, 0.75vw, 1rem);
-  }
-
-  .check{
-    text-align: center;
-    margin-top: -4.7rem;
-  }
-
-  .komendy {
-    padding-top: 1rem;
-    padding-left: 0.8rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 16px;
-  }
-
-  .bitsy {
-    padding-top: 1rem;
-    padding-left: 0.8rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 16px;
-  }
-
-  .ch-points {
-    padding-top: 1rem;
-    padding-left: 0.8rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 16px;
-  }
-
-  .check-section  {
-    margin-bottom: 3rem;
-  }
+.upload-buttons {
+  margin-right: 0.7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 
-  @media screen and (max-width: 980px) {
-      .columns .column {
-          margin-bottom: 5px;
-          flex-basis: 40%;
-    }
-      .columns .column:nth-last-child(2) {
-          margin-right: 0;
-    }
-      .columns .column:last-child {
-          flex-basis: 100%;
-          margin: 0;
-    }
-  }
-
-  @media screen and (max-width: 680px) {
-      .columns .column {
-          flex-basis: 100%;
-          margin: 0 0 5px 0;
-    }
-  }
 
 
   @media screen and (max-width: 768px) {
     .sidebar {
       opacity: 0.8;
     }
-    .content{
+    .page-content{
         width: 100%;
         min-height: 100vh;
         padding-left: 10%;
@@ -457,7 +409,7 @@ html {
         overflow: hidden;
         transition: all .3s ease-in-out;
     }
-    .content.active{
+    .page-content.active{
         width: 100%;
         min-height: 100vh;
         padding-left: 10%;
@@ -467,25 +419,56 @@ html {
         overflow: hidden;
         transition: all .3s ease-in-out;
     }
-    .my-3 {
-      transition: all .8s ease-in-out;
-    }
-    .komendy {
-
-      transition: all .8s ease-in-out;
-    }
-    
-    .bitsy {
-      padding-top: 1rem;
-
-      transition: all .8s ease-in-out;
-    }
-
-    .column {
-      padding-top: 2rem;
-    }
-  
   }
+
+  @media screen and (max-width: 980px) {
+    .columns .column {
+        margin-bottom: 5px;
+        flex-basis: 40%;
+  }
+    .columns .column:nth-last-child(2) {
+        margin-right: 0;
+  }
+    .columns .column:last-child {
+        flex-basis: 100%;
+        margin: 0;
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  .app-container {
+    height: 45rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .my-3 {
+    transition: all .8s ease-in-out;
+  }
+  .komendy {
+
+    transition: all .8s ease-in-out;
+  }
+  
+  .bitsy {
+    padding-top: 1rem;
+
+    transition: all .8s ease-in-out;
+  }
+
+  .column {
+    padding-top: 2rem;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .columns .column {
+      flex-basis: 100%;
+      margin: 0 0 5px 0;
+  }
+}
+
+
 
 
 
