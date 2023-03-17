@@ -86,10 +86,8 @@ $('.switch-data').click(function() {
     dataToWrite = {
       content: checkboxObjJson
     }
-    //$.post("save.php", dataToWrite)
-    $.post("save.php", dataToWrite, function(response){
-      $(".upload-buttons").html(response);
-    })
+    $.post("save.php", dataToWrite)
+
 });
 });
 });
