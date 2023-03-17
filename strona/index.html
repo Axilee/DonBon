@@ -56,58 +56,60 @@
 
 
 <!-- Page Content -->
-<div class="content">
+<div class="page-content">
 
-    <div class="content-container">
-
-        <div class="checks">
+    <div class="app-container">
+        <!--Txt effect, nazwa -->
+        <div class="napis">
             <h1 data-value="DONBON" id="txt-effect">DONBON</h1>
-            <section class="columns">
-                <div class="column">
-                    <div class="check-section">
-                        <h2 class="check">Komendy</h2>
-                        <hr class="my-3">
-                        <form method="post">
+        </div>
+        <!--Kolumny z sekcjami komend -->
+        <section class="columns">
+            <div class="column">
+                <h2>Komendy</h2>
+                <hr class="my-3">
+                <div class="switches-container">
+                    <form method="post">
                         <div class="komendy" id="komendy-checkboxes">
                             <!--<input id="s1" type="checkbox" class="switch"><label for="s1">Switch</label>-->
                         </div>
-                       </form>
-                    </div>
+                    </form>
                 </div>
-                <div class="column">
-                    <div class="check-section">
-                        <h2 class="check">Bitsy</h2>
-                        <hr class="my-3">
-                        <form method="post">
+            </div>
+            <div class="column">
+                <h2>Bitsy</h2>
+                <hr class="my-3">
+                <div class="switches-container">
+                    <form method="post">
                         <div class="bitsy" id="bitsy-checkboxes">
                             <!--<input id="s1" type="checkbox" class="switch"><label for="s1">Switch</label>-->
                         </div>
-                        </form>
-                    </div>
+                    </form>
                 </div>
-                <div class="column">
-                    <div class="check-section">
-                        <h2 class="check">Channel Points</h2>
-                        <hr class="my-3">
-                        <form method="post">
+            </div>
+          <div class="column">
+                <h2>Pointsy</h2>
+                <hr class="my-3">
+                <div class="switches-container">
+                    <form method="post">
                         <div class="ch-points" id="pointsy-checkboxes">
                             <!--<input id="s1" type="checkbox" class="switch"><label for="s1">Switch</label>-->
                         </div>
-                        </form>
-                    </div>
+                    </form>
                 </div>
-
-            </section>	
-            <div class="upload-buttons">
-                <button class="save-settings">Zapisz</button>
-                <button class="restore-settings">Przywróć</button>
             </div>
+        </section>	
+        
+        <div class="upload-buttons">
+            <button class="save-settings">Zapisz</button>
+            <button class="restore-settings">Przywróć</button>
         </div>
-
     </div>
 
 </div>
 
+
+<!--Modal-->
 <dialog class="modal" id="modal">
     <div class="modal-content">
         <div class="top-bar">

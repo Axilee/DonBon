@@ -5,7 +5,7 @@ $(document).ready(function() {
         $(".button").toggleClass("active");
         $(".sidebar-item").toggleClass("active");
         $("sidebar").toggleClass("nav-right visible-xs");
-        $(".content").toggleClass("active");
+        $(".page-content").toggleClass("active");
         $('.sidebar').toggleClass('active');
 
     }

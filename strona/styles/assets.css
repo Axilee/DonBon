@@ -126,7 +126,7 @@
 
     -webkit-appearance: none;
     -moz-appearance: none;
-    height: 21px;
+    height: 24px;
     outline: none;
     display: inline-block;
     vertical-align: top;
@@ -180,8 +180,8 @@
     --o: 1;
  }
   input[type="checkbox"] + label, input[type="radio"] + label {
-    font-size: 14px;
-    line-height: 21px;
+    font-size: 21px;
+    line-height: 25px;
     display: inline-block;
     vertical-align: top;
     cursor: pointer;
@@ -204,21 +204,21 @@
     --r: 43deg;
  }
   input[type="checkbox"].switch {
-    width: 38px;
+    width: 56px;
     border-radius: 11px;
  }
   input[type="checkbox"].switch:after {
     left: 2px;
-    top: 2px;
+    top: 1px;
     border-radius: 50%;
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
     background: var(--ab, var(--border));
     transform: translateX(var(--x, 0));
  }
   input[type="checkbox"].switch:checked {
     --ab: var(--active-inner);
-    --x: 17px;
+    --x: 30px;
  }
   input[type="checkbox"].switch:disabled:not(:checked):after {
     opacity: 0.6;
