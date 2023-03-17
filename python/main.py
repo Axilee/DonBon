@@ -21,11 +21,14 @@ sys.path.append('Oauth2')
 from Oauth2 import webhook
 from Oauth2 import AuthorizationOauth2 
 from Oauth2 import initWebhook
+
+webhook = webhook.flaskAppWebhook()
+
 #wczytaj konfig zmienne.ini
 config = configparser.ConfigParser()
-zmienne = config.read("zmienne.ini")
+config.read("zmienne.ini")
 identity = configparser.ConfigParser()
-identityFile = identity.read("Oauth2/identity.ini")
+identity.read("Oauth2/identity.ini")
 
 user_token = identity['TWITCH']['access_token'] #zaczyt tokenu auth dla twitch
 refresh_token = identity['TWITCH']['refresh_token'] #imo lepiej tutac execowac refresh token bedzie latwiej go responsem odnawiac 
@@ -86,7 +89,7 @@ def sprawdz_token(token,service_name):
             pass 
 
     if  response.status_code == 401:
-        json = webhook.flaskAppWebhook.refresh(service_name,i['refresh_token'],i['client_id'],i['client_secret'])
+        json = webhook.refresh(service_name)
         response = requests.get(url,headers=headers)
         if response.status_code == 401 and i['access_token'] == "":
             print("Pierwsza autoryzacja")
@@ -98,11 +101,22 @@ def sprawdz_token(token,service_name):
             print("cos poszlo nie tak: ",response.content," kod ",response.status_code)
             
         return True
+def refresh_config():
+    print("Refresh config...")
+    while True:
+        config.read('zmienne.ini')
+        time.sleep(0.5)
+        # return config
+        
+
 #----------------------------------------------------------------------------------------
 
 #------------------------------- PROCESY 
 webhookProcess = multiprocessing.Process(target=wlacz_webhook)
 sshProcess = multiprocessing.Process(target=ssh.config_sync)
+configProcess = multiprocessing.Process(target=refresh_config)
+tokenRefreshProcess = multiprocessing.Process(target=webhook.background_token_refresh)
+#-------------------------------
 
 wsh = comclt.Dispatch("WScript.Shell")
 ap = comclt.Dispatch("Shell.Application")
@@ -111,7 +125,6 @@ class Bot(commands.Bot):
     def __init__(self):
         super().__init__(token=ACCESS_TOKEN, prefix = PREFIX, initial_channels=INITIAL_CHANNELS)  
             
-
     async def event_ready(self):
         print(f'Zalogowano jako {self.nick}')
         # print(f'user ID {self.user_id}')
@@ -226,9 +239,10 @@ class Bot(commands.Bot):
 #         await client.pubsub.subscribe_topics(topics)
 #         await client.start()
 
+
+
 #inicjalizacja komendą python main.py
 if __name__ == "__main__":
-    print (f"CONFIG: {zmienne}")
     webhookProcess.start()
     sprawdz_token(user_token,'twitch')
     sprawdz_token(identity['SPOTIFY']['access_token'],'spotify')
@@ -236,6 +250,8 @@ if __name__ == "__main__":
     bot.update_komendy()
     ssh.execute()
     sshProcess.start()
+    configProcess.start()
+    tokenRefreshProcess.start()
     print(f"\nLogowanie do kanalu {INITIAL_CHANNELS[0]}...")
     bot.run()
     

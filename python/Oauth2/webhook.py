@@ -9,8 +9,8 @@ import os
 start_time = time.time()
 config = configparser.ConfigParser()
 config.read("Oauth2/identity.ini")
-htmldir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'html'))
-static = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'html'))
+htmldir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'strona'))
+static = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'strona'))
 
 
 class flaskAppWebhook():
@@ -21,7 +21,15 @@ class flaskAppWebhook():
     
     # base64_bytes = base64.b64encode(sample_string_bytes)
     # base64_string = base64_bytes.decode("ascii")
-    def refresh(service_name,refresh_token,client_id,client_secret):
+
+    
+    def refresh(self,service_name):
+
+        config.read('identity.ini')
+        c = config[service_name.upper()]
+        refresh_token = c['refresh_token']
+        client_id = c['client_id']
+        client_secret = c['client_secret']
         print(f"WEBHOOK >> Odświeżanie tokenu dla >> {client_id}")
         if service_name.lower() == "twitch":
             uri = 'https://id.twitch.tv/oauth2/token'
@@ -48,13 +56,16 @@ class flaskAppWebhook():
             response = requests.post(uri,headers = headers,data = dane)
             response.raise_for_status()
         except requests.exceptions.HTTPError as e:
-            print(f"Coś poszło nie tak, kod {e}")
-            print(headers)
-            print(dane)
-            print(uri)
-            if service_name == "spotify": print(f"string for encoded: {tokenString}, encoded string: {encoded_client}")
+            
+            if service_name.lower() == "spotify": print(f"string for encoded: {tokenString}, encoded string: {encoded_client}")
+            elif service_name.lower() != "spotify":
+                print(f"Coś poszło nie tak, kod {e}")
+                print(headers)
+                print(dane)
+                print(uri)
         json = response.json()
         if json.get('access_token'):   
+            print("WEBHOOK >> ACCESS TOKEN")
             expires_in = json.get('expires_in')
             expires_seconds = time.time() + expires_in
             expires_at = time.localtime(expires_seconds)
@@ -63,12 +74,28 @@ class flaskAppWebhook():
             config.set(service_name.upper(),'access_token',json.get('access_token'))
             config.set(service_name.upper(),'expires_in',str(expires_seconds))
             config.set(service_name.upper(),'data_waznosci',expires_at)
-            if service_name != 'spotify': config.set(service_name.upper(),'refresh_token',json.get('refresh_token'))
+            if service_name.lower() != 'spotify': config.set(service_name.upper(),'refresh_token',json.get('refresh_token'))
             with open ('Oauth2/identity.ini', 'w') as plik:
                 config.write(plik)
-            
         
         return json
+
+
+    def background_token_refresh(self):
+        while True:
+
+            config.read("Oauth2/identity.ini")
+            csp = float(config['SPOTIFY']['expires_in'])
+            ctw = float(config['TWITCH']['expires_in'])
+            aktualny_czas = time.time()
+            if csp < aktualny_czas:
+                self.refresh("SPOTIFY")
+            elif ctw < aktualny_czas:
+                self.refresh("TWITCH")
+            else:
+                pass
+            time.sleep(1)
+
 
     def send(code, service_name,client_id,client_secret,redirect_uri):
         if service_name.lower() == "twitch":
@@ -144,7 +171,8 @@ class flaskAppWebhook():
                 config.set(service_name,'refresh_token', refresh_token)
                 with open('Oauth2/identity.ini','w') as f:
                     config.write(f)
-            return f"<H1 style='font-size:5em'>TOKEN ODEBRANY WOOHOO<br>Do serwisu: {service_name}<br>TOKEN: {access_token}<br><br>REFRESH TOKEN: {refresh_token}"
+            return render_template("authorized.html")
+            # return f"<H1 style='font-size:5em'>TOKEN ODEBRANY WOOHOO<br>Do serwisu: {service_name}<br>TOKEN: {access_token}<br><br>REFRESH TOKEN: {refresh_token}"
 
 
    
