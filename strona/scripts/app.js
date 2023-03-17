@@ -107,6 +107,6 @@ window.addEventListener('load',function(){
       $(".Message--red").fadeOut(2000, function (){
         $(this).addClass("is-hidden").show();
       });
-    }, 5000); //Czas podany w milisekundach do ukrycia popup'u 
+    }, 7000); //Czas podany w milisekundach do ukrycia popup'u 
   });
   

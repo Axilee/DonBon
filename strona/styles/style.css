@@ -29,7 +29,7 @@ body {
     background-color: var(--color1);
     transition: background-color 0.7s ease;
     color: var(--color4);
-  
+    overflow: hidden;
     font-family: 'Arimo', sans-serif;
 }
 
@@ -348,7 +348,7 @@ html {
   display: grid;
   justify-content:  center;
   align-items: center;
-  grid-template-columns: 150px 150px;
+  grid-template-columns: 153px 153px;
   grid-gap: 16px;
   
 }
