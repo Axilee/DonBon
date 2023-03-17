@@ -10,7 +10,7 @@ start_time = time.time()
 config = configparser.ConfigParser()
 config.read("Oauth2/identity.ini")
 htmldir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'strona'))
-static = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'strona'))
+static = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'strona/styles'))
 
 
 class flaskAppWebhook():
@@ -171,9 +171,10 @@ class flaskAppWebhook():
                 config.set(service_name,'refresh_token', refresh_token)
                 with open('Oauth2/identity.ini','w') as f:
                     config.write(f)
-            return render_template("authorized.html")
-            # return f"<H1 style='font-size:5em'>TOKEN ODEBRANY WOOHOO<br>Do serwisu: {service_name}<br>TOKEN: {access_token}<br><br>REFRESH TOKEN: {refresh_token}"
-
+            if access_token:
+                return render_template("authorized.html",token=access_token,refresh = refresh_token)
+            else:
+                return render_template("notauthorized.html")
 
    
 
