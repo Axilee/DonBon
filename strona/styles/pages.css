@@ -1,3 +1,7 @@
+ .pages, .paginate, .counter {
+    display: none;
+ }
+
  .paginate { /*Button */
 	 -webkit-appearance: none;
 	 background: transparent;

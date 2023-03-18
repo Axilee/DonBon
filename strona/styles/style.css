@@ -315,17 +315,17 @@ html {
   padding: 0 3rem 3rem 3rem;
 
   box-shadow: 0px 8px 20px rgba(54, 121, 98, 0.1);
-  animation: fadeIn 2.5s ease-in-out forwards;
+  animation: fadeIn .5s ease-in-out forwards;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-70px);
+    transform: translateX(-200%);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 }
 
