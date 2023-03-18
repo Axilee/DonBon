@@ -312,7 +312,6 @@ html {
   
   border-radius: 6px;
 
-  margin-left: 3%;
   padding: 0 3rem 3rem 3rem;
 
   box-shadow: 0px 8px 20px rgba(54, 121, 98, 0.1);
@@ -387,7 +386,7 @@ html {
 
 .upload-buttons {
   position: fixed;
-  left: 50%;
+  left: 49%;
   bottom: 20px;
   transform: translate(-50%, -50%);
   margin: 0 auto;

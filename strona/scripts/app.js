@@ -138,8 +138,7 @@ window.addEventListener('load',function(){
   });
   
 
-
-//Pagination
+//Stronnicowanie
   var pr = document.querySelector('.paginate.left');
   var pl = document.querySelector('.paginate.right');
   var pageNames = ['DonBon', 'AxBon', 'BierBon', 'JarBon', 'BauBon']; // tablica nazw stron
@@ -147,41 +146,41 @@ window.addEventListener('load',function(){
   pr.onclick = slide.bind(this, -1);
   pl.onclick = slide.bind(this, 1);
 
-  var index = 0, total = 5; //Liczba stron
+  var index = 0,
+    total = 5; //Liczba stron
 
   var startX = null;
   var dragging = false;
 
   function slide(offset) {
     index = Math.min(Math.max(index + offset, 0), total - 1);
-
-    pr.setAttribute('data-state', index === 0 ? 'disabled' : '');
-    pl.setAttribute('data-state', index === total - 1 ? 'disabled' : '');
-
+  
     function getPages(index) {
       var prevPage = index > 0 ? pageNames[index - 1] : null;
       var nextPage = index < pageNames.length - 1 ? pageNames[index + 1] : null;
       var currentPage = pageNames[index];
-    
-      if (currentPage === 'DonBon') {
-        document.querySelector('.app-container').style.display = 'block';
-        document.querySelector('.app-container2').style.display = 'none';
-      } else if (currentPage === 'AxBon') {
-        document.querySelector('.app-container').style.display = 'none';
-        document.querySelector('.app-container2').style.display = 'block';
-      }
-    
       return [prevPage, currentPage, nextPage];
     }
-    
+  
     var [prevPage, currentPage, nextPage] = getPages(index);
-
+  
     document.querySelector('.prev-page').textContent = prevPage || '';
     document.querySelector('.current-page').textContent = currentPage || '';
     document.querySelector('.next-page').textContent = nextPage || '';
-
-
+  
+    pr.setAttribute('data-state', index === 0 ? 'disabled' : '');
+    pl.setAttribute('data-state', index === total - 1 ? 'disabled' : '');
+  
+    // Dodaj kod, który będzie wyświetlał odpowiedni kontener dla danej strony
+    if (currentPage === 'DonBon') {
+      document.querySelector('.app-container').style.display = 'block';
+      document.querySelector('.app-container2').style.display = 'none';
+    } else if (currentPage === 'AxBon') {
+      document.querySelector('.app-container').style.display = 'none';
+      document.querySelector('.app-container2').style.display = 'block';
+    } 
   }
+  
 
   slide(0);
 
@@ -202,9 +201,10 @@ window.addEventListener('load',function(){
     }
   });
 
-document.addEventListener('mouseup', function(event) {
+  document.addEventListener('mouseup', function(event) {
   dragging = false;
-});
+  });
+
 
 
 
