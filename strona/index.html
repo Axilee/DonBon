@@ -14,6 +14,7 @@
 
     <!-- Dodatkowy CSS -->
     <link href="styles/assets.css" rel="stylesheet">
+    <link href="styles/pages.css" rel="stylesheet">
 
     <!-- Główny JS -->
     <script src="scripts/main.js"></script>
@@ -58,6 +59,7 @@
 <!-- Page Content -->
 <div class="page-content">
 
+<!-- DonBon Container -->
     <div class="app-container">
         <!--Txt effect, nazwa -->
         <div class="napis">
@@ -104,8 +106,37 @@
             <button class="save-settings">Zapisz</button>
             <button class="restore-settings">Przywróć</button>
         </div>
+
+        <div class="pages">
+            <button class="paginate left"><i></i><i></i></button>
+            <button class="paginate right"><i></i><i></i></button>
+        </div>
+        
     </div>
 
+    <div class="app-container2">
+        <div class="napis">
+            <h1 data-value="AXBON" id="txt-effect">AXBON</h1>
+        </div>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Praesentium corporis quis quia. Dolor cupiditate quae fuga. Ducimus cum dicta commodi cupiditate deserunt id perferendis assumenda suscipit in omnis fugiat incidunt, nulla impedit optio! Sit cupiditate, cum architecto molestiae quisquam temporibus nostrum esse similique reprehenderit, assumenda minus voluptate mollitia, reiciendis voluptatem.
+    
+        <div class="upload-buttons">
+            <button class="save-settings">Zapisz</button>
+            <button class="restore-settings">Przywróć</button>
+        </div>
+
+        <div class="pages">
+            <button class="paginate left"><i></i><i></i></button>
+            <button class="paginate right"><i></i><i></i></button>
+        </div>
+    </div>
+
+    <div class="counter">
+        <span class="prev-page"></span>
+        <span class="current-page"></span>
+        <span class="next-page"></span>
+    </div>
+      
 </div>
 
 
@@ -186,20 +217,20 @@
 
 <div class="Message Message--green is-hidden">
     <div class="Message-icon">
-      <i class="fa fa-check"></i>
+    <i class="fa fa-check"></i>
     </div>
     <div class="Message-body">
-      <p>Yikes, udało się zapisać ustawienia.</p>
-      <p class="good_job">Dobra robota!</p>
+    <p>Yikes, udało się zapisać ustawienia.</p>
+    <p class="good_job">Dobra robota!</p>
     </div>
 </div>
 
 <div class="Message Message--red is-hidden">
     <div class="Message-icon">
-      <i class="fa fa-times"></i>
+    <i class="fa fa-times"></i>
     </div>
     <div class="Message-body">
-      <p>Coś sie spierdoliło, spróbuj jeszcze raz.</p>
+    <p>Coś sie spierdoliło, spróbuj jeszcze raz.</p>
     </div>
     <button class="Message-close js-messageClose"><i class="fa fa-times"></i></button>
 </div>
@@ -210,6 +241,9 @@
         <i class="fa-solid fa-wand-magic-sparkles my-float"></i>
     </div>
 </button>
+
+
+
 
 
 

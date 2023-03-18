@@ -298,7 +298,7 @@ html {
 
 /* Kontener z aplikacją DonBon */
 
-.app-container {
+.app-container, .app-container2 {
   position: absolute;
 
   width: 75rem;
@@ -386,10 +386,11 @@ html {
 }
 
 .upload-buttons {
-  margin-right: 0.7rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;
 }
 
 
