@@ -178,11 +178,3 @@ window.addEventListener('load',function(){
   $(document).mouseup(function(event) {
     dragging = false;
   });
-
-  
-
-
-
-
-
- 

@@ -1,6 +1,6 @@
- .pages, .paginate, .counter {
+ /* .pages, .paginate, .counter {
     display: none;
- }
+ } */
 
  .paginate { /*Button */
 	 -webkit-appearance: none;
