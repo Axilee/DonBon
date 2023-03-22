@@ -1,6 +1,7 @@
 import os
 import time
 import asyncio
+from twitchio.ext import pubsub
 from datetime import datetime
 from twitchio.ext import commands
 from twitchio import Message
@@ -110,21 +111,29 @@ def sprawdz_token(token,service_name):
             print("cos poszlo nie tak: ",response.content," kod ",response.status_code)
             
         return True
+
+def enable(command):
+    c = config["KOMENDY"]
+    if c[command] == 1:
+        return True
+    elif c[command] == 0:
+        return False
+    else:
+        print("Komendy brak w configu")
 def refresh_config():
     print("Refresh config...")
     while True:
         config.read('zmienne.ini')
         time.sleep(0.5)
-        # return config
         
-
 #----------------------------------------------------------------------------------------
 
 #------------------------------- PROCESY 
 webhookProcess = multiprocessing.Process(target=wlacz_webhook)
 sshProcess = multiprocessing.Process(target=ssh.config_sync)
-configProcess = multiprocessing.Process(target=refresh_config)
 tokenRefreshProcess = multiprocessing.Process(target=webhook.background_token_refresh)
+configProcess = multiprocessing.Process(target=refresh_config)
+
 #-------------------------------
 
 wsh = comclt.Dispatch("WScript.Shell")
@@ -210,10 +219,20 @@ class Bot(commands.Bot):
         await ctx.send(getCurrentlyPlaying(identity['SPOTIFY']['access_token']))
     #@commands.command(name = "chatgpt")
     #async def chatgpt(self,ctx:commands.Context):
+    async def remove(self,command):
+        self.remove_command(command)
+    
 
+    @commands.command(name = "d")
+    async def d(self,ctx:commands.Context):
+        self.remove_command(name="allchat")
+    
+    @commands.command(name = "e")
+    async def e(self,ctx:commands.Context):
+        self.add_command(self.allchat)
+        
 
-
-#wyślij liste komend do zmienne.ini
+    #wyślij liste komend do zmienne.ini
     def update_komendy(self):
         for command in self.commands.values():
             if not config.read("zmienne.ini"):
@@ -226,27 +245,35 @@ class Bot(commands.Bot):
                 print(f"Dodaje komendę {command.name}...")
         with open('zmienne.ini', 'w') as plik:
             config.write(plik)
-    
-# class bitbot():
-#     client = twitchio.Client(ACCESS_TOKEN)
-#     @client.event()
-#     async def event_pubsub_bits(event: pubsub.PubSubBitsMessage):
-#         print('bitsy')
 
-#     @client.event()
-#     async def event_pubsub_channel_points(event: pubsub.PubSubChannelPointsMessage):
-#         if event.reward.id == "2f445287-bff8-401b-8011-e44e070c60ca":
-#             print('Odebrano wspólny wypad w gierce')
-#         else:
-#             print(f'Użytkownik {event.channel_id} odebrał {event.reward} o ID = {event.id}, jego input {event.input}, status {event.status}')
 
-#     async def main():
-#         topics = [
-#             pubsub.channel_points(users_oauth_token)[users_channel_id],
-#             pubsub.bits(users_oauth_token)[users_channel_id]
-#         ]
-#         await client.pubsub.subscribe_topics(topics)
-#         await client.start()
+
+
+
+users_oauth_token = "uc6wftw4zvot86y7o8t3wga6d2gnt7"
+users_channel_id = 161307951
+client = twitchio.Client(token=ACCESS_TOKEN)
+client.pubsub = pubsub.PubSubPool(client)
+class bitbot():
+    client = twitchio.Client(ACCESS_TOKEN)
+    @client.event()
+    async def event_pubsub_bits(event: pubsub.PubSubBitsMessage):
+        print('bitsy')
+
+    @client.event()
+    async def event_pubsub_channel_points(event: pubsub.PubSubChannelPointsMessage):
+        if event.reward.id == "2f445287-bff8-401b-8011-e44e070c60ca":
+            print('Odebrano wspólny wypad w gierce')
+        else:
+            print(f'Użytkownik {event.channel_id} odebrał {event.reward} o ID = {event.id}, jego input {event.input}, status {event.status}')
+
+    async def main():
+        topics = [
+            pubsub.channel_points(users_oauth_token)[users_channel_id],
+            pubsub.bits(users_oauth_token)[users_channel_id]
+        ]
+        await client.pubsub.subscribe_topics(topics)
+        await client.start()
 
 
 
@@ -261,7 +288,7 @@ if __name__ == "__main__":
     sshProcess.start()
     configProcess.start()
     tokenRefreshProcess.start()
-    print(f"\nLogowanie do kanalu {INITIAL_CHANNELS[0]}...")
+    print(f"Logowanie do kanalu {INITIAL_CHANNELS[0]}...")
     bot.run()
     
     
