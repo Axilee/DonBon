@@ -4,7 +4,6 @@ import asyncio
 from twitchio.ext import pubsub
 from datetime import datetime
 from twitchio.ext import commands
-from twitchio import Message
 import twitchio
 import win32com.client as comclt
 import win32api
@@ -120,21 +119,9 @@ def enable(command):
         return False
     else:
         print("Komendy brak w configu")
-def refresh_config():
-    print("Refresh config...")
-    while True:
-        config.read('zmienne.ini')
-        time.sleep(0.5)
-        
+
 #----------------------------------------------------------------------------------------
 
-#------------------------------- PROCESY 
-webhookProcess = multiprocessing.Process(target=wlacz_webhook)
-sshProcess = multiprocessing.Process(target=ssh.config_sync)
-tokenRefreshProcess = multiprocessing.Process(target=webhook.background_token_refresh)
-configProcess = multiprocessing.Process(target=refresh_config)
-
-#-------------------------------
 
 wsh = comclt.Dispatch("WScript.Shell")
 ap = comclt.Dispatch("Shell.Application")
@@ -230,7 +217,12 @@ class Bot(commands.Bot):
     @commands.command(name = "e")
     async def e(self,ctx:commands.Context):
         self.add_command(self.allchat)
-        
+    
+    def endis(self,nazwa_komendy):
+        print (nazwa_komendy.lower())
+        self.remove_command(name=nazwa_komendy.lower())
+        print("endissss")
+
 
     #wyślij liste komend do zmienne.ini
     def update_komendy(self):
@@ -245,6 +237,65 @@ class Bot(commands.Bot):
                 print(f"Dodaje komendę {command.name}...")
         with open('zmienne.ini', 'w') as plik:
             config.write(plik)
+
+
+
+
+
+    async def event_message(self, message:twitchio.Message):
+        config.read("zmienne.ini")
+        c = config["KOMENDY"]
+        # if message.author == self.nick.lower(): #ignoruj samego siebie
+        #     return
+
+        if message.content.startswith("$"):
+            cmd_name = message.content.split(" ")[0][1:]  #komenda bez prefixu
+            if c[cmd_name] == 1:
+                print(c[cmd_name],"enabled command ",cmd_name)
+                await self.handle_commands(message)
+                await message.channel.send(f"Command '{cmd_name}' isenabled.")
+            else:
+                # Send a message or do nothing if the command is disabled
+                await message.channel.send(f"Command '{cmd_name}' is currently disabled.")
+        else:
+            # Process regular messages
+            await self.handle_commands(message)
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -276,6 +327,13 @@ class bitbot():
         await client.start()
 
 
+#------------------------------- PROCESY 
+webhookProcess = multiprocessing.Process(target=wlacz_webhook)
+sshProcess = multiprocessing.Process(target=ssh.config_sync)
+tokenRefreshProcess = multiprocessing.Process(target=webhook.background_token_refresh)
+# configProcess = multiprocessing.Process(target=refresh_config)
+
+#-------------------------------
 
 #inicjalizacja komendą python main.py
 if __name__ == "__main__":
@@ -286,7 +344,7 @@ if __name__ == "__main__":
     bot.update_komendy()
     ssh.execute()
     sshProcess.start()
-    configProcess.start()
+    # configProcess.start()
     tokenRefreshProcess.start()
     print(f"Logowanie do kanalu {INITIAL_CHANNELS[0]}...")
     bot.run()
