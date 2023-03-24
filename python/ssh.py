@@ -18,8 +18,7 @@ def polacz():
 
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(hostname, username=username, password='qwe!@#')
-
+    ssh.connect(hostname, username=username, password='qwe!@#',timeout=3)
     sciezka_lokalna = '.\\zmienne.ini'
     sciezka_zdalna = '/home/fitas/bot/zmienne.ini'
 
@@ -36,13 +35,17 @@ def execute():
     try:
         print(f"\nSSH >> Wysyłanie komend do {hostname}")
         loading_t.start()
-        polacz()
-        loading_t.terminate()
+        try:
+            polaczenie = polacz()
+            print(f"\nSSH >> SUKCES! Wysłano komendy do {hostname} jako {username}")
+            loading_t.terminate()
+        except paramiko.ChannelException as e:
+            print("\nSSH >> Nieudane połączenie ",e)
+        
+        
     except:
         loading_t.terminate()
-        print("SSH >> COŚ POSZŁO NIE TAK - NIE WYSŁANO")
-    else:
-        print(f"\nSSH >> SUKCES! Wysłano komendy do {hostname} jako {username}")
+        print("\nSSH >> COŚ POSZŁO NIE TAK - NIE WYSŁANO")
 def config_sync():
     print("Config remote sync...")
     config = configparser.ConfigParser()
