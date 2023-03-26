@@ -247,7 +247,8 @@ class Bot(commands.Bot):
         c = config["KOMENDY"]
         cmd = ctx.content
         if ctx.content.startswith("$"):
-            cmd = ctx.content.split("$", 1)[1]
+            cmd = ctx.content.split("$", 1)[-1].split()[0]
+            print (cmd, ">>>>> KOMENDA")
             if c[cmd] == "1":
                 await self.handle_commands(ctx)
                 print("handle command enabled")
@@ -292,8 +293,8 @@ class bitbot():
 
     @client.event()
     async def event_pubsub_channel_points(event: pubsub.PubSubChannelPointsMessage):
-        if event.reward.id == "2f445287-bff8-401b-8011-e44e070c60ca":
-            print('Odebrano wspólny wypad w gierce')
+        if event.reward.title == "drop":
+            await Bot.drop() #nw czy to dziala moze trzeba przepisac
         else:
             print(f'Użytkownik {event.channel_id} odebrał {event.reward} o ID = {event.id}, jego input {event.input}, status {event.status}')
 

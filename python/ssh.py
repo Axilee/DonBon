@@ -20,7 +20,7 @@ def polacz():
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(hostname, username=username, password='qwe!@#',timeout=3)
     sciezka_lokalna = '.\\zmienne.ini'
-    sciezka_zdalna = '/home/fitas/bot/zmienne.ini'
+    sciezka_zdalna = '/var/www/python/zmienne.ini'
 
     with open(sciezka_lokalna, 'rb') as plik_lokalny:
         plik_content = plik_lokalny.read()
@@ -55,7 +55,7 @@ def config_sync():
     sftp = ssh.open_sftp()
 
     while ssh:
-        with sftp.open('/home/fitas/bot/zmienne.ini','rb+') as config_remote, open('.\\zmienne.ini','rb+') as config_local:
+        with sftp.open('/var/www/python/zmienne.ini','rb+') as config_remote, open('.\\zmienne.ini','rb+') as config_local:
             cl = config_local.read()
             cr = config_remote.read()
             if cl == cr:
