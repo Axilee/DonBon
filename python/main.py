@@ -241,42 +241,21 @@ class Bot(commands.Bot):
 
 
 
-
-    async def event_message(self, message:twitchio.Message):
+    #handler kazdej wiadomosci, zeby wylaczyc te wylaczone w configu
+    async def event_message(self, ctx:commands.Context):
         config.read("zmienne.ini")
         c = config["KOMENDY"]
-        # if message.author == self.nick.lower(): #ignoruj samego siebie
-        #     return
-
-        if message.content.startswith("$"):
-            cmd_name = message.content.split(" ")[0][1:]  #komenda bez prefixu
-            if c[cmd_name] == 1:
-                print(c[cmd_name],"enabled command ",cmd_name)
-                await self.handle_commands(message)
-                await message.channel.send(f"Command '{cmd_name}' isenabled.")
+        cmd = ctx.content
+        if ctx.content.startswith("$"):
+            cmd = ctx.content.split("$", 1)[1]
+            if c[cmd] == "1":
+                await self.handle_commands(ctx)
+                print("handle command enabled")
+            elif c[cmd] == "0":
+                await ctx.channel.send(f"Komenda {cmd} jest wyłączona")
+                print("wylaczona komenda")
             else:
-                # Send a message or do nothing if the command is disabled
-                await message.channel.send(f"Command '{cmd_name}' is currently disabled.")
-        else:
-            # Process regular messages
-            await self.handle_commands(message)
-
-
-
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
+                print("komenda nie istnieje")
 
 
 
