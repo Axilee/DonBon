@@ -21,6 +21,7 @@ sys.path.append('Oauth2')
 from Oauth2 import webhook
 from Oauth2 import AuthorizationOauth2 
 from Oauth2 import initWebhook
+from pointbits import pointbits
 
 webhook = webhook.flaskAppWebhook()
 
@@ -245,7 +246,7 @@ class Bot(commands.Bot):
     async def event_message(self, message = twitchio.Message):
         config.read("zmienne.ini")
         c = config["KOMENDY"]
-        print(message.raw_data)
+        print(message.raw_data) #debug wiadomosci
         if message.echo: #ignoruj samego siebie
             return
         else:
@@ -282,49 +283,11 @@ class Bot(commands.Bot):
 
 
 
-
-
-class bitbot():
-    
-    users_oauth_token = "uc6wftw4zvot86y7o8t3wga6d2gnt7"
-    users_channel_id = 161307951
-    client = twitchio.Client(token=ACCESS_TOKEN)
-    client.pubsub = pubsub.PubSubPool(client)
-
-
-    def __init__(self):
-        self.client = twitchio.Client(client_secret=identity["TWITCH"]["client_secret"], token = ACCESS_TOKEN)
-        print("Client Joined")
-
-    async def connect(self):
-        await self.client.connect()
-        print("Connect")      
-    client = twitchio.Client(ACCESS_TOKEN)
-
-    @client.event()
-    async def event_pubsub_bits(event: pubsub.PubSubBitsMessage):
-        print('bitsy')
-
-    @client.event()
-    async def event_pubsub_channel_points(event: pubsub.PubSubChannelPointsMessage):
-        if event.reward.title == "Bążur":
-            print('@FSLDFJEAFKLWEJFEWLAFJ NAGRODA >?>>>>')
-        else:
-            print(f'Użytkownik {event.channel_id} odebrał {event.reward} o ID = {event.id}, jego input {event.input}, status {event.status}')
-
-    async def main():
-        topics = [
-            pubsub.channel_points(users_oauth_token)[users_channel_id],
-            pubsub.bits(users_oauth_token)[users_channel_id]
-        ]
-        await client.pubsub.subscribe_topics(topics)
-        await client.start()
-
-
 #------------------------------- PROCESY 
 webhookProcess = multiprocessing.Process(target=wlacz_webhook)
 sshProcess = multiprocessing.Process(target=ssh.config_sync)
 tokenRefreshProcess = multiprocessing.Process(target=webhook.background_token_refresh)
+pointbitsProcess = multiprocessing.Process(target=pointbits)
 # configProcess = multiprocessing.Process(target=refresh_config)
 
 #-------------------------------
@@ -334,8 +297,6 @@ if __name__ == "__main__":
     webhookProcess.start()
     sprawdz_token(user_token,'twitch')
     sprawdz_token(identity['SPOTIFY']['access_token'],'spotify')
-    bb = bitbot()
-    bb.connect()
     bot = Bot()
     bot.update_komendy()
     ssh.execute()
@@ -343,7 +304,9 @@ if __name__ == "__main__":
     # configProcess.start()
     tokenRefreshProcess.start()
     print(f"Logowanie do kanalu {INITIAL_CHANNELS[0]}...")
+    pointbitsProcess.start()
     bot.run()
+
     
     
     
