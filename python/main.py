@@ -46,7 +46,7 @@ ACCESS_TOKEN = 'dji7vy3dlc0szw4vz28ai6cllt4p9b'
 
 PREFIX = "$"
 
-INITIAL_CHANNELS=["aaxile"]
+INITIAL_CHANNELS=["DonHoman"]
 
 
 
@@ -242,24 +242,28 @@ class Bot(commands.Bot):
 
 
 
-    async def event_message(self, message:twitchio.Message):
+    async def event_message(self, message = twitchio.Message):
         config.read("zmienne.ini")
         c = config["KOMENDY"]
-        # if message.author == self.nick.lower(): #ignoruj samego siebie
-        #     return
-
-        if message.content.startswith("$"):
-            cmd_name = message.content.split(" ")[0][1:]  #komenda bez prefixu
-            if c[cmd_name] == 1:
-                print(c[cmd_name],"enabled command ",cmd_name)
-                await self.handle_commands(message)
-                await message.channel.send(f"Command '{cmd_name}' isenabled.")
-            else:
-                # Send a message or do nothing if the command is disabled
-                await message.channel.send(f"Command '{cmd_name}' is currently disabled.")
+        print(message.raw_data)
+        if message.echo: #ignoruj samego siebie
+            return
         else:
-            # Process regular messages
-            await self.handle_commands(message)
+            if message.content.startswith("$"):
+                cmd_name = message.content.split(" ")[0][1:]  #komenda bez prefixu
+                if cmd_name not in c.keys():
+                    return
+                elif c[cmd_name] == 1:
+                    print(c[cmd_name],"enabled command ",cmd_name)
+                    await self.handle_commands(message)
+                    await message.channel.send(f"Command '{cmd_name}' isenabled.")
+                
+                else:
+                    # Send a message or do nothing if the command is disabled
+                    await message.channel.send(f"Command '{cmd_name}' is currently disabled.")
+            else:
+                # Process regular messages
+                await self.handle_commands(message)
 
 
 
@@ -280,41 +284,31 @@ class Bot(commands.Bot):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-users_oauth_token = "uc6wftw4zvot86y7o8t3wga6d2gnt7"
-users_channel_id = 161307951
-client = twitchio.Client(token=ACCESS_TOKEN)
-client.pubsub = pubsub.PubSubPool(client)
 class bitbot():
+    
+    users_oauth_token = "uc6wftw4zvot86y7o8t3wga6d2gnt7"
+    users_channel_id = 161307951
+    client = twitchio.Client(token=ACCESS_TOKEN)
+    client.pubsub = pubsub.PubSubPool(client)
+
+
+    def __init__(self):
+        self.client = twitchio.Client(client_secret=identity["TWITCH"]["client_secret"], token = ACCESS_TOKEN)
+        print("Client Joined")
+
+    async def connect(self):
+        await self.client.connect()
+        print("Connect")      
     client = twitchio.Client(ACCESS_TOKEN)
+
     @client.event()
     async def event_pubsub_bits(event: pubsub.PubSubBitsMessage):
         print('bitsy')
 
     @client.event()
     async def event_pubsub_channel_points(event: pubsub.PubSubChannelPointsMessage):
-        if event.reward.id == "2f445287-bff8-401b-8011-e44e070c60ca":
-            print('Odebrano wspólny wypad w gierce')
+        if event.reward.title == "Bążur":
+            print('@FSLDFJEAFKLWEJFEWLAFJ NAGRODA >?>>>>')
         else:
             print(f'Użytkownik {event.channel_id} odebrał {event.reward} o ID = {event.id}, jego input {event.input}, status {event.status}')
 
@@ -340,6 +334,8 @@ if __name__ == "__main__":
     webhookProcess.start()
     sprawdz_token(user_token,'twitch')
     sprawdz_token(identity['SPOTIFY']['access_token'],'spotify')
+    bb = bitbot()
+    bb.connect()
     bot = Bot()
     bot.update_komendy()
     ssh.execute()
