@@ -34,3 +34,4 @@ def pointbits():
         
 
     client.loop.run_until_complete(main())
+#TODO tworzenie rewardsów i usuwanie ich przy wlaczeniu/wylaczeniu komendy za nagrode, wykombinowac jak dodawac/usuwac nagrody za bitsy bez marnowania ich
