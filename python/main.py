@@ -254,11 +254,9 @@ class Bot(commands.Bot):
                 cmd_name = message.content.split(" ")[0][1:]  #komenda bez prefixu
                 if cmd_name not in c.keys():
                     return
-                elif c[cmd_name] == 1:
+                elif c[cmd_name] == "1":
                     print(c[cmd_name],"enabled command ",cmd_name)
                     await self.handle_commands(message)
-                    await message.channel.send(f"Command '{cmd_name}' isenabled.")
-                
                 else:
                     # Send a message or do nothing if the command is disabled
                     await message.channel.send(f"Command '{cmd_name}' is currently disabled.")
