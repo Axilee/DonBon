@@ -112,14 +112,14 @@ def sprawdz_token(token,service_name):
             
         return True
 
-def enable(command):
-    c = config["KOMENDY"]
-    if c[command] == 1:
-        return True
-    elif c[command] == 0:
-        return False
-    else:
-        print("Komendy brak w configu")
+def punkty_bitsy():
+    while 1:
+        if os.path.exists(".//temp.txt"):
+            with open("temp.txt","r") as temp:
+                l = temp.readlines()
+                for i in l:
+                    # asyncio.run(Bot.allchat.invoke("ble")) #to ma dzialac bo nie dziala teraz
+                    exit()
 
 #----------------------------------------------------------------------------------------
 
@@ -205,25 +205,8 @@ class Bot(commands.Bot):
     @commands.command(name = "song")
     async def song(self,ctx:commands.Context):
         await ctx.send(getCurrentlyPlaying(identity['SPOTIFY']['access_token']))
-    #@commands.command(name = "chatgpt")
-    #async def chatgpt(self,ctx:commands.Context):
-    async def remove(self,command):
-        self.remove_command(command)
-    
 
-    @commands.command(name = "d")
-    async def d(self,ctx:commands.Context):
-        self.remove_command(name="allchat")
     
-    @commands.command(name = "e")
-    async def e(self,ctx:commands.Context):
-        self.add_command(self.allchat)
-    
-    def endis(self,nazwa_komendy):
-        print (nazwa_komendy.lower())
-        self.remove_command(name=nazwa_komendy.lower())
-        print("endissss")
-
 
     #wyślij liste komend do zmienne.ini
     def update_komendy(self):
@@ -263,8 +246,7 @@ class Bot(commands.Bot):
             else:
                 # Process regular messages
                 await self.handle_commands(message)
-
-
+    
 
 
         
@@ -286,7 +268,8 @@ webhookProcess = multiprocessing.Process(target=wlacz_webhook)
 sshProcess = multiprocessing.Process(target=ssh.config_sync)
 tokenRefreshProcess = multiprocessing.Process(target=webhook.background_token_refresh)
 pointbitsProcess = multiprocessing.Process(target=pointbits)
-# configProcess = multiprocessing.Process(target=refresh_config)
+punkty_bitsyProcess = multiprocessing.Process(target=punkty_bitsy)
+
 
 #-------------------------------
 
@@ -299,10 +282,10 @@ if __name__ == "__main__":
     bot.update_komendy()
     ssh.execute()
     sshProcess.start()
-    # configProcess.start()
     tokenRefreshProcess.start()
-    print(f"Logowanie do kanalu {INITIAL_CHANNELS[0]}...")
     pointbitsProcess.start()
+    punkty_bitsyProcess.start()
+    print(f"Logowanie do kanalu {INITIAL_CHANNELS[0]}...")
     bot.run()
 
     

@@ -14,14 +14,18 @@ def pointbits():
     client = twitchio.Client(token=my_token)
     client.pubsub = pubsub.PubSubPool(client)
     # def reward_config():
-    #     d
+    #     while 1:
+    #         config.read("zmienne.ini")
+
 
     @client.event()
     async def event_pubsub_channel_points(event: pubsub.PubSubChannelPointsMessage):
         print("reward?")
         if event.reward.title == "Bążur":
+            with open("temp.txt","w") as temp:
+                temp.write("allchat")
+            
             print("Bążur wydane")
-            await event.reward.edit(token = my_token,title = "Test", cost = 100)
         else:
             print(event.reward.title)
 

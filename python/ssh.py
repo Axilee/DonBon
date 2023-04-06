@@ -2,10 +2,11 @@ import paramiko
 import multiprocessing
 import time
 import configparser
+import difflib
 hostname='172.30.85.163'
 username='fitas'
 password='qwe!@#'
-
+diff = difflib.Differ()
 def loading():
     while True:
         for i in range(3):
@@ -61,8 +62,14 @@ def config_sync():
             if cl == cr:
                 pass
             else:
-                print ("SSH >> Lokalny config \n",cl)
-                print ("SSH >> Zdalny config \n",cr)
+                # remote = sftp.open('/var/www/python/zmienne.ini','r') #pojedyncza roznica linijkami, moze sie przyda
+                # local = open('.\\zmienne.ini','r')
+                # roznica = list(diff.compare(remote.readlines(),local.readlines()))
+                # for i in roznica:
+                #     if i.startswith("+") or i.startswith("-"):
+                #         print("Zmiana komendy",i, end="")
+                # print ("SSH >> Lokalny config \n",cl) #pokazuje cale configi przy zmianie
+                # print ("SSH >> Zdalny config \n",cr)
                 with open('.\\zmienne.ini','wb+') as config_local:
                     print("SSH >> Config Updated")
                     config_local.write(cr)
