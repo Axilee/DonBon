@@ -22,6 +22,7 @@ from Oauth2 import webhook
 from Oauth2 import AuthorizationOauth2 
 from Oauth2 import initWebhook
 from pointbits import pointbits
+import komendy
 
 webhook = webhook.flaskAppWebhook()
 
@@ -146,9 +147,7 @@ class Bot(commands.Bot):
     @commands.command(name = "drop")
     async def drop(self, ctx: commands.Context):
         await ctx.send(f'{ctx.author.name} wyrzucił broń LUL')
-        wsh.SendKeys("1")
-        time.sleep(0.3)
-        wsh.SendKeys("g")
+        komendy.valorant.allchat(ctx)
     @commands.command(name = "ping")
     async def ping(self, ctx: commands.Context):
         await ctx.send(f'{ctx.author} pingnął KEKW')
@@ -242,7 +241,7 @@ class Bot(commands.Bot):
                     await self.handle_commands(message)
                 else:
                     # Send a message or do nothing if the command is disabled
-                    await message.channel.send(f"Command '{cmd_name}' is currently disabled.")
+                    await message.channel.send(f"Komenda ${cmd_name} jest wyłączona")
             else:
                 # Process regular messages
                 await self.handle_commands(message)
