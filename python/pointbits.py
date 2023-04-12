@@ -16,15 +16,13 @@ def pointbits():
     # def reward_config():
     #     while 1:
     #         config.read("zmienne.ini")
-
+    
 
     @client.event()
     async def event_pubsub_channel_points(event: pubsub.PubSubChannelPointsMessage):
         print("reward?")
         if event.reward.title == "Bążur":
-            with open("temp.txt","w") as temp:
-                temp.write("allchat")
-            
+            await event.reward.edit(token = my_token,title = "Test", cost = 100)
             print("Bążur wydane")
         else:
             print(event.reward.title)
@@ -35,6 +33,7 @@ def pointbits():
             pubsub.channel_points(users_oauth_token)[users_channel_id],
             pubsub.bits(users_oauth_token)[users_channel_id]
         ]
+        
         await client.pubsub.subscribe_topics(topics)
         await client.start()
         
