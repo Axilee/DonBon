@@ -151,56 +151,28 @@ class Bot(commands.Bot):
     @commands.command(name = "ping")
     async def ping(self, ctx: commands.Context):
         await ctx.send(f'{ctx.author} pingnął KEKW')
-        wsh.SendKeys("z")
-    @commands.command(name = "cof")
-    async def cof(self, ctx: commands.Context):
-        wsh.SendKeys("")
+        komendy.valorant.ping(ctx)
     @commands.command(name = "notepad")
     async def notepad(self, ctx:commands.Context):
-        wsh.Run("notepad.exe") 
-        time.sleep(0.2)
-        wsh.SendKeys("LOL")
+        komendy.valorant.notepad(ctx)
     @commands.command(name = "allchat")
     async def allchat(self, ctx:commands.Context):
-        msg = (ctx.message.content)
-        msg = msg.replace("$allchat","")
-        wsh.SendKeys("{Enter}")
-        time.sleep(0.05)
-        wsh.SendKeys("{/}")
-        wsh.SendKeys("all")
-        time.sleep(0.05)
-        wsh.SendKeys(msg)
-        wsh.SendKeys("{Enter}")
+        komendy.valorant.allchat(ctx)
     @commands.command(name = "teamchat")
     async def teamchat(self, ctx:commands.Context):
-        msg = (ctx.message.content)
-        msg = msg.replace("$teamchat","")
-        wsh.SendKeys("{Enter}")
-        time.sleep(0.05)
-        wsh.SendKeys("{/}")
-        wsh.SendKeys("team")
-        time.sleep(0.05)
-        wsh.SendKeys(msg)
-        wsh.SendKeys("{Enter}")
+       komendy.valorant.teamchat(ctx)
     @commands.command(name = "knife")
     async def knife(self,ctx:commands.Context):
-        wsh.SendKeys("3")    
+           komendy.valorant.knife(ctx)
     @commands.command(name = "pulpit")
     async def pulpit(self,ctx:commands.Context):
-        ap.ToggleDesktop()
+        komendy.valorant.pulpit(ctx)
     @commands.command(name = "thank")
     async def thank(self,ctx:commands.Context):
-        wsh.SendKeys(".")
-        time.sleep(0.05)
-        wsh.SendKeys("31")
+        komendy.valorant.thank(ctx)
     @commands.command(name = "skill")
     async def skill(self,ctx:commands.Context):
-        s = ctx.message.content
-        s = s.replace("$skill ", "")
-        wsh.SendKeys(s)
-    @commands.command(name = "czesc")
-    async def czesc(self,ctx:commands.Context):
-        await ctx.send(user_token)
+        komendy.valorant.skill(ctx)
     @commands.command(name = "song")
     async def song(self,ctx:commands.Context):
         await ctx.send(getCurrentlyPlaying(identity['SPOTIFY']['access_token']))
