@@ -1,7 +1,7 @@
 
 
 import openai
-openai.api_key = "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"
+openai.api_key = "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"
 def chatgpt(prompt):
     
 
