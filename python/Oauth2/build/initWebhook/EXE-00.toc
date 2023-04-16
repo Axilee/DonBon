@@ -59,7 +59,7 @@
  [],
  False,
  False,
- 1681608606,
+ 1681651299,
  [('run.exe',
    'C:\\Users\\Kacper\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\run.exe',
    'EXECUTABLE')])
