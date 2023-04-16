@@ -8,9 +8,9 @@ import configparser
 import os
 start_time = time.time()
 config = configparser.ConfigParser()
-config.read("Oauth2/identity.ini")
-htmldir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'strona'))
-static = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'strona/styles'))
+config.read("identity.ini")
+htmldir = 'strona'
+static = 'strona/styles'
 
 
 class flaskAppWebhook():
@@ -75,7 +75,7 @@ class flaskAppWebhook():
             config.set(service_name.upper(),'expires_in',str(expires_seconds))
             config.set(service_name.upper(),'data_waznosci',expires_at)
             if service_name.lower() != 'spotify': config.set(service_name.upper(),'refresh_token',json.get('refresh_token'))
-            with open ('Oauth2/identity.ini', 'w') as plik:
+            with open ('identity.ini', 'w') as plik:
                 config.write(plik)
         
         return json
@@ -84,7 +84,7 @@ class flaskAppWebhook():
     def background_token_refresh(self):
         while True:
 
-            config.read("Oauth2/identity.ini")
+            config.read("identity.ini")
             csp = float(config['SPOTIFY']['expires_in'])
             ctw = float(config['TWITCH']['expires_in'])
             aktualny_czas = time.time()
@@ -147,6 +147,7 @@ class flaskAppWebhook():
 
     @app.route('/callback', methods=['GET'])
     def handle_callback():
+            print("CALLBACK doszedl")
             code = request.args.get('code') #pobiera ten jebany kod
             scope = request.args.getlist('scope') #pobiera scope permisji //lista
             state = request.args.get('state')
@@ -159,7 +160,7 @@ class flaskAppWebhook():
                 refresh_token = json.get('refresh_token')
                 config.set(service_name,'access_token', access_token)
                 config.set(service_name,'refresh_token', refresh_token)
-                with open('Oauth2/identity.ini','w') as f:
+                with open('identity.ini','w') as f:
                      config.write(f)
             else:
                 service_name = "SPOTIFY"
@@ -169,7 +170,7 @@ class flaskAppWebhook():
                 refresh_token = json.get('refresh_token')
                 config.set(service_name,'access_token', access_token)
                 config.set(service_name,'refresh_token', refresh_token)
-                with open('Oauth2/identity.ini','w') as f:
+                with open('identity.ini','w') as f:
                     config.write(f)
             if access_token:
                 return render_template("authorized.html",token=access_token,refresh = refresh_token)

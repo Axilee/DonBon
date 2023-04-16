@@ -1,7 +1,7 @@
 import webbrowser
 import configparser
 config = configparser.ConfigParser()
-config.read("Oauth2/identity.ini")
+config.read("identity.ini")
 
 def getOAuth(service_name,client_id,link,redirect_uri):
     c = config[service_name.upper()]

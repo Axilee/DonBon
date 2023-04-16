@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DonBon</title>
+</head>
+
+    <!--===== Importy =====-->
+
+    <!-- Główny CSS -->
+    <link href="styles/style.css" rel="stylesheet">
+
+    <!-- Dodatkowy CSS -->
+    <link href="styles/assets.css" rel="stylesheet">
+    <link href="styles/pages.css" rel="stylesheet">
+
+    <!-- Główny JS -->
+    <script src="scripts/main.js"></script>
+
+    <!-- AwesomeFonts -->
+    <script src="https://kit.fontawesome.com/bd626f218f.js" crossorigin="anonymous"></script>
+
+<body onload="loadconfig()">
+
+<!-- Loader strony -->  
+<div class="loader-wrapper">
+    <div class="loader">
+    </div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
+
+<!-- Navbar -->
+<div class="nav-right visible-xs">
+    <div class="button" id="btn">
+    <div class="bar top"></div>
+    <div class="bar middle"></div>
+    <div class="bar bottom"></div>
+    </div>
+</div>
+
+<div class="sidebar">
+    <ul class="sidebar-list">
+        <li class="sidebar-item"><a href="#" class="sidebar-anchor">Strona Główna</a></li>
+        <li class="sidebar-item"><a href="#" class="sidebar-anchor">Funkcje</a></li>
+        <li class="sidebar-item"><a href="#" class="sidebar-anchor">Twitch</a></li>
+        <li class="sidebar-item"><a href="#" class="sidebar-anchor">Logowanie</a></li>
+        <button class="settings settings-open"><li class="sidebar-item"><a href="#settings" class="sidebar-anchor">Ustawienia</a></li></button>
+    </ul>    
+
+        
+    
+</div>
+
+
+
+<!-- Page Content -->
+<div class="page-content">
+
+<!-- DonBon Container -->
+    <div class="app-container">
+        <!--Txt effect, nazwa -->
+        <div class="napis">
+            <h1 data-value="DONBON" id="txt-effect">DONBON</h1>
+        </div>
+        <!--Kolumny z sekcjami komend -->
+        <section class="columns">
+            <div class="column">
+                <h2>Komendy</h2>
+                <hr class="my-3">
+                <div class="switches-container">
+                    <form method="post">
+                        <div class="komendy" id="komendy-checkboxes">
+                            <!--<input id="s1" type="checkbox" class="switch"><label for="s1">Switch</label>-->
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="column">
+                <h2>Bitsy</h2>
+                <hr class="my-3">
+                <div class="switches-container">
+                    <form method="post">
+                        <div class="bitsy" id="bitsy-checkboxes">
+                            <!--<input id="s1" type="checkbox" class="switch"><label for="s1">Switch</label>-->
+                        </div>
+                    </form>
+                </div>
+            </div>
+          <div class="column">
+                <h2>Pointsy</h2>
+                <hr class="my-3">
+                <div class="switches-container">
+                    <form method="post">
+                        <div class="ch-points" id="pointsy-checkboxes">
+                            <!--<input id="s1" type="checkbox" class="switch"><label for="s1">Switch</label>-->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>	
+
+        <!-- Buttony next i prev page -->   
+        <div class="pages">
+            <button class="paginate left"><i></i><i></i></button>
+            <button class="paginate right"><i></i><i></i></button>
+        </div>
+        
+        <!-- Buttony upload/save/restore -->    
+        <div class="upload-buttons">
+            <button class="save-settings">Zapisz</button>
+            <button class="restore-settings">Przywróć</button>
+        </div>
+
+    </div>
+    
+    <!-- Indicator obecnej strony -->   
+    <div class="counter">
+        <span class="prev-page"></span>
+        <span class="current-page"></span>
+        <span class="next-page"></span>
+      </div>
+
+      <div class="app-container2">
+         <!--Txt effect, nazwa -->
+         <div class="napis">
+            <h1 data-value="DONBON" id="txt-effect">DONBON</h1>
+         </div>
+                 <!-- Buttony next i prev page -->   
+        <div class="pages">
+            <button class="paginate left"><i></i><i></i></button>
+            <button class="paginate right"><i></i><i></i></button>
+        </div>
+        
+        <!-- Buttony upload/save/restore -->    
+        <div class="upload-buttons">
+            <button class="save-settings">Zapisz</button>
+            <button class="restore-settings">Przywróć</button>
+        </div>
+      </div>
+
+</div> 
+
+
+
+<!--Modal-->
+<dialog class="modal" id="modal">
+    <div class="modal-content">
+        <div class="top-bar">
+            <button class="settings-close">&#10006;</button>
+        </div>
+
+        <div class="settings-sidebar">
+
+            <div class="menu-box block">
+                <ul class="menu-box-menu">
+                    <li>
+                        <a class="menu-box-tab" href="#account"><i class="icon fa-solid fa-user"></i>Konto</a>
+                    </li>
+                    <li>
+                        <a class="menu-box-tab" href="#privacy"><i class="icon fa-solid fa-lock"></i>Prywatność</a>
+                    </li>
+                    <li>
+                        <a class="menu-box-tab" href="#functions"><i class="icon fa-solid fa-circle-info"></i>Funkcje</a>
+                    </li>
+                    <li>
+                        <a class="menu-box-tab" href="#application"><i class="icon fa-solid fa-arrow-up-from-bracket"></i>Aplikacja</a>
+                    </li>
+                </ul>
+                <div class="account-wrap user top dropdown">
+                    <div class="picture filled">
+                        <i class="far fa-user"></i>
+                        <img src="#">
+                    </div>
+                    <span>NatalieSource</span>
+                    <div class="dropdown-content">
+                        <ul>
+                            <li>
+                                <a href="#">Profil</a>
+                            </li>
+                            <li>
+                                <a href="#">Admin</a>
+                            </li>
+                            <li>
+                                <a href="#">Wyloguj</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="settings-inside" id="account">
+            <div class="settings-content">
+               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem quasi pariatur ea a laudantium doloribus quo asperiores amet, molestiae autem ipsam repudiandae cum iste quam? Id doloribus dolore cum. Eius obcaecati eveniet labore saepe at aspernatur, sed sapiente omnis enim in, neque et animi magnam ipsam? Expedita quis voluptatem, numquam quasi perferendis dolores in facilis tenetur assumenda suscipit hic odit.
+            </div>
+        </div>
+        <div class="settings-inside" id="privacy">
+        <div class="settings-content">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, suscipit.
+        </div>
+        </div>
+        <div class="settings-inside" id="functions">
+            <div class="settings-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint a rerum reprehenderit laboriosam? Nostrum, ab.
+            </div>
+        </div>
+        <div class="settings-inside" id="application">
+            <div class="settings-content">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam quisquam maxime voluptatem voluptate excepturi commodi ex itaque nihil? Quod similique laborum sit nemo praesentium, ex animi, nihil dignissimos, enim ducimus architecto nam cumque beatae aliquid! Esse, incidunt ipsam! Excepturi ex similique nesciunt quisquam explicabo quos beatae numquam itaque assumenda nihil.
+            </div>
+        </div>
+
+    </div>
+    
+</dialog>
+
+<!--Notifications-->
+
+<div class="Message Message--green is-hidden">
+    <div class="Message-icon">
+    <i class="fa fa-check"></i>
+    </div>
+    <div class="Message-body">
+    <p>Yikes, udało się zapisać ustawienia.</p>
+    <p class="good_job">Dobra robota!</p>
+    </div>
+</div>
+
+<div class="Message Message--red is-hidden">
+    <div class="Message-icon">
+    <i class="fa fa-times"></i>
+    </div>
+    <div class="Message-body">
+    <p>Coś sie spierdoliło, spróbuj jeszcze raz.</p>
+    </div>
+    <button class="Message-close js-messageClose"><i class="fa fa-times"></i></button>
+</div>
+
+
+
+
+
+
+    <!-- JQuery JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Modernizr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+    <!-- Główny JS -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
