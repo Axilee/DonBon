@@ -11,11 +11,11 @@ config = configparser.ConfigParser()
 config.read("identity.ini")
 htmldir = 'strona'
 static = 'strona/styles'
-
+print("WEBHOOK>>")
 
 class flaskAppWebhook():
     app = Flask(__name__,template_folder=htmldir, static_folder=static)
-    
+    print(">>WEBHOOK")
     # client_encoded = client_id + ":" + client_secret
     # sample_string_bytes = client_encoded.encode("ascii")
     

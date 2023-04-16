@@ -1,5 +1,3 @@
-
-
 import multiprocessing
 import webhook
 import AuthorizationOauth2  
@@ -18,6 +16,8 @@ class inicjalizuj():
         httpd = make_server('localhost',5000,webhook.flaskAppWebhook.app)
         httpd.serve_forever()
     wh = multiprocessing.Process(target=hook)
+
+
     def wybor(self):
         
         config = configparser.ConfigParser()
@@ -49,11 +49,18 @@ class inicjalizuj():
         btnsp = tk.Button(okno,bd=0, command=btn_sp,image=spico, bg="#1c1b22")
         btntw.grid(row=0,column=0)
         btnsp.grid(row=0,column=1)
+        print("okno startuje")
         okno.mainloop() #start okno dopoki sie nie zamknie
+        print("okno wyskoczylo")
         # wh.join() #zakoncz proces webhooka
         #app = webhook.flaskAppWebhook(service_name,client_id,client_secret,redirect_uri)
-    
+
 if __name__ == "__main__":
-    inicjalizuj().wh.start()
-    inicjalizuj().wybor()
-    inicjalizuj().wh.terminate()
+    multiprocessing.freeze_support()
+    i = inicjalizuj()
+    i.wh.start()
+    print("wh started")
+    i.wybor()
+    print("okno started")
+    i.wh.terminate()
+    
