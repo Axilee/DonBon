@@ -159,6 +159,10 @@ class flaskAppWebhook():
                 refresh_token = json.get('refresh_token')
                 config.set(service_name,'access_token', access_token)
                 config.set(service_name,'refresh_token', refresh_token)
+
+                print("============================================\n")
+                print(scope)
+                print("============================================\n")
                 with open('Oauth2/identity.ini','w') as f:
                      config.write(f)
             else:
