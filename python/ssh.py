@@ -3,6 +3,7 @@ import multiprocessing
 import time
 import configparser
 import difflib
+import pointbits
 hostname='172.30.85.163'
 username='fitas'
 password='qwe!@#'
@@ -74,6 +75,7 @@ def config_sync():
                     print("SSH >> Config Updated")
                     config_local.write(cr)
                     config_local.close()
+                pointbits.updateRewards()
             time.sleep(0.5)
     
     
