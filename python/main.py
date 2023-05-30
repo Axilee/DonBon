@@ -258,6 +258,7 @@ if __name__ == "__main__":
     punkty_bitsyProcess.start()
     print(f"Logowanie do kanalu {INITIAL_CHANNELS[0]}...")
     bot.run()
+    
 
     
     

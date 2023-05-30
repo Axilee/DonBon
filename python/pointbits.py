@@ -32,8 +32,6 @@ def deleteReward(id):
         'Content-Type': "application/x-www-form-urlencoded" 
     }
     data = {
-        "title":"game analysis 1v1",
-        "cost":100,
         "id":id
     }
     odp = requests.delete(url,headers = headers, data = data)
@@ -90,7 +88,6 @@ def updateRewards():
             else:
                 modifyReward(rid,"enable") #włącz komendę bo istnieje i ma 1 w konfigu
         if komendy[x] == "0": 
-            print (rid, is_enabled)
             if rid and is_enabled:              #sprawdz czy jest juz taki reward
                 print("POINTBITS >> disabling ",x)
                 modifyReward(rid, "disable")
@@ -110,21 +107,14 @@ def updateRewards():
 
 #--------- bot
 def pointbits():
-    updateRewards()
-    getReward()
+
     my_token = 'dji7vy3dlc0szw4vz28ai6cllt4p9b'
     users_oauth_token = identity["access_token"]
     client = twitchio.Client(token=my_token)
     client.pubsub = pubsub.PubSubPool(client)
-    
-
-
-
-
 
 
     @client.event()
-
     async def event_pubsub_channel_points(event: pubsub.PubSubChannelPointsMessage):
         print(event)
         if event.reward.title == "Bążur":
