@@ -84,7 +84,7 @@ def updateRewards():
         if komendy[x] == "1":  #sprawdź czy włączony w configu
             if not rid: #sprawdź czy juz jest stworzony taki reward
                 print("POINTBITS >> creating ",x)
-                createReward(x,700)
+                createReward(x,500)
             else:
                 modifyReward(rid,"enable") #włącz komendę bo istnieje i ma 1 w konfigu
         if komendy[x] == "0": 

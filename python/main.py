@@ -176,6 +176,7 @@ class Bot(commands.Bot):
     @commands.command(name = "song")
     async def song(self,ctx:commands.Context):
         await ctx.send(getCurrentlyPlaying(identity['SPOTIFY']['access_token']))
+  
 
     
 
@@ -184,12 +185,29 @@ class Bot(commands.Bot):
         for command in self.commands.values():
             if not config.read("zmienne.ini"):
                 open("zmienne.ini","w")
-                print("\nKonfig Pusty, tworze nowy")
+                print("\nMAIN >> Konfig Pusty, tworze nowy")
                 config.add_section("KOMENDY")
-                print("Stworzono sekcje KOMENDY")
+                config.add_section("POINTSY")
+                config.add_section("BITSY")
+                print("MAIN >> Stworzono sekcje")
             if not command.name in config["KOMENDY"]:   
                 config['KOMENDY'][command.name] = "0"
-                print(f"Dodaje komendę {command.name}...")
+                print(f"MAIN >> Dodaje komendę {command.name}...")
+            if not command.name in config["POINTSY"]:
+                config['POINTSY'][command.name] = "0"
+                print(f"MAIN >> Dodaje komendę {command.name}...")
+            if not command.name in config["BITSY"]:
+                config['BITSY'][command.name] = "0"
+                print(f"MAIN >> Dodaje komendę {command.name}...")
+            for konfigkomenda in config["BITSY"]:
+                if not konfigkomenda in self.commands:
+                    del config["BITSY"][konfigkomenda] 
+            for konfigkomenda in config["POINTSY"]:
+                if not konfigkomenda in self.commands:
+                    del config["POINTSY"][konfigkomenda] 
+            for konfigkomenda in config["KOMENDY"]:
+                if not konfigkomenda in self.commands:
+                    del config["KOMENDY"][konfigkomenda] 
         with open('zmienne.ini', 'w') as plik:
             config.write(plik)
 
