@@ -49,6 +49,7 @@ def getReward(title="NaN"):
     if title=="NaN":
         for x in odp["data"]:
             print("POINTBITS >> ",x["title"], " ID ", x["id"])
+        return odp["data"]
     else:
         for x in odp["data"]:
             if x["title"] == title:
@@ -91,9 +92,14 @@ def updateRewards():
             if rid and is_enabled:              #sprawdz czy jest juz taki reward
                 print("POINTBITS >> disabling ",x)
                 modifyReward(rid, "disable")
-                    
-    
+def purge():
+    rewards = getReward()
+    for reward in rewards:
+        deleteReward(reward["id"])
+
 # def updateRewards(): #awaryjnie odkomentować żeby usunac rewardsy zamiast tej funkcji wyżej^
+#     config.read("zmienne.ini")
+#     komendy = config["POINTSY"]
 #     for x in komendy:
 #         if komendy[x] == "1":  #sprawdź czy włączony w configu
 #             if getReward(x): #sprawdź czy juz jest stworzony taki reward
@@ -117,10 +123,11 @@ def pointbits():
     @client.event()
     async def event_pubsub_channel_points(event: pubsub.PubSubChannelPointsMessage):
         print(event)
-        if event.reward.title == "Bążur":
+        config.read("zmienne.ini")
+        pointsy = config["POINTSY"]
+        if event.reward.title in pointsy:
             print("Bążur wydane")
-        else:
-            print(event.reward.id)
+        
         
 
 

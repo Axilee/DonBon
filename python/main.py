@@ -22,7 +22,9 @@ from Oauth2 import webhook
 from Oauth2 import AuthorizationOauth2 
 from Oauth2 import initWebhook
 from pointbits import pointbits
+import pointbits as pb
 import komendy
+import argparse
 
 webhook = webhook.flaskAppWebhook()
 
@@ -31,6 +33,12 @@ config = configparser.ConfigParser()
 config.read("zmienne.ini")
 identity = configparser.ConfigParser()
 identity.read("Oauth2/identity.ini")
+parser = argparse.ArgumentParser()
+parser.add_argument("-p","--purge",action="store_true")
+ar = parser.parse_args()
+if ar.purge:
+    pb.purge()
+    exit()
 
 user_token = identity['TWITCH']['access_token'] #zaczyt tokenu auth dla twitch
 refresh_token = identity['TWITCH']['refresh_token'] #imo lepiej tutac execowac refresh token bedzie latwiej go responsem odnawiac 
@@ -113,14 +121,8 @@ def sprawdz_token(token,service_name):
             
         return True
 
-def punkty_bitsy():
-    while 1:
-        if os.path.exists(".//temp.txt"):
-            with open("temp.txt","r") as temp:
-                l = temp.readlines()
-                for i in l:
-                    # asyncio.run(Bot.allchat.invoke("ble")) #to ma dzialac bo nie dziala teraz
-                    exit()
+
+
 
 #----------------------------------------------------------------------------------------
 
@@ -257,13 +259,14 @@ webhookProcess = multiprocessing.Process(target=wlacz_webhook)
 sshProcess = multiprocessing.Process(target=ssh.config_sync)
 tokenRefreshProcess = multiprocessing.Process(target=webhook.background_token_refresh)
 pointbitsProcess = multiprocessing.Process(target=pointbits)
-punkty_bitsyProcess = multiprocessing.Process(target=punkty_bitsy)
+
 
 
 #-------------------------------
 
 #inicjalizacja komendą python main.py
 if __name__ == "__main__":
+    
     webhookProcess.start()
     sprawdz_token(user_token,'twitch')
     sprawdz_token(identity['SPOTIFY']['access_token'],'spotify')
@@ -273,7 +276,6 @@ if __name__ == "__main__":
     sshProcess.start()
     tokenRefreshProcess.start()
     pointbitsProcess.start()
-    punkty_bitsyProcess.start()
     print(f"Logowanie do kanalu {INITIAL_CHANNELS[0]}...")
     bot.run()
     
