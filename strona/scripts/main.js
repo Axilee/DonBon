@@ -21,6 +21,8 @@ $.get("load.php", function(data) {
       var div = $("<div>").append(checkbox, label).attr({id: 'KOMENDY'});
       $("#komendy-checkboxes").append(div);      
     }
+    var nDiv = $("<div>", {id: "kurwa"});
+    nDiv.appendTo("#KOMENDY");
 
   });
   $.each(data.BITSY, function(key, value){
@@ -63,15 +65,38 @@ $.get("load.php", function(data) {
       var div = $("<div>").append(checkbox, label).attr({id: 'POINTSY'});
       $("#pointsy-checkboxes").append(div);      
     }
-
   });
 
+  // $.each(data.VALKOMENDY, function(key, value){
+  //   var valueBox = $("<input>").addClass("ugabuga").attr({
+  //     type: "number",
+  //     value: value
+  //   });
+  //   $(".komendy").append(valueBox);
+  // });
+  // $.each(data.VALBITSY, function(key, value){
+  //   var valueBox = $("<input>").addClass("ugabuga").attr({
+  //     type: "number",
+  //     value: value
+  //   });
+  //   $(".bitsy").append(valueBox);
+  // });
+  // $.each(data.VALPOINTSY, function(key, value){
+  //   var valueBox = $("<input>").addClass("ugabuga").attr({
+  //     type: "number",
+  //     value: value
+  //   });
+  //   $(".ch-points").append(valueBox);
+  // });
 
 $('.switch-data').click(function() {
   const checkboxObj = {
     KOMENDY: [],
     BITSY: [],
-    POINTSY: []
+    POINTSY: [],
+    VALKOMENDY: [],
+    VALBITSY: [],
+    VALPOINTSY: []
   }
   $('.switch-data').each(function () {
     const prefix = $(this).parent().attr('id');
@@ -89,6 +114,7 @@ $('.switch-data').click(function() {
     $.post("save.php", dataToWrite)
 
 });
+
 });
 });
 }
