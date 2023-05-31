@@ -55,12 +55,12 @@ def getReward(title="NaN"):
     else:
         for x in odp["data"]:
             if x["title"] == title:
-                return x["id"], x["is_enabled"]
+                return x["id"], x["is_enabled"], x["cost"]
             #todo wykryc jak nie znajdzie, moze to zadziala ponizej // update, dziala to ponizej
-        return None, None
+        return None, None, None
     
 
-def modifyReward(id,state,title=None):
+def modifyReward(id,state=None,title=None):
     config.read("zmienne.ini")
     cost = config["VALPOINTSY"]
     if state == "enable":
@@ -68,9 +68,8 @@ def modifyReward(id,state,title=None):
     elif state == "disable":
         enable = False
     else:
-        return 0
+        enable = None
     if title != None: 
-        print(f"POINTBITS >> Zmieniam koszt {title}")
         points = cost[title]
     else: points = ""
     headers = {
@@ -92,17 +91,22 @@ def updateRewards():
     komendy = config["POINTSY"]
     cost = config["VALPOINTSY"]
     for x in komendy:
-        rid, is_enabled = getReward(x)
+        rid, is_enabled, getCost = getReward(x)
+        # print(x, komendy[x], rid, is_enabled, getCost, cost[x]) #debug
         if komendy[x] == "1":  #sprawdź czy włączony w configu
-            if not rid: #sprawdź czy juz jest stworzony taki reward
+            if not rid: #sprawdź czy NIE istnieje ten reward na twtichu
                 print("POINTBITS >> creating ",x)
                 createReward(x,cost[x])
-            else:
-                modifyReward(rid,"enable",x) #włącz komendę bo istnieje i ma 1 w konfigu
+            elif is_enabled == False:
+                print("POINTBITS >> Enabling ",x)
+                modifyReward(rid,"enable") #włącz komendę bo istnieje i ma 1 w konfigu
+            elif int(cost[x]) != getCost: #sprawdz czy koszt z configu jest taki sam jak koszt na twitchu
+                print(f"POINTBITS >> Zmieniam koszt {x} z {getCost} na {cost[x]}")
+                modifyReward(rid,None,x)
         if komendy[x] == "0": 
             if rid and is_enabled:              #sprawdz czy jest juz taki reward
                 print("POINTBITS >> disabling ",x)
-                modifyReward(rid, "disable")
+                modifyReward(rid, "disable", x)
 def purge():
     print("PURGE >> PURGING")
     rewards = getReward()
@@ -130,7 +134,6 @@ def pointbits():
     users_oauth_token = identity["access_token"]
     client = twitchio.Client(token=my_token)
     client.pubsub = pubsub.PubSubPool(client)
-    updateRewards() #update rewardsow na init
 
     from komendy import valorant
     klasa = locals().get("valorant")
@@ -145,7 +148,7 @@ def pointbits():
             class ctx:
                 def __init__(self):
                     self.message = message()
-            class  message:
+            class message:
                 def __init__(self):
                     self.content = event.input
             ctx = ctx()
