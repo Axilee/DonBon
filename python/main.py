@@ -178,6 +178,9 @@ class Bot(commands.Bot):
     @commands.command(name = "song")
     async def song(self,ctx:commands.Context):
         await ctx.send(getCurrentlyPlaying(identity['SPOTIFY']['access_token']))
+    @commands.command(name = "context")
+    async def ctx(self,ctx:commands.Context):
+        print(type(ctx))
   
 
     
@@ -220,7 +223,7 @@ class Bot(commands.Bot):
     async def event_message(self, message = twitchio.Message):
         config.read("zmienne.ini")
         c = config["KOMENDY"]
-        print(message.raw_data) #debug wiadomosci
+        #print(message.raw_data) #debug wiadomosci
         if message.echo: #ignoruj samego siebie
             return
         else:

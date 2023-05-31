@@ -55,7 +55,6 @@ def config_sync():
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(hostname, username=username, password='qwe!@#')
     sftp = ssh.open_sftp()
-
     while ssh:
         with sftp.open('/var/www/python/zmienne.ini','rb+') as config_remote, open('.\\zmienne.ini','rb+') as config_local:
             cl = config_local.read()

@@ -3,6 +3,7 @@ from twitchio.ext import pubsub
 import asyncio
 import configparser
 import requests
+import importlib
 config = configparser.ConfigParser()
 config.read("Oauth2//identity.ini")
 identity = config["TWITCH"]
@@ -20,7 +21,8 @@ def createReward(title,cost):
     data = {
         "title":{title},
         "cost":{cost},
-        "background_color":"#000000"
+        "background_color":"#000000",
+        "is_user_input_required":True
     }
     odp = requests.post(url,headers = headers, data = data)
 
@@ -35,7 +37,7 @@ def deleteReward(id):
         "id":id
     }
     odp = requests.delete(url,headers = headers, data = data)
-    print(f"usuwam{id}")
+    print(f"POINTBITS >> usuwam {id}")
 
 
 def getReward(title="NaN"):
@@ -58,41 +60,51 @@ def getReward(title="NaN"):
         return None, None
     
 
-def modifyReward(id,state):
+def modifyReward(id,state,title=None):
+    config.read("zmienne.ini")
+    cost = config["VALPOINTSY"]
     if state == "enable":
         enable = True
     elif state == "disable":
         enable = False
     else:
         return 0
+    if title != None: 
+        print(f"POINTBITS >> Zmieniam koszt {title}")
+        points = cost[title]
+    else: points = ""
     headers = {
         'client-id': identity["client_id"],
         'Authorization': f"Bearer {identity['access_token']}", 
         'Content-Type': "application/x-www-form-urlencoded" 
     }
     data = {
-        "is_enabled": {enable}
+        "is_enabled": {enable},
+        "cost": {points} 
     }
     urlid = url + "&id=" + id 
     odp = requests.patch(urlid,headers = headers, data = data)
 
 
 def updateRewards():
+    print("POINTBITS >> Updating rewards")
     config.read("zmienne.ini")
     komendy = config["POINTSY"]
+    cost = config["VALPOINTSY"]
     for x in komendy:
         rid, is_enabled = getReward(x)
         if komendy[x] == "1":  #sprawdź czy włączony w configu
             if not rid: #sprawdź czy juz jest stworzony taki reward
                 print("POINTBITS >> creating ",x)
-                createReward(x,500)
+                createReward(x,cost[x])
             else:
-                modifyReward(rid,"enable") #włącz komendę bo istnieje i ma 1 w konfigu
+                modifyReward(rid,"enable",x) #włącz komendę bo istnieje i ma 1 w konfigu
         if komendy[x] == "0": 
             if rid and is_enabled:              #sprawdz czy jest juz taki reward
                 print("POINTBITS >> disabling ",x)
                 modifyReward(rid, "disable")
 def purge():
+    print("PURGE >> PURGING")
     rewards = getReward()
     for reward in rewards:
         deleteReward(reward["id"])
@@ -113,23 +125,33 @@ def purge():
 
 #--------- bot
 def pointbits():
-
+    
     my_token = 'dji7vy3dlc0szw4vz28ai6cllt4p9b'
     users_oauth_token = identity["access_token"]
     client = twitchio.Client(token=my_token)
     client.pubsub = pubsub.PubSubPool(client)
+    updateRewards() #update rewardsow na init
 
+    from komendy import valorant
+    klasa = locals().get("valorant")
 
     @client.event()
     async def event_pubsub_channel_points(event: pubsub.PubSubChannelPointsMessage):
-        print(event)
         config.read("zmienne.ini")
         pointsy = config["POINTSY"]
+        print("reward hjakis")
+        # print(pubsub.PubSubChannelPointsMessage.input)
         if event.reward.title in pointsy:
-            print("Bążur wydane")
-        
-        
-
+            class ctx:
+                def __init__(self):
+                    self.message = message()
+            class  message:
+                def __init__(self):
+                    self.content = event.input
+            ctx = ctx()
+            funkcja = event.reward.title
+            komenda = getattr(klasa,funkcja)
+            komenda(ctx)
 
     async def main():
         topics = [
@@ -142,4 +164,3 @@ def pointbits():
         
 
     client.loop.run_until_complete(main())
-#TODO tworzenie rewardsów i usuwanie ich przy wlaczeniu/wylaczeniu komendy za nagrode, wykombinowac jak dodawac/usuwac nagrody za bitsy bez marnowania ich

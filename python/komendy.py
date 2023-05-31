@@ -9,7 +9,7 @@ ap = comclt.Dispatch("Shell.Application")
 
 class valorant():
     
-    def allchat(ctx):
+    def knife(ctx):
         wsh.SendKeys("1")
         time.sleep(0.3)
         wsh.SendKeys("g")
