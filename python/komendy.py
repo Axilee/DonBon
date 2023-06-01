@@ -18,7 +18,7 @@ class valorant():
     def notepad(ctx):
         wsh.Run("notepad.exe") 
         time.sleep(0.2)
-        wsh.SendKeys("LOL LOL LOL LOL LOL LOL LOL LOL LOL LOL LOL LOL LOL ")
+        wsh.SendKeys(ctx.message.content.replace("$notepad",""))
     def allchat(ctx):
         msg = (ctx.message.content)
         msg = msg.replace("$allchat","")
@@ -52,3 +52,5 @@ class valorant():
         if s == "c" | "x" | "e" | "q":
             s = s.replace("$skill ", "")
             wsh.SendKeys(s)
+    def drop(ctx):
+        wsh.SendKeys("G")

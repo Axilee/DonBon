@@ -11,7 +11,7 @@ users_channel_id = 104929447
 url = f"https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id={str(users_channel_id)}"
 
 #----- requesty do modyfikacji rewardsów
-def createReward(title,cost):
+def createReward(title,cost,inputrequired = False):
 
     headers = {
         'client-id': identity["client_id"],
@@ -22,7 +22,7 @@ def createReward(title,cost):
         "title":{title},
         "cost":{cost},
         "background_color":"#000000",
-        "is_user_input_required":True
+        "is_user_input_required": inputrequired
     }
     odp = requests.post(url,headers = headers, data = data)
 
@@ -91,12 +91,16 @@ def updateRewards():
     komendy = config["POINTSY"]
     cost = config["VALPOINTSY"]
     for x in komendy:
+        if x in config['INPUTREQUIRED']:
+            inputrequired = True
+        else:
+            inputrequired = False
         rid, is_enabled, getCost = getReward(x)
         # print(x, komendy[x], rid, is_enabled, getCost, cost[x]) #debug
         if komendy[x] == "1":  #sprawdź czy włączony w configu
             if not rid: #sprawdź czy NIE istnieje ten reward na twtichu
                 print("POINTBITS >> creating ",x)
-                createReward(x,cost[x])
+                createReward(x,cost[x],inputrequired)
             elif is_enabled == False:
                 print("POINTBITS >> Enabling ",x)
                 modifyReward(rid,"enable") #włącz komendę bo istnieje i ma 1 w konfigu
@@ -113,24 +117,13 @@ def purge():
     for reward in rewards:
         deleteReward(reward["id"])
 
-# def updateRewards(): #awaryjnie odkomentować żeby usunac rewardsy zamiast tej funkcji wyżej^
-#     config.read("zmienne.ini")
-#     komendy = config["POINTSY"]
-#     for x in komendy:
-#         if komendy[x] == "1":  #sprawdź czy włączony w configu
-#             if getReward(x): #sprawdź czy juz jest stworzony taki reward
-#                 print("POINTBITS >> creating ",x)
-#                 deleteReward(getReward(x))
-            
-        
-
 
 
 
 #--------- bot
 def pointbits():
-    
-    my_token = 'dji7vy3dlc0szw4vz28ai6cllt4p9b'
+    updateRewards() #uptade na init odrazu
+    my_token = '160g7wv175m4mjwzfpd071k5ww8pvx'
     users_oauth_token = identity["access_token"]
     client = twitchio.Client(token=my_token)
     client.pubsub = pubsub.PubSubPool(client)

@@ -24,6 +24,7 @@ def getOAuth(service_name,client_id,link,redirect_uri):
         link = link+client_uri+scope
     elif(service_name == "twitch"):
         link = link+client_uri+scope+"&state=c3ab8aa609ea11e793ae92361f002671"
+        print(link)
     
     webbrowser.open(link)
 if __name__ == "__main__":

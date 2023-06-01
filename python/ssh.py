@@ -35,7 +35,7 @@ def polacz():
 
 def execute():
     try:
-        print(f"\nSSH >> Wysyłanie komend do {hostname}")
+        print(f"\nSSH >> Command sync {hostname}")
         loading_t.start()
         try:
             polaczenie = polacz()
