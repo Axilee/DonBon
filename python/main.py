@@ -40,7 +40,6 @@ if ar.purge:
     pb.purge()
     exit()
 
-inputrequired = ['allchat','teamchat','notepad','skill']
 
 user_token = identity['TWITCH']['access_token'] #zaczyt tokenu auth dla twitch
 refresh_token = identity['TWITCH']['refresh_token'] #imo lepiej tutac execowac refresh token bedzie latwiej go responsem odnawiac 
@@ -185,13 +184,12 @@ class Bot(commands.Bot):
     
     #wyślij liste komend do zmienne.ini
     def update_komendy(self):
-
-        sekcje = ["KOMENDY", "POINTSY", "BITSY", "VALPOINTSY", "VALBITSY", "INPUTREQUIRED"]
+        print("MAIN >> Update komendy")
+        sekcje = ["KOMENDY", "POINTSY", "BITSY", "VALPOINTSY", "VALBITSY"]
         config.read("zmienne.ini")
-        print (config.sections(), sekcje)
         if not config.sections() == sekcje:
                 open("zmienne.ini","w")
-                print("\nMAIN >> Config Pusty, tworze nowy")
+                print("MAIN >> Config Pusty, tworze nowy")
                 sekcjeConfig = config.sections()
                 for sekcja in sekcje:
                     if sekcja not in sekcjeConfig:
@@ -207,8 +205,6 @@ class Bot(commands.Bot):
                 config['BITSY'][command.name] = "0"
                 config['VALPOINTSY'][command.name] = "0"
                 config['VALBITSY'][command.name] = "0"
-            if command.name in inputrequired:
-                config['INPUTREQUIRED'][command.name] = "1"
                 #usuwanie komend
             for konfigkomenda in config["BITSY"]:
                 if not konfigkomenda in self.commands:

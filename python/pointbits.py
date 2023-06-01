@@ -3,12 +3,16 @@ from twitchio.ext import pubsub
 import asyncio
 import configparser
 import requests
+import time
 import importlib
+
+
 config = configparser.ConfigParser()
 config.read("Oauth2//identity.ini")
 identity = config["TWITCH"]
 users_channel_id = 104929447
 url = f"https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id={str(users_channel_id)}"
+inputrequired_commands = ['allchat','teamchat','notepad','skill']
 
 #----- requesty do modyfikacji rewardsów
 def createReward(title,cost,inputrequired = False):
@@ -91,7 +95,7 @@ def updateRewards():
     komendy = config["POINTSY"]
     cost = config["VALPOINTSY"]
     for x in komendy:
-        if x in config['INPUTREQUIRED']:
+        if x in inputrequired_commands:
             inputrequired = True
         else:
             inputrequired = False
@@ -122,11 +126,12 @@ def purge():
 
 #--------- bot
 def pointbits():
-    updateRewards() #uptade na init odrazu
+    time.sleep(2) #poczekaj troche az sie zsynchronizuje config i dolaczy irl z maina
     my_token = '160g7wv175m4mjwzfpd071k5ww8pvx'
     users_oauth_token = identity["access_token"]
     client = twitchio.Client(token=my_token)
     client.pubsub = pubsub.PubSubPool(client)
+    updateRewards() #uptade na init odrazu
 
     from komendy import valorant
     klasa = locals().get("valorant")
@@ -138,7 +143,7 @@ def pointbits():
         print("reward hjakis")
         # print(pubsub.PubSubChannelPointsMessage.input)
         if event.reward.title in pointsy:
-            class ctx:
+            class ctx: #definiowanie ctx.message bo z komend taki przesyla czasami, wiec tu niech tez bedzie
                 def __init__(self):
                     self.message = message()
             class message:
@@ -148,13 +153,21 @@ def pointbits():
             funkcja = event.reward.title
             komenda = getattr(klasa,funkcja)
             komenda(ctx)
+    config.read("zmienne.ini")
+    kosztBitsy = config['VALBITSY']
+    # for i in kosztBitsy:
+    #     print (kosztBitsy[i])
+        
+    async def event_pubsub_bits(event: pubsub.PubSubBitsMessage):
+        config.read("zmienne.ini")
+        kosztBitsy = config['VALBITSY']
 
+        event.bits_used.bit_count
     async def main():
         topics = [
             pubsub.channel_points(users_oauth_token)[users_channel_id],
             pubsub.bits(users_oauth_token)[users_channel_id]
         ]
-        
         await client.pubsub.subscribe_topics(topics)
         await client.start()
         
