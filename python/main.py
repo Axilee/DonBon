@@ -187,23 +187,29 @@ class Bot(commands.Bot):
 
     #wyślij liste komend do zmienne.ini
     def update_komendy(self):
-        for command in self.commands.values():
-            if not config.read("zmienne.ini"):
+        # print (self.commands) #zrobic generowanie komend ktore wymagaja inputu do 'inputrequired' config
+        sekcje = ["KOMENDY", "POINTSY", "BITSY", "VALPOINTSY", "VALBITSY", "INPUTREQUIRED"]
+        config.read("zmienne.ini")
+        if not config.sections() == sekcje:
+                print (config.keys(), sekcje)
                 open("zmienne.ini","w")
-                print("\nMAIN >> Konfig Pusty, tworze nowy")
-                config.add_section("KOMENDY")
-                config.add_section("POINTSY")
-                config.add_section("BITSY")
+                print("\nMAIN >> Config Pusty, tworze nowy")
+                sekcjeConfig = config.sections()
+                for sekcja in sekcje:
+                    if sekcja not in sekcjeConfig:
+                        config.add_section(sekcja)
                 print("MAIN >> Stworzono sekcje")
+
+        for command in self.commands.values():
+                #dodawanie komend
             if not command.name in config["KOMENDY"]:   
                 config['KOMENDY'][command.name] = "0"
                 print(f"MAIN >> Dodaje komendę {command.name}...")
-            if not command.name in config["POINTSY"]:
                 config['POINTSY'][command.name] = "0"
-                print(f"MAIN >> Dodaje komendę {command.name}...")
-            if not command.name in config["BITSY"]:
                 config['BITSY'][command.name] = "0"
-                print(f"MAIN >> Dodaje komendę {command.name}...")
+                config['VALPOINTSY'][command.name] = "0"
+                config['VALBITSY'][command.name] = "0"
+                #usuwanie komend
             for konfigkomenda in config["BITSY"]:
                 if not konfigkomenda in self.commands:
                     del config["BITSY"][konfigkomenda] 
@@ -213,6 +219,13 @@ class Bot(commands.Bot):
             for konfigkomenda in config["KOMENDY"]:
                 if not konfigkomenda in self.commands:
                     del config["KOMENDY"][konfigkomenda] 
+            for konfigkomenda in config["VALPOINTSY"]:
+                if not konfigkomenda in self.commands:
+                    del config["VALPOINTSY"][konfigkomenda] 
+            for konfigkomenda in config["VALBITSY"]:
+                if not konfigkomenda in self.commands:
+                    del config["VALBITSY"][konfigkomenda] 
+            
         with open('zmienne.ini', 'w') as plik:
             config.write(plik)
 
