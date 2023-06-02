@@ -179,8 +179,16 @@ class Bot(commands.Bot):
     @commands.command(name = "song")
     async def song(self,ctx:commands.Context):
         await ctx.send(getCurrentlyPlaying(identity['SPOTIFY']['access_token']))
-   
-    
+    @commands.command(name = "bits")
+    async def bits(self,ctx:commands.Context):
+        config.read("zmienne.ini")
+        menu = "**Menu bitsow ©** --------------------"
+        linebreak = "______________________________"
+        for nazwa in config["VALBITSY"]: 
+            if config["BITSY"][nazwa] == "1": 
+                menu = menu+nazwa+"-"+config["VALBITSY"][nazwa]+" | "
+        
+        await ctx.send(menu)
     
     #wyślij liste komend do zmienne.ini
     def update_komendy(self):
@@ -243,7 +251,7 @@ class Bot(commands.Bot):
                 if cmd_name not in c.keys():
                     return
                 elif c[cmd_name] == "1":
-                    print(c[cmd_name],"enabled command ",cmd_name)
+                    print("MAIN >> Komenda "+cmd_name+" od "+message.author.display_name)
                     await self.handle_commands(message)
                 else:
                     # Send a message or do nothing if the command is disabled

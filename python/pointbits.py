@@ -126,21 +126,21 @@ def purge():
 
 #--------- bot
 def pointbits():
-    time.sleep(2) #poczekaj troche az sie zsynchronizuje config i dolaczy irl z maina
     my_token = '160g7wv175m4mjwzfpd071k5ww8pvx'
     users_oauth_token = identity["access_token"]
+    print("joining")
     client = twitchio.Client(token=my_token)
     client.pubsub = pubsub.PubSubPool(client)
+    print("joined")
     updateRewards() #uptade na init odrazu
 
     from komendy import valorant
     klasa = locals().get("valorant")
-
+#REWARDS
     @client.event()
     async def event_pubsub_channel_points(event: pubsub.PubSubChannelPointsMessage):
         config.read("zmienne.ini")
         pointsy = config["POINTSY"]
-        print("reward hjakis")
         # print(pubsub.PubSubChannelPointsMessage.input)
         if event.reward.title in pointsy:
             class ctx: #definiowanie ctx.message bo z komend taki przesyla czasami, wiec tu niech tez bedzie
@@ -150,19 +150,21 @@ def pointbits():
                 def __init__(self):
                     self.content = event.input
             ctx = ctx()
+            print("POINTBITS >> Channel Points ",event.reward.title)
             funkcja = event.reward.title
             komenda = getattr(klasa,funkcja)
             komenda(ctx)
-    config.read("zmienne.ini")
-    kosztBitsy = config['VALBITSY']
-    # for i in kosztBitsy:
-    #     print (kosztBitsy[i])
-        
+#BITS
     async def event_pubsub_bits(event: pubsub.PubSubBitsMessage):
         config.read("zmienne.ini")
-        kosztBitsy = config['VALBITSY']
-
-        event.bits_used.bit_count
+        BitRewards = config['VALBITSY']
+        ctx = event
+        for BitReward in BitRewards:
+            if event.bits_used == BitRewards[BitReward]:
+                print (BitReward)
+            funkcja = BitReward
+            komenda = getattr(klasa,funkcja)
+            komenda(ctx)
     async def main():
         topics = [
             pubsub.channel_points(users_oauth_token)[users_channel_id],
