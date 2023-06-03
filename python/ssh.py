@@ -24,12 +24,13 @@ def polacz():
     sciezka_lokalna = '.\\zmienne.ini'
     sciezka_zdalna = '/var/www/python/zmienne.ini'
 
-    with open(sciezka_lokalna, 'rb') as plik_lokalny:
-        plik_content = plik_lokalny.read()
-
+   
     sftp = ssh.open_sftp()
-    with sftp.open(sciezka_zdalna, 'wb') as plik_zdalny:
-        plik_zdalny.write(plik_content)
+    with sftp.open(sciezka_zdalna, 'rb') as plik_zdalny:
+        plikzdalny_content = plik_zdalny.read()
+    with open(sciezka_lokalna, 'wb') as plik_lokalny:
+        plik_lokalny.write(plikzdalny_content)
+
     sftp.close()
     ssh.close()
 

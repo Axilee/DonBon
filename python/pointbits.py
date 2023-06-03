@@ -171,8 +171,10 @@ def pointbits():
         BitRewards = config['VALBITSY']
         print("POINTBITS >> Event bitsy, ilosc="+str(event.bits_used)+" od "+str(event.user.name)+"   "+str(event.message.content))
         msg = str(event.message.content)
-        msg = msg.split(" ", 1)[1]
-
+        try: 
+            msg = msg.split(" ", 1)[1]
+        except:
+            msg = msg
         class ctx: #definiowanie ctx.message bo z komend taki przesyla czasami, wiec tu niech tez bedzie
                 def __init__(self):
                     self.message = message()
@@ -183,9 +185,10 @@ def pointbits():
 
         for BitReward in BitRewards:
             if event.bits_used == int(BitRewards[BitReward]):
-                print (BitReward)
-                komenda = getattr(klasa,BitReward)
-                komenda(ctx)
+                if config['BITSY'][BitReward] == "1":
+                    print (BitReward)
+                    komenda = getattr(klasa,BitReward)
+                    komenda(ctx)
 
                 
     async def main():

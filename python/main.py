@@ -237,9 +237,6 @@ class Bot(commands.Bot):
             config.write(plik)
 
 
-
-
-
     async def event_message(self, message = twitchio.Message):
         config.read("zmienne.ini")
         c = config["KOMENDY"]
@@ -294,8 +291,8 @@ if __name__ == "__main__":
     sprawdz_token(user_token,'twitch')
     sprawdz_token(identity['SPOTIFY']['access_token'],'spotify')
     bot = Bot()
-    bot.update_komendy()
     ssh.execute()
+    bot.update_komendy()
     sshProcess.start()
     tokenRefreshProcess.start()
     pointbitsProcess.start()
