@@ -49,8 +49,7 @@ class valorant():
         wsh.SendKeys("31")
     def skill(ctx):
         s = ctx.message.content
-        if s == "c" | "x" | "e" | "q":
-            s = s.replace("$skill ", "")
-            wsh.SendKeys(s)
+        s = s.replace("$skill ", "")
+        wsh.SendKeys(s)
     def drop(ctx):
         wsh.SendKeys("G")

@@ -141,7 +141,8 @@ class Bot(commands.Bot):
         
 #powitanie po właczeniu i wejsciu na kanał
     async def event_channel_joined(self,channel):    
-        await channel.send(f"Bążur @{channel.name}!")
+        # await channel.send(f"Bążur @{channel.name}!")
+        pass
     
 #logowanie eventu dołączania viewerów (wtf)
     async def event_join(self,channel,user):

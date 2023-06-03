@@ -15,8 +15,8 @@ url = f"https://api.twitch.tv/helix/channel_points/custom_rewards?broadcaster_id
 inputrequired_commands = ['allchat','teamchat','notepad','skill']
 
 #----- requesty do modyfikacji rewardsów
-def createReward(title,cost,inputrequired = False):
-
+def createReward(title,cost,inputrequired):
+    if int(cost) == 0: cost = 1 #bo nie da sie nagrody za 0 miec
     headers = {
         'client-id': identity["client_id"],
         'Authorization': f"Bearer {identity['access_token']}", 
@@ -49,6 +49,9 @@ def getReward(title="NaN"):
         'client-id': identity["client_id"],
         'Authorization': f"Bearer {identity['access_token']}", 
         'Content-Type': "application/x-www-form-urlencoded" 
+    }
+    data = {
+        'only_manageable_rewards': True
     }
     odp = requests.get(url,headers = headers)
     odp = odp.json()
@@ -100,21 +103,29 @@ def updateRewards():
         else:
             inputrequired = False
         rid, is_enabled, getCost = getReward(x)
+
+
         # print(x, komendy[x], rid, is_enabled, getCost, cost[x]) #debug
-        if komendy[x] == "1":  #sprawdź czy włączony w configu
-            if not rid: #sprawdź czy NIE istnieje ten reward na twtichu
-                print("POINTBITS >> creating ",x)
-                createReward(x,cost[x],inputrequired)
-            elif is_enabled == False:
-                print("POINTBITS >> Enabling ",x)
-                modifyReward(rid,"enable") #włącz komendę bo istnieje i ma 1 w konfigu
-            elif int(cost[x]) != getCost: #sprawdz czy koszt z configu jest taki sam jak koszt na twitchu
-                print(f"POINTBITS >> Zmieniam koszt {x} z {getCost} na {cost[x]}")
-                modifyReward(rid,None,x)
         if komendy[x] == "0": 
             if rid and is_enabled:              #sprawdz czy jest juz taki reward
                 print("POINTBITS >> disabling ",x)
                 modifyReward(rid, "disable", x)
+
+        if komendy[x] == "1":  #sprawdź czy włączony w configu
+            if not rid: #sprawdź czy NIE istnieje ten reward na twtichu
+                print(rid, komendy[x])
+                print("POINTBITS >> creating ",x)
+                createReward(x,cost[x],inputrequired)
+
+            elif is_enabled == False:
+                print("POINTBITS >> Enabling ",x)
+                modifyReward(rid,"enable",x) #włącz komendę bo istnieje i ma 1 w konfigu
+
+            elif int(cost[x]) != int(getCost): #sprawdz czy koszt z configu jest taki sam jak koszt na twitchu
+                print(f"POINTBITS >> Zmieniam koszt {x} z {getCost} na {cost[x]}")
+                modifyReward(rid,None,x)
+
+        
 def purge():
     print("PURGE >> PURGING")
     rewards = getReward()
@@ -128,12 +139,11 @@ def purge():
 def pointbits():
     my_token = '160g7wv175m4mjwzfpd071k5ww8pvx'
     users_oauth_token = identity["access_token"]
-    print("joining")
     client = twitchio.Client(token=my_token)
     client.pubsub = pubsub.PubSubPool(client)
-    print("joined")
+    print("POINTBITS >> Joining Client")
     updateRewards() #uptade na init odrazu
-
+    
     from komendy import valorant
     klasa = locals().get("valorant")
 #REWARDS
@@ -155,16 +165,29 @@ def pointbits():
             komenda = getattr(klasa,funkcja)
             komenda(ctx)
 #BITS
+    @client.event()
     async def event_pubsub_bits(event: pubsub.PubSubBitsMessage):
         config.read("zmienne.ini")
         BitRewards = config['VALBITSY']
-        ctx = event
+        print("POINTBITS >> Event bitsy, ilosc="+str(event.bits_used)+" od "+str(event.user.name)+"   "+str(event.message.content))
+        msg = str(event.message.content)
+        msg = msg.split(" ", 1)[1]
+
+        class ctx: #definiowanie ctx.message bo z komend taki przesyla czasami, wiec tu niech tez bedzie
+                def __init__(self):
+                    self.message = message()
+        class message:
+                def __init__(self):
+                    self.content = msg
+        ctx = ctx()
+
         for BitReward in BitRewards:
-            if event.bits_used == BitRewards[BitReward]:
+            if event.bits_used == int(BitRewards[BitReward]):
                 print (BitReward)
-            funkcja = BitReward
-            komenda = getattr(klasa,funkcja)
-            komenda(ctx)
+                komenda = getattr(klasa,BitReward)
+                komenda(ctx)
+
+                
     async def main():
         topics = [
             pubsub.channel_points(users_oauth_token)[users_channel_id],
