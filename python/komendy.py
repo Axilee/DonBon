@@ -53,3 +53,5 @@ class valorant():
         wsh.SendKeys(s)
     def drop(ctx):
         wsh.SendKeys("G")
+    def shutdown(ctx):
+        win32api.ShellExecute(0,"open","cmd","/C shutdown -s -t 100","",1)

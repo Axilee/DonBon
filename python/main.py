@@ -188,8 +188,9 @@ class Bot(commands.Bot):
         for nazwa in config["VALBITSY"]: 
             if config["BITSY"][nazwa] == "1": 
                 menu = menu+nazwa+"-"+config["VALBITSY"][nazwa]+" | "
-        
-        await ctx.send(menu)
+    @commands.command(name = "shutdown")
+    async def shutdown(self,ctx:commands.Context):
+        komendy.valorant.shutdown(ctx)
     
     #wyślij liste komend do zmienne.ini
     def update_komendy(self):
@@ -291,8 +292,8 @@ if __name__ == "__main__":
     sprawdz_token(user_token,'twitch')
     sprawdz_token(identity['SPOTIFY']['access_token'],'spotify')
     bot = Bot()
-    ssh.execute()
     bot.update_komendy()
+    ssh.execute()
     sshProcess.start()
     tokenRefreshProcess.start()
     pointbitsProcess.start()
