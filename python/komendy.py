@@ -7,8 +7,16 @@ import time
 import rotatescreen
 import keyboard
 import mouse
+import multiprocessing
 wsh = comclt.Dispatch("WScript.Shell")
 ap = comclt.Dispatch("Shell.Application")
+
+def runProcess(funkcja):
+    # funckja = getattr("komendy",funkcja)
+    p = multiprocessing.Process(target=funkcja)
+    p.daemon=True
+    p.start()
+
 
 class valorant():
     
@@ -63,7 +71,6 @@ class valorant():
         main.rotate_to(180)
         time.sleep(10)
         main.rotate_to(0)
-        exit()
     def idzpan(ctx = None):
         endTime = time.time() + 15
         keyboard.block_key("s")
@@ -74,7 +81,6 @@ class valorant():
                 keyboard.press("w")
             keyboard.release("s")
         keyboard.release("w")
-        exit()
     def myszka(ctx = None):
         for i in range(40):
             mouse.move(-i*i,0,absolute=False,duration=0.1)

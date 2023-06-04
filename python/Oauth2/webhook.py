@@ -16,13 +16,6 @@ static = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'stron
 class flaskAppWebhook():
     app = Flask(__name__,template_folder=htmldir, static_folder=static)
     
-    # client_encoded = client_id + ":" + client_secret
-    # sample_string_bytes = client_encoded.encode("ascii")
-    
-    # base64_bytes = base64.b64encode(sample_string_bytes)
-    # base64_string = base64_bytes.decode("ascii")
-
-    
     def refresh(self,service_name):
 
         config.read('identity.ini')

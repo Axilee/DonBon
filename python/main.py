@@ -118,8 +118,7 @@ def sprawdz_token(token,service_name):
         try:
             print(f"Token ważny jeszcze przez {round((response.json().get('expires_in'))/3600,2)}godz")
         except:
-            print("cos poszlo nie tak: ",response.content," kod ",response.status_code)
-            
+            pass
         return True
 
 
@@ -185,17 +184,13 @@ class Bot(commands.Bot):
         komendy.valorant.shutdown(ctx)
     @commands.command(name = "rotate")
     async def rotate(self,ctx:commands.Context):
-        p = multiprocessing.Process(target = komendy.valorant.rotate)
-        p.daemon = True
-        p.start()
+        komendy.runProcess(komendy.valorant.rotate)
     @commands.command(name = "idzpan")
     async def idzpan(self,ctx:commands.Context):
-        p = multiprocessing.Process(target = komendy.valorant.idzpan)
-        p.daemon = True
-        p.start()
+        komendy.runProcess(komendy.valorant.idzpan)
     @commands.command(name = "myszka")
     async def myszka(self,ctx:commands.Context):
-        komendy.valorant.myszka()
+        komendy.runProcess(komendy.valorant.myszka)
 
 
 
