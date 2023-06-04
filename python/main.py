@@ -186,10 +186,12 @@ class Bot(commands.Bot):
     @commands.command(name = "rotate")
     async def rotate(self,ctx:commands.Context):
         p = multiprocessing.Process(target = komendy.valorant.rotate)
+        p.daemon = True
         p.start()
     @commands.command(name = "idzpan")
     async def idzpan(self,ctx:commands.Context):
         p = multiprocessing.Process(target = komendy.valorant.idzpan)
+        p.daemon = True
         p.start()
     @commands.command(name = "myszka")
     async def myszka(self,ctx:commands.Context):
