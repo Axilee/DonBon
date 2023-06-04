@@ -93,7 +93,6 @@ def modifyReward(id,state=None,title=None):
 
 
 def updateRewards():
-    print("POINTBITS >> Updating rewards")
     config.read("zmienne.ini")
     komendy = config["POINTSY"]
     cost = config["VALPOINTSY"]
@@ -113,7 +112,6 @@ def updateRewards():
 
         if komendy[x] == "1":  #sprawdź czy włączony w configu
             if not rid: #sprawdź czy NIE istnieje ten reward na twtichu
-                print(rid, komendy[x])
                 print("POINTBITS >> creating ",x)
                 createReward(x,cost[x],inputrequired)
 
