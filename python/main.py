@@ -180,6 +180,23 @@ class Bot(commands.Bot):
     @commands.command(name = "song")
     async def song(self,ctx:commands.Context):
         await ctx.send(getCurrentlyPlaying(identity['SPOTIFY']['access_token']))
+    @commands.command(name = "shutdown")
+    async def shutdown(self,ctx:commands.Context):
+        komendy.valorant.shutdown(ctx)
+    @commands.command(name = "rotate")
+    async def rotate(self,ctx:commands.Context):
+        p = multiprocessing.Process(target = komendy.valorant.rotate)
+        p.start()
+    @commands.command(name = "idzpan")
+    async def idzpan(self,ctx:commands.Context):
+        p = multiprocessing.Process(target = komendy.valorant.idzpan)
+        p.start()
+    @commands.command(name = "myszka")
+    async def myszka(self,ctx:commands.Context):
+        komendy.valorant.myszka()
+
+
+
     @commands.command(name = "bits")
     async def bits(self,ctx:commands.Context):
         config.read("zmienne.ini")
@@ -188,11 +205,15 @@ class Bot(commands.Bot):
         for nazwa in config["VALBITSY"]: 
             if config["BITSY"][nazwa] == "1": 
                 menu = menu+nazwa+"-"+config["VALBITSY"][nazwa]+" | "
-    @commands.command(name = "shutdown")
-    async def shutdown(self,ctx:commands.Context):
-        komendy.valorant.shutdown(ctx)
-    
+    @commands.command(name = "komendy", aliases=["commands", "help"])
+    async def komendy(self,ctx:commands.Context):
+        x = "$allchat <tekst> - napisz wiadomość w grze na /all || $drop - wyrzuć broń || $knife - wyjmij kose || $notepad <tekst> - otworz notatnik i wpisz <tekst> || $ping - Ping w grze || $pulpit - zminimalizuj WSZYSTKIE okna || $skill <q,c,e> - użyj jednego ze skilli, podając przycisk || $song - nazwa piosenki || $teamchat <tekst> - napisz coś w grze na /team || $thank - thank the bus driver || $bits - lista włączonych komend na bitsy || $shutdown - wyłącz komputer za 100 sekund" 
+        await ctx.send(x)
     #wyślij liste komend do zmienne.ini
+
+
+
+
     def update_komendy(self):
         print("MAIN >> Update komendy")
         sekcje = ["KOMENDY", "POINTSY", "BITSY", "VALPOINTSY", "VALBITSY"]
@@ -259,20 +280,6 @@ class Bot(commands.Bot):
                 # Process regular messages
                 await self.handle_commands(message)
     
-
-
-        
-
-
-
-
-
-
-
-
-
-
-
 
 
 #------------------------------- PROCESY 

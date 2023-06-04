@@ -4,6 +4,9 @@ import win32con
 import win32com.client as comclt
 import configparser
 import time
+import rotatescreen
+import keyboard
+import mouse
 wsh = comclt.Dispatch("WScript.Shell")
 ap = comclt.Dispatch("Shell.Application")
 
@@ -55,3 +58,26 @@ class valorant():
         wsh.SendKeys("G")
     def shutdown(ctx):
         win32api.ShellExecute(0,"open","cmd","/C shutdown -s -t 100","",1)
+    def rotate(ctx = None):
+        main = rotatescreen.get_primary_display()
+        main.rotate_to(180)
+        time.sleep(10)
+        main.rotate_to(0)
+        exit()
+    def idzpan(ctx = None):
+        endTime = time.time() + 15
+        keyboard.block_key("s")
+        keyboard.block_key("w")
+        while time.time() < endTime:
+            keyboard.press("w")
+            if not keyboard.is_pressed("w"):
+                keyboard.press("w")
+            keyboard.release("s")
+        keyboard.release("w")
+        exit()
+    def myszka(ctx = None):
+        for i in range(40):
+            mouse.move(-i*i,0,absolute=False,duration=0.1)
+            mouse.move(i*i,0,absolute=False,duration=0.1)
+        
+
