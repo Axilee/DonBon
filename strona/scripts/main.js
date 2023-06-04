@@ -66,7 +66,7 @@ $.get("load.php", function(data) {
   $.each(data.VALBITSY, function(key, value){
     $('div[data-command="BITSY' + key +'"]').each(function() {
     var valueBox = $("<input>").addClass("input-data zmienne").attr({
-      type: "number",
+      type: "text",
       value: value,
       name: key
     });
@@ -76,7 +76,7 @@ $.get("load.php", function(data) {
   $.each(data.VALPOINTSY, function(key, value){
     $('div[data-command="POINTSY' + key +'"]').each(function() {
     var valueBox = $("<input>").addClass("input-data zmienne").attr({
-      type: "number",
+      type: "text",
       value: value,
       name: key
     });
