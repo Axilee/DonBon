@@ -186,10 +186,12 @@ class Bot(commands.Bot):
     @commands.command(name = "rotate")
     async def rotate(self,ctx:commands.Context):
         p = multiprocessing.Process(target = komendy.valorant.rotate)
+        p.daemon = True
         p.start()
     @commands.command(name = "idzpan")
     async def idzpan(self,ctx:commands.Context):
         p = multiprocessing.Process(target = komendy.valorant.idzpan)
+        p.daemon = True
         p.start()
     @commands.command(name = "myszka")
     async def myszka(self,ctx:commands.Context):
@@ -207,7 +209,7 @@ class Bot(commands.Bot):
                 menu = menu+nazwa+"-"+config["VALBITSY"][nazwa]+" | "
     @commands.command(name = "komendy", aliases=["commands", "help"])
     async def komendy(self,ctx:commands.Context):
-        x = "$allchat <tekst> - napisz wiadomość w grze na /all || $drop - wyrzuć broń || $knife - wyjmij kose || $notepad <tekst> - otworz notatnik i wpisz <tekst> || $ping - Ping w grze || $pulpit - zminimalizuj WSZYSTKIE okna || $skill <q,c,e> - użyj jednego ze skilli, podając przycisk || $song - nazwa piosenki || $teamchat <tekst> - napisz coś w grze na /team || $thank - thank the bus driver || $bits - lista włączonych komend na bitsy || $shutdown - wyłącz komputer za 100 sekund" 
+        x = "$allchat <tekst> - napisz wiadomość w grze na /all || $drop - wyrzuć broń || $knife - wyjmij kose || $notepad <tekst> - otworz notatnik i wpisz <tekst> || $ping - Ping w grze || $pulpit - zminimalizuj WSZYSTKIE okna || $skill <q,c,e> - użyj jednego ze skilli, podając przycisk || $song - nazwa piosenki || $teamchat <tekst> - napisz coś w grze na /team || $thank - thank the bus driver || $bits - lista włączonych komend na bitsy || $shutdown - wyłącz komputer za 100 sekund || $rotate - obróc monitor o 180 stopni || $idzpan - idzie do przodu przez 15 sekund || $myszka - myszka dostaje aspergera" 
         await ctx.send(x)
     #wyślij liste komend do zmienne.ini
 
