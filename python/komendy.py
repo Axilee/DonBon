@@ -25,7 +25,7 @@ class valorant():
         time.sleep(0.3)
         wsh.SendKeys("g")
     def ping(ctx):
-        wsh.SendKeys("z")  
+        mouse.click('middle')  
     def notepad(ctx):
         wsh.Run("notepad.exe") 
         time.sleep(0.2)
@@ -76,10 +76,8 @@ class valorant():
         keyboard.block_key("s")
         keyboard.block_key("w")
         while time.time() < endTime:
-            keyboard.press("w")
             if not keyboard.is_pressed("w"):
                 keyboard.press("w")
-            keyboard.release("s")
         keyboard.release("w")
     def myszka(ctx = None):
         for i in range(40):
