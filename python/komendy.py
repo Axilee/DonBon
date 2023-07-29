@@ -76,8 +76,7 @@ class valorant():
         keyboard.block_key("s")
         keyboard.block_key("w")
         while time.time() < endTime:
-            if not keyboard.is_pressed("w"):
-                keyboard.press("w")
+            keyboard.press("w")
         keyboard.release("w")
     def myszka(ctx = None):
         for i in range(40):
